@@ -2,37 +2,75 @@ package view;
 
 import java.util.Scanner;
 
+import model.Card;
+import model.TTModel;
+
 public class TTCLIView{
 
 	private TTModel model;
+	private boolean drawMenu = true;
+	private boolean autoPlay = false;
 
 	public TTCLIView(TTModel model){
 		this.model = model;
 	}
 
-	public void menuScreen(){
-		System.out.println("Froggo Trumps, ver. 0.1");
-		System.out.println("Select mode:");
-		System.out.println("1. New Game");
-		//System.out.println("2. Quit");
+	// draw CLI main menu
+	public void drawMain(){
+		System.out.println("--------------------------------");
+		System.out.println("| Froggo Trumps, test_ver. 0.1 |");
+		System.out.println("--------------------------------");
+		System.out.println("Select mode...--------------");
+		System.out.println("	1. New Player Game");
+		//System.out.println("	2. AI vs AI Autoplay")
+		//System.out.println("	3. View runtime stats")
+		System.out.println("	4. Quit");
+		System.out.println("----------------------------");
+		this.drawMenu = true;
+	}
+
+
+
+	// main hand view for CLI
+	public void drawCards(Turn currentTurn){
+		ArrayList<Card> currentHand = currentTurn.getTurnHand(); // get current list of cards
+		for(Card card : currentHand){
+
+			// put these in Card.toString()?
+			// See Dan regarding Card class
+
+			String playerName = card.getOwner().getName();
+			int numHand = card.getOwner().getNumberOfCards();
+			String cardName = card.getName();
+			String statName = Card.getStats()[cuurentTurn.getSelectedStat()];
+			int statValue = card.getStat(currentTurn.getSelectedStat());
+
+			String turnText = String.format("Player: %s has %d in their hand.\n %-15s %s: %2d" ,playerName,inHand,cardName,statName,statvalue);
+			System.out.println(turnText);
+		}
+	}
+
+	public void drawCard(Card selectCard){
+
 	}
 
 	public void newGameState(){
-
 	}
 
 	public void runTime(){
-		Scanner systemInput = new Scanner(System.in);
-		this.menuScreen();
-		int readInput = systemInput.nextInt();
+		Scanner systemInput = new Scanner(System.in); // User input instance
+		this.drawMain(); // draw main menu options
+		int readInput = "";
 		do{
-			if(readInput == 1){
+			if(this.readInput == 1){
 				this.newGameState();
-			} else if(readInput == 2){
-
+			} else if(readInput == 4){
+				this.systemInput.close();
 			} else{
 				System.out.println("Please select a valid menu option...");
+				this.drawMain();
 			}
-		} while(readInput != 1 || readInput != 2);
+		} while(this.readInput != 1 || this.readInput != 4);
+		this.systemInput.close();
 	}
 }

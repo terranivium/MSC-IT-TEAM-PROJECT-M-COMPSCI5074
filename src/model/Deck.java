@@ -1,8 +1,20 @@
 public class Deck{
 	
-	private ArrayList<Card> playerDeck = new ArrayList<Card>();
+	private final String filePath = "StarCitizenDeck.txt";
+	private ArrayList<Card> deck = new ArrayList<Card>();
 
-	public Deck(){
+	public Deck(String filePath){
+		FileReader fr = null;
 
+		try{
+			fr = new FileReader(filePath);
+			Scanner s = new Scanner(fr);
+		} catch(FileNotFoundException e){
+			e.printStackTrace();
+		}
+	}
+
+	public void shuffle(){
+		Collections.shuffle(this.deck);
 	}
 }

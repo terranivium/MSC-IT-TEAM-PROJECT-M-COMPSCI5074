@@ -39,7 +39,9 @@ public class TopTrumpsCLIApplication {
 			// Add your game logic here based on the requirements
 			// ----------------------------------------------------
 			
-			model.startGame();
+			model.addPlayers();
+			model.loadDeck();
+			model.dealCards();
 			userWantsToQuit=true; // use this when the user wants to exit the game
 			
 		}

@@ -48,7 +48,7 @@ public class TTModel {
 
 	public void loadDeck() { // reads cards from txt file and shuffles them into random order in an arraylist
 		BufferedReader br;
-		File file = new File(".\\StarCitizenDeck.txt");
+		File file = new File(".\\DogsDeck.txt");
 
 		try {
 			br = new BufferedReader(new FileReader(file));

@@ -11,7 +11,8 @@ public class Card{
 	private int intelligence;
 	private int cuteness;
 	private String[] headerNames;
-	HashMap<String, String> hmap;
+	HashMap<Integer,Integer> stats;
+
 	
 	public Card(String name, String size, String rarity, String temperament, String intelligence, String cuteness, String[] headerNames){
 		this.name = name;
@@ -20,17 +21,18 @@ public class Card{
 		this.temperament = Integer.parseInt(temperament);
 		this.intelligence = Integer.parseInt(intelligence);
 		this.cuteness = Integer.parseInt(cuteness);
-		this.headerNames =headerNames;
+		this.headerNames =headerNames; 
 		
-		hmap = new HashMap<String, String>();  //Don't know if this is really needed but it allows the header names to be matched with the individual stats (String values) themselves
-		hmap.put(headerNames[0], name);
-		hmap.put(headerNames[1], size);
-		hmap.put(headerNames[2], rarity);
-		hmap.put(headerNames[3], temperament);
-		hmap.put(headerNames[4], intelligence);
-		hmap.put(headerNames[5], cuteness);
-		}
+		stats = new HashMap<Integer,Integer>();
+		stats.put(1, this.size);
+		stats.put(2, this.rarity);
+		stats.put(3, this.temperament);
+		stats.put(4, this.intelligence);
+		stats.put(5, this.cuteness);
 		
+		
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -53,6 +55,14 @@ public class Card{
 
 	public int getCuteness() {
 		return cuteness;
+	}
+
+	public String[] getHeaderNames() {
+		return headerNames;
+	}
+	
+	public HashMap<Integer, Integer> getStats() {
+		return stats;
 	}
 
 	

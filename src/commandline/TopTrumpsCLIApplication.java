@@ -16,12 +16,12 @@ public class TopTrumpsCLIApplication {
 		if (args[0].equalsIgnoreCase("true")) writeGameLogsToFile = true; // Command line selection
 		
 		// State
-		//boolean userWantsToQuit = false; // flag to check whether the user wants to quit the application
+		boolean userWantsToQuit = false; // flag to check whether the user wants to quit the application
 		
 		// Create MVC instances
-		TTModel model = new TTModel(writeGameLogsToFile);
-		TTCLIView view = new TTCLIView(model);
-		new TTController(model, view);
+		TTModel model = new TTModel();
+		//TTCLIView view = new TTCLIView(model);
+		//new TTController(model, view);
 
 
 
@@ -33,6 +33,10 @@ public class TopTrumpsCLIApplication {
 			// Add your game logic here based on the requirements
 			// ----------------------------------------------------
 			
+			model.addPlayers();
+			model.loadDeck();
+			model.dealCards();
+			model.choosePlayer();
 			userWantsToQuit=true; // use this when the user wants to exit the game
 			
 		}

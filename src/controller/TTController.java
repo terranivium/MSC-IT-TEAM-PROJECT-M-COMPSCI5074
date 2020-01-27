@@ -15,22 +15,6 @@ public class TTController{
 		this.view = view;
 	}
 
-	public void setView(TTCLIView newView){
-		this.view = newView;
-	}
-
-	public TTCLIView getView(){
-		return this.view;
-	}
-
-	public void setModel(TTModel newModel){
-		this.model = newModel;
-	}
-
-	public TTModel getModel(){
-		return this.model;
-	}
-
 	public void run(){
 		Scanner systemInput = new Scanner(System.in); // User input instance
 		this.view.drawMain(); // draw main menu
@@ -38,12 +22,19 @@ public class TTController{
 		do{
 			readInput = systemInput.nextInt();
 			if(readInput == 1){ 
-				// @dan, might be worth creating a new game method in model that runs all of the intial 
-				// setup methods together in one go
-				this.model.addPlayers();
-				this.model.loadDeck();
-				this.model.dealCards();
-				this.model.choosePlayer();
+				System.out.println("How many AI players do you want to play against? (Max 4)");
+				int botCount = systemInput.nextInt();
+				systemInput.nextLine();
+				if (botCount >= 5 || botCount <= 0) {
+					System.out.println("Error, please chose between 1 and 4 AI Players.");
+					botCount = systemInput.nextInt();
+					systemInput.nextLine();
+				}
+				else {
+					this.model.startGame(botCount);
+				}
+			
+				if(model.getPlayers().get(model.)
 
 				this.view.newGameState();
 

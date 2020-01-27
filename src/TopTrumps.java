@@ -1,8 +1,4 @@
-import commandline.TopTrumpsCLIApplication;
-
 import online.TopTrumpsOnlineApplication;
-
-
 
 public class TopTrumps {
 

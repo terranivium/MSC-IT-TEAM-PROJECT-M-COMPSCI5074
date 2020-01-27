@@ -1,5 +1,9 @@
 package commandline;
 
+import controller.TTController;
+import model.TTModel;
+import view.TTCLIView;
+
 /**
  * Top Trumps command line application
  */
@@ -13,17 +17,17 @@ public class TopTrumpsCLIApplication {
 	public static void main(String[] args) {
 
 		boolean writeGameLogsToFile = false; // Should we write game logs to file?
-		if (args[0].equalsIgnoreCase("true")) writeGameLogsToFile = true; // Command line selection
+		if (args[0].equalsIgnoreCase("true")){
+			writeGameLogsToFile = true; // Command line selection
+		}
 		
 		// State
 		boolean userWantsToQuit = false; // flag to check whether the user wants to quit the application
 		
 		// Create MVC instances
-		TTModel model = new TTModel();
-		//TTCLIView view = new TTCLIView(model);
-		//new TTController(model, view);
-
-
+		TTModel model = new TTModel(writeGameLogsToFile);
+		TTCLIView view = new TTCLIView(model);
+		TTController controller = new TTController(model, view);
 
 
 		// Loop until the user wants to exit the game
@@ -33,10 +37,8 @@ public class TopTrumpsCLIApplication {
 			// Add your game logic here based on the requirements
 			// ----------------------------------------------------
 			
-			model.addPlayers();
-			model.loadDeck();
-			model.dealCards();
-			model.choosePlayer();
+			controller.run();
+
 			userWantsToQuit=true; // use this when the user wants to exit the game
 			
 		}

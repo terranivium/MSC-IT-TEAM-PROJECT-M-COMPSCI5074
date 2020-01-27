@@ -8,8 +8,6 @@ import model.TTModel;
 public class TTCLIView{
 
 	private TTModel model;
-	private boolean drawMenu = true;
-	private boolean autoPlay = false;
 
 	public TTCLIView(TTModel model){
 		this.model = model;
@@ -29,10 +27,8 @@ public class TTCLIView{
 		this.drawMenu = true;
 	}
 
-
-
 	// main hand view for CLI
-	public void drawCards(Turn currentTurn){
+	public void viewHand(Turn currentTurn){
 		ArrayList<Card> currentHand = currentTurn.getTurnHand(); // get current list of cards
 		for(Card card : currentHand){
 
@@ -40,9 +36,9 @@ public class TTCLIView{
 			// See Dan regarding Card class
 
 			String playerName = card.getOwner().getName();
-			int numHand = card.getOwner().getNumberOfCards();
+			int numHand = card.getOwner().getOwnerNumCards();
 			String cardName = card.getName();
-			String statName = Card.getStats()[cuurentTurn.getSelectedStat()];
+			String statName = Card.getStats()[currentTurn.getSelectedStat()];
 			int statValue = card.getStat(currentTurn.getSelectedStat());
 
 			String turnText = String.format("Player: %s has %d in their hand.\n %-15s %s: %2d" ,playerName,inHand,cardName,statName,statvalue);
@@ -50,11 +46,12 @@ public class TTCLIView{
 		}
 	}
 
-	public void drawCard(Card selectCard){
+	public void viewCard(Card selectCard){
 
 	}
 
 	public void newGameState(){
+		
 	}
 
 	public void runTime(){

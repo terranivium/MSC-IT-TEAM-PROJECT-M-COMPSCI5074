@@ -3,6 +3,7 @@ package view;
 import java.util.Scanner;
 
 import model.Card;
+import model.Player;
 import model.TTModel;
 
 public class TTCLIView{
@@ -48,8 +49,25 @@ public class TTCLIView{
 
 	public void viewCard(Card selectCard){
 		// View for the current card/this turn card
+		System.out.println("///////////////////////");
+		System.out.println(selectCard.getHeaderNames()[0] + " : " + selectCard.getName());
+		System.out.println("1. " + selectCard.getHeaderNames()[1] + " : " + selectCard.getSize());
+		System.out.println("2. " + selectCard.getHeaderNames()[2] + " : " + selectCard.getRarity());
+		System.out.println("3. " + selectCard.getHeaderNames()[3] + " : " + selectCard.getTemperament());
+		System.out.println("4. " + selectCard.getHeaderNames()[4] + " : " + selectCard.getIntelligence());
+		System.out.println("5. " + selectCard.getHeaderNames()[5] + " : " + selectCard.getCuteness());
+		System.out.println("///////////////////////\n");
 	}
-
+	
+	public void playersTurn() {
+		System.out.println("///////////////////////");
+		System.out.println("It is " + model.getActivePlayer().getName() + "'s turn to play.");
+		System.out.println("///////////////////////\n");
+	}
+	
+	public void comapreCards() {
+		
+	}
 	public void newGameState(){
 		// View for the start of the game/first round
 	}

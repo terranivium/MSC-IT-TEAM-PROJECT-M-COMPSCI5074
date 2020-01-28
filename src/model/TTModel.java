@@ -12,27 +12,26 @@ import java.util.Scanner;
 public class TTModel {
 	private int playerCount;
 	private int numOfCards;
-	private int nextPlayer;
+	private Player activePlayer;
+	private int activeStat;
+	private int cardsPerHand;
 	private ArrayList<Player> players;
 	private ArrayList<Card> deck;
 	private ArrayList<Card> discardPile;
 	private String[] headerNames;
-	private String winner;
 
 	public TTModel() { // constructor
-		this.playerCount = 0;
 		this.players = new ArrayList<Player>();
-		this.numOfCards = 0;
-		this.deck = new ArrayList<Card>();
-		this.winner = null;
 		this.discardPile = new ArrayList<Card>();
+		this.deck = new ArrayList<Card>();
+
 	}
 
 	public void startGame(int botCount) {
 		playerCount = botCount + 1;
 		players.add(new Player("Player1"));
 		for (int i = 0; i < botCount; i++) {
-			players.add(new Bot("Player" + (i + 2)));
+			players.add(new Bot("Player" + (i + 2) +" (AI)"));
 		}
 		loadDeck();
 		dealCards();
@@ -42,7 +41,7 @@ public class TTModel {
 	private void loadDeck() { // reads cards from txt file and creates card objects
 		BufferedReader br;
 		String filePath = new File("DogsDeck.txt").getAbsolutePath();
-		System.out.println(filePath);
+		System.out.println("Loaded file from  " + filePath);
 		try {
 			br = new BufferedReader(new FileReader(filePath));
 			String read = null;
@@ -61,7 +60,7 @@ public class TTModel {
 
 	private void dealCards() { // shuffles and deals cards based on number of players
 		Collections.shuffle(deck);
-		int cardsPerHand = numOfCards / playerCount;
+		cardsPerHand = numOfCards / playerCount;
 		int cardsLeftOver = numOfCards % playerCount;
 
 		int insertIndex = numOfCards - 1;
@@ -74,8 +73,8 @@ public class TTModel {
 				p.addHand(deck.remove(insertIndex--));
 			}
 		} while (deck.isEmpty() == false);
-
-		for (int j = 0; j < playerCount; j++) { // CHECK
+/*
+		for (int j = 0; j < playerCount; j++) { // print players cards check
 			for (int i = 0; i < cardsPerHand; i++) {
 				System.out.println(players.get(j).getName());
 				System.out.println(players.get(j).getHand().get(i).getName());
@@ -83,24 +82,20 @@ public class TTModel {
 		}
 		if (discardPile.isEmpty() == false) {
 			System.out.println("discard pile = " + discardPile.get(0).getName());
-		}
+		}*/
 	}
+	
 
 	private void selectRandomPlayer() {
 		Random r = new Random();
-		nextPlayer = r.nextInt(playerCount);
-		int chosenStat;
-		if (players.get(nextPlayer).getClass() == players.get(0).getClass()) {
-			chosenStat = players.get(0).chooseCard();
-		} else {
-			chosenStat = players.get(nextPlayer).chooseCard();
-		}
-		compareCards(chosenStat);
+		activePlayer = players.get(r.nextInt(playerCount));
 	}
 
-	public void compareCards(int stat) {
+	public Card compareCards(int stat) {
+		
 		for (Player p : players)
 			System.out.println(p.getName() + " :  " + p.getHand().get((p.getHand().size() - 1)).stats.get(stat));
+		return null;
 	}
 
 	public void endGame() {
@@ -132,7 +127,15 @@ public class TTModel {
 		return headerNames;
 	}
 
-	public String getWinner() {
-		return winner;
+	public Player getActivePlayer() {
+		return activePlayer;
+	}
+
+	public int getActiveStat() {
+		return activeStat;
+	}
+
+	public int getCardsPerHand() {
+		return cardsPerHand;
 	}
 }

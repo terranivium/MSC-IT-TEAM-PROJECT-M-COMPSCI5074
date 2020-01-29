@@ -1,4 +1,4 @@
-public class Deck{
+/*public class Deck{
 	
 	private final String filePath = "StarCitizenDeck.txt";
 	private ArrayList<Card> deck = new ArrayList<Card>();
@@ -17,4 +17,4 @@ public class Deck{
 	public void shuffle(){
 		Collections.shuffle(this.deck);
 	}
-}
+}*/

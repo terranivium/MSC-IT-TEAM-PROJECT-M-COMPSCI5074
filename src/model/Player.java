@@ -6,6 +6,8 @@ import java.util.Scanner;
 public class Player {
 	private String name;
 	protected ArrayList<Card> hand; 
+	private int topCardIndex;
+	private int activeStat;
 
 	public Player(String name) {
 		this.name = name;
@@ -13,21 +15,16 @@ public class Player {
 	}
 	
 	public int chooseCard() {
-		int topCardIndex = hand.size() - 1 ; 
-			System.out.println(hand.get(topCardIndex).getHeaderNames()[0] + " : " + hand.get(topCardIndex).getName());
-			System.out.println("1. " + hand.get(topCardIndex).getHeaderNames()[1] + " : " + hand.get(topCardIndex).getSize());
-			System.out.println("2. " + hand.get(topCardIndex).getHeaderNames()[2] + " : " + hand.get(topCardIndex).getRarity());
-			System.out.println("3. " + hand.get(topCardIndex).getHeaderNames()[3] + " : " + hand.get(topCardIndex).getTemperament());
-			System.out.println("4. " + hand.get(topCardIndex).getHeaderNames()[4] + " : " + hand.get(topCardIndex).getIntelligence());
-			System.out.println("5. " + hand.get(topCardIndex).getHeaderNames()[5] + " : " + hand.get(topCardIndex).getCuteness() + "\n");
-			System.out.println("Please select a stat to play (1-5)");
-			Scanner s = new Scanner(System.in);
-			int nominatedStat = s.nextInt();
-			return nominatedStat;
+		return activeStat;
 		}
+
+	public void setActiveStat(int activeStat) {
+		this.activeStat = activeStat;
+	}
 
 	public void addHand(Card card) {
 		this.hand.add(card);
+		topCardIndex = this.hand.size() - 1;
 	}
 
 	public ArrayList<Card> getHand() {
@@ -36,5 +33,10 @@ public class Player {
 
 	public String getName() {
 		return name;
+	}
+
+	public int getTopCardIndex() {
+		topCardIndex = this.hand.size() - 1;
+		return topCardIndex;
 	}
 }

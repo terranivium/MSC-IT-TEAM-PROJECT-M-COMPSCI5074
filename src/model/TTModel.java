@@ -12,46 +12,38 @@ import java.util.Scanner;
 public class TTModel {
 	private int playerCount;
 	private int numOfCards;
+	private Player activePlayer;
+	private int activeStat;
+	private int cardsPerHand;
 	private ArrayList<Player> players;
 	private ArrayList<Card> deck;
 	private ArrayList<Card> discardPile;
 	private String[] headerNames;
-	private String winner;
 
 	public TTModel() { // constructor
-		this.playerCount = 0;
 		this.players = new ArrayList<Player>();
-		this.numOfCards = 0;
-		this.deck = new ArrayList<Card>();
-		this.winner = null;
 		this.discardPile = new ArrayList<Card>();
+		this.deck = new ArrayList<Card>();
+
 	}
 
-	public void addPlayers() { // This method literally just determines the number of bots, i think ill combine
-								// it later when using it to assign cards
-		Scanner s = new Scanner(System.in);
-
-		System.out.println("How many AI players do you want to play against? (Max 4)");
-		int botCount = s.nextInt();
-		s.nextLine();
-		if (botCount >= 5 || botCount <= 0) {
-			System.out.println("Error, please chose between 1 and 4 AI Players.");
-			addPlayers();
-		} else {
-			playerCount = botCount + 1;
-			players.add( new Player("Player1"));
-			for (int i = 0; i < botCount; i++) {
-				players.add(new Bot("Player" + (i + 2)));
-			}
+	public void startGame(int botCount) {
+		playerCount = botCount + 1;
+		players.add(new Player("Player1"));
+		for (int i = 0; i < botCount; i++) {
+			players.add(new Bot("Player" + (i + 2) +" (AI)"));
 		}
+		loadDeck();
+		dealCards();
+		selectRandomPlayer();
 	}
 
-	public void loadDeck() { // reads cards from txt file and shuffles them into random order in an arraylist
+	private void loadDeck() { // reads cards from txt file and creates card objects
 		BufferedReader br;
-		File file = new File(".\\DogsDeck.txt");
-
+		String filePath = new File("DogsDeck.txt").getAbsolutePath();
+		System.out.println("Loaded file from  " + filePath);
 		try {
-			br = new BufferedReader(new FileReader(file));
+			br = new BufferedReader(new FileReader(filePath));
 			String read = null;
 			read = br.readLine();
 			headerNames = read.split("\\s+");
@@ -61,28 +53,14 @@ public class TTModel {
 				String[] word = read.split("\\s+");
 				deck.add(new Card(word[0], word[1], word[2], word[3], word[4], word[5], headerNames));
 			}
-		} catch (IOException e) { // not sure if this is bad Software Engineering...??
+		} catch (IOException e) {
 			System.out.println("The file you have requested, does not exist");
 		}
-		// possibly add more exception catching and a 'finally' catch too, input
-		// mismatch etc, would have to change IOExcpetion
-
-		Collections.shuffle(deck);
-		/*System.out.println(players.get(1).getName());
-		for(Card c:deck) {  
-			System.out.println(c.getHeaderNames()[0] + " : " + c.getName());
-			System.out.println(c.getHeaderNames()[1]+ " : " + c.getSize());
-			System.out.println(c.getHeaderNames()[2]+ " : " + c.getRarity());
-			System.out.println(c.getHeaderNames()[3]+ " : " + c.getTemperament());
-			System.out.println(c.getHeaderNames()[4]+ " : " + c.getIntelligence());
-			System.out.println(c.getHeaderNames()[5]+ " : " + c.getCuteness() + "\n");
-			
-		}
-		*/
 	}
 
-	public void dealCards() {
-		int cardsPerHand = numOfCards / playerCount;
+	private void dealCards() { // shuffles and deals cards based on number of players
+		Collections.shuffle(deck);
+		cardsPerHand = numOfCards / playerCount;
 		int cardsLeftOver = numOfCards % playerCount;
 
 		int insertIndex = numOfCards - 1;
@@ -95,38 +73,69 @@ public class TTModel {
 				p.addHand(deck.remove(insertIndex--));
 			}
 		} while (deck.isEmpty() == false);
-		
-		for(int j = 0; j < playerCount;j++) {  //CHECK
-		for(int i = 0;i< cardsPerHand;i++) {
-			System.out.println(players.get(j).getName());
-		System.out.println(players.get(j).getHand().get(i).getName());  
+/*
+		for (int j = 0; j < playerCount; j++) { // print players cards check
+			for (int i = 0; i < cardsPerHand; i++) {
+				System.out.println(players.get(j).getName());
+				System.out.println(players.get(j).getHand().get(i).getName());
+			}
 		}
-	}
-		if(discardPile.isEmpty() == false) {
-		System.out.println("discard pile = " + discardPile.get(0).getName());
-		}
-	}
-
-	public void choosePlayer() {
-		Random r = new Random();
-		int nextPlayer = r.nextInt(playerCount);
-		int chosenStat;
-		System.out.println("////" + players.get(nextPlayer).getClass());
-		if(players.get(nextPlayer).getClass() == players.get(0).getClass()) {
-			chosenStat = players.get(0).chooseCard();
-		}
-		else {
-			chosenStat = players.get(nextPlayer).chooseCard();
-		}
-		compareCards(chosenStat);
-	}
-
-	public void compareCards(int stat) {
-		for(Player p:players)
-		System.out.println(p.getName() + " :  " + p.getHand().get((p.getHand().size()-1)).stats.get(stat));
+		if (discardPile.isEmpty() == false) {
+			System.out.println("discard pile = " + discardPile.get(0).getName());
+		}*/
 	}
 	
+
+	private void selectRandomPlayer() {
+		Random r = new Random();
+		activePlayer = players.get(r.nextInt(playerCount));
+	}
+
+	public Card compareCards(int stat) {
+		
+		for (Player p : players)
+			System.out.println(p.getName() + " :  " + p.getHand().get((p.getHand().size() - 1)).stats.get(stat));
+		return null;
+	}
+
 	public void endGame() {
 
+	}
+
+	// Getter methods
+	public int getPlayerCount() {
+		return playerCount;
+	}
+
+	public int getNumOfCards() {
+		return numOfCards;
+	}
+
+	public ArrayList<Player> getPlayers() {
+		return players;
+	}
+
+	public ArrayList<Card> getDeck() {
+		return deck;
+	}
+
+	public ArrayList<Card> getDiscardPile() {
+		return discardPile;
+	}
+
+	public String[] getHeaderNames() {
+		return headerNames;
+	}
+
+	public Player getActivePlayer() {
+		return activePlayer;
+	}
+
+	public int getActiveStat() {
+		return activeStat;
+	}
+
+	public int getCardsPerHand() {
+		return cardsPerHand;
 	}
 }

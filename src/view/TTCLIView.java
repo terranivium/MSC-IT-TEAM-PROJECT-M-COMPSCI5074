@@ -69,7 +69,7 @@ public class TTCLIView{
 	
 	public void playersTurn() {
 		System.out.println("///////////////////////");
-		System.out.println("It is " + model.getActivePlayer().getName() + "'s turn to play.");
+		System.out.println("It is " + this.model.getActivePlayer().getName() + "'s turn to play.");
 		System.out.println("///////////////////////\n");
 	}
 	

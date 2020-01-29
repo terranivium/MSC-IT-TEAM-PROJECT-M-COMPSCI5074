@@ -22,38 +22,26 @@ public class TTCLIView{
 		System.out.println("Select mode...--------------");
 		System.out.println("	1. New Player Game");
 		//System.out.println("	2. AI vs AI Autoplay") // Bot class
-		System.out.println("	3. View runtime stats") // DB
+		//System.out.println("	3. View runtime stats") // DB
 		System.out.println("	4. Quit");
 		System.out.println("----------------------------");
 	}
 
+	// draw AI select menu
 	public void drawAIMenu(){
-		System.out.println("How many AI players do you want to play against? (Max 4)");
+		System.out.println("Select AI players...--------");
+		System.out.println("	Max 1-4");
 	}
+
 
 	public void selectStat(){
 		System.out.println("Please select a stat to play between 1 and 5.");
 	}
 
+	// for non valid inputs
 	public void notValid(){
 		System.out.println("Please select a valid menu option...");
 	}
-
-	// // if we want to view a players hand?
-	// public void viewHand(Turn currentTurn){
-	// 	ArrayList<Card> currentHand = currentTurn.getTurnHand(); // get current list of cards
-	// 	for(Card card : currentHand){
-
-	// 		//String playerName = card.getOwner().getName();
-	// 		//int numHand = card.getOwner().getOwnerNumCards();
-	// 		String cardName = card.getName();
-	// 		//String statName = Card.getStats()[currentTurn.getSelectedStat()];
-	// 		int statValue = card.getStat(currentTurn.getSelectedStat());
-
-	// 		String turnText = String.format("Player: %s has %d in their hand.\n %-15s %s: %2d" ,playerName,inHand,cardName,statName,statvalue);
-	// 		System.out.println(turnText);
-	// 	}
-	// }
 
 	public void viewCard(Card selectCard){
 		// View for the current card/this turn card
@@ -67,15 +55,16 @@ public class TTCLIView{
 		System.out.println("///////////////////////\n");
 	}
 	
-	public void playersTurn() {
+	public void playersTurn(){
 		System.out.println("///////////////////////");
 		System.out.println("It is " + this.model.getActivePlayer().getName() + "'s turn to play.");
 		System.out.println("///////////////////////\n");
 	}
 	
-	public void comapreCards() {
+	public void comapreCards(){
 		
 	}
+
 	public void newGameState(){
 	}
 }

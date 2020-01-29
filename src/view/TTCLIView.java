@@ -22,9 +22,17 @@ public class TTCLIView{
 		System.out.println("Select mode...--------------");
 		System.out.println("	1. New Player Game");
 		//System.out.println("	2. AI vs AI Autoplay") // Bot class
-		//System.out.println("	3. View runtime stats") // DB
+		System.out.println("	3. View runtime stats") // DB
 		System.out.println("	4. Quit");
 		System.out.println("----------------------------");
+	}
+
+	public void drawAIMenu(){
+		System.out.println("How many AI players do you want to play against? (Max 4)");
+	}
+
+	public void selectStat(){
+		System.out.println("Please select a stat to play between 1 and 5.");
 	}
 
 	public void notValid(){
@@ -61,7 +69,7 @@ public class TTCLIView{
 	
 	public void playersTurn() {
 		System.out.println("///////////////////////");
-		System.out.println("It is " + model.getActivePlayer().getName() + "'s turn to play.");
+		System.out.println("It is " + this.model.getActivePlayer().getName() + "'s turn to play.");
 		System.out.println("///////////////////////\n");
 	}
 	
@@ -69,6 +77,5 @@ public class TTCLIView{
 		
 	}
 	public void newGameState(){
-		// View for the start of the game/first round
 	}
 }

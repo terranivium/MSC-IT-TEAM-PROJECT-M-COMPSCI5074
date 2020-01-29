@@ -15,8 +15,8 @@ public class Player {
 	}
 	
 	public int chooseCard() {
-		return activeStat;
-		}
+		return this.activeStat;
+	}
 
 	public void setActiveStat(int activeStat) {
 		this.activeStat = activeStat;
@@ -28,11 +28,11 @@ public class Player {
 	}
 
 	public ArrayList<Card> getHand() {
-		return hand;
+		return this.hand;
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public int getTopCardIndex() {

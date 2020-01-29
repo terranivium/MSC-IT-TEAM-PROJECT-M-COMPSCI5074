@@ -15,49 +15,26 @@ public class TTController {
 		this.view = view;
 	}
 
-	public void run() {
+	public void runtimeMenu(){
 		Scanner systemInput = new Scanner(System.in); // User input instance
 		this.view.drawMain(); // draw main menu
 		int readInput;
-		int activeStat;
 		do {
 			readInput = systemInput.nextInt();
 			if (readInput == 1) {
-				System.out.println("How many AI players do you want to play against? (Max 4)");
-				int botCount = systemInput.nextInt();
-				systemInput.nextLine();
-				if (botCount >= 5 || botCount <= 0) {
+				this.view.drawAIMenu();
+				readInput = systemInput.nextInt();
+				if (readInput >= 5 || readInput <= 0) {
 					do {
+						this.view.notValid();
 						System.out.println("Error, please chose between 1 and 4 AI Players.");
-						botCount = systemInput.nextInt();
-						systemInput.nextLine();
-					} while (botCount >= 5 || botCount <= 0);
+						readInput = systemInput.nextInt();
+					} while (readInput >= 5 || readInput <= 0);
 				} else {
-					this.model.startGame(botCount);
+					this.model.startGame(readInput);
 				}
-				view.playersTurn();
-				if (model.getActivePlayer().getClass() == model.getPlayers().get(0).getClass()) {
-					view.viewCard(model.getActivePlayer().getHand().get(model.getActivePlayer().getTopCardIndex()));
-					System.out.println("Please select a stat to play between 1 and 5.");
-					activeStat = systemInput.nextInt();
-					systemInput.nextLine();
-					if (activeStat > 5 || activeStat < 1) {
-						do {
-							System.out.println("Error. Please select a stat to play between 1 and 5 to continue.");
-							activeStat = systemInput.nextInt();
-							systemInput.nextLine();
-						} while (activeStat > 5 || activeStat < 1);
-						model.getActivePlayer().setActiveStat(activeStat);
-					}
-
-				} else {
-					view.viewCard(model.getActivePlayer().getHand().get(model.getActivePlayer().getTopCardIndex()));
-					activeStat = model.getActivePlayer().chooseCard();
-				}
-
-				model.compareCards(activeStat);
-				this.view.newGameState();
-
+				// game starting
+				this.runtimeGame();
 			} else if (readInput == 4) {
 				// closes scanner
 				systemInput.close();
@@ -67,5 +44,31 @@ public class TTController {
 				this.view.drawMain();
 			}
 		} while (readInput != 1 || readInput != 4);
+	}
+
+	public void runtimeGame(){
+		this.view.playersTurn();
+		if (this.model.getActivePlayer().getClass() == model.getPlayers().get(0).getClass()) {
+			this.view.viewCard(this.model.getActivePlayer().getHand().get(this.model.getActivePlayer().getTopCardIndex()));
+			this.view.selectStat();
+			int readInput = systemInput.nextInt();
+			if (readInput > 5 || readInput < 1) {
+				do {
+					this.view.notValid();
+					System.out.println("Error. Please select a stat to play between 1 and 5 to continue.");
+					readInput = systemInput.nextInt();
+				} while (readInput > 5 || readInput < 1);
+					this.model.getActivePlayer().setActiveStat(readInput);
+				}
+			} else {
+				this.view.viewCard(this.model.getActivePlayer().getHand().get(this.model.getActivePlayer().getTopCardIndex()));
+				readInput = this.model.getActivePlayer().chooseCard();
+			}
+		this.model.compareCards(readInput);
+		this.view.newGameState();
+	}
+
+	public void runtimeStats(){
+		// method to write stats call loops for view and model
 	}
 }

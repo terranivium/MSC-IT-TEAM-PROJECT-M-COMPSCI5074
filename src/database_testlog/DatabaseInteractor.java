@@ -189,7 +189,8 @@ public static void main (String[] args) {
 //		}
 //		catch (SQLException e) 
 //		{
-//			System.out.println("Update unsuccessful");
+//			System.out.println("Data retrieval unsuccessful");
+//			e.printStackTrace();
 //		}
 //		finally
 //		{

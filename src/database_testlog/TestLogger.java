@@ -1,3 +1,5 @@
+//check main below, which does the same as the constructor will.
+
 package database_testlog;
 
 import java.io.IOException;
@@ -91,7 +93,11 @@ public class TestLogger {
 	
 public static void main(String[] args) {
 	
-     //retained to use as testing
+    //retained to use as testing
+	
+	//For me this seems to generate an error of java.nio.file.AccessDeniedException: toptrumps.log.lck
+	//it is failing to create a file when used in this class
+	//compiling the exact same code in a separate class\project allows it to work.
 	
 	try
 	{
@@ -112,7 +118,7 @@ public static void main(String[] args) {
 		e.printStackTrace();
 	}
 	
-	LOGGER.info("Test input");
+	//LOGGER.info("Test input");
 	fHandler.close();
 	
 	}//closes main

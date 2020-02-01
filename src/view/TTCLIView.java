@@ -35,7 +35,7 @@ public class TTCLIView{
 
 
 	public void selectStat(){
-		System.out.println("Please select a stat to play between 1 and 5.");
+		System.out.println("Please select a stat to play between 1 and 5...");
 	}
 
 	// for non valid inputs
@@ -55,7 +55,7 @@ public class TTCLIView{
 		System.out.println("///////////////////////\n");
 	}
 	
-	public void playersTurn(){
+	public void playersTurnHeader(){
 		System.out.println("///////////////////////");
 		System.out.println("It is " + this.model.getActivePlayer().getName() + "'s turn to play.");
 		System.out.println("///////////////////////\n");

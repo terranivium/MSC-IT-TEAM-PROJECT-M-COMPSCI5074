@@ -1,141 +1,151 @@
 package model;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.Random;
-import java.util.Scanner;
 
 public class TTModel {
-	private int playerCount;
-	private int numOfCards;
+	int playerCount;
+	private int activePlayerNum;
 	private Player activePlayer;
-	private int activeStat;
-	private int cardsPerHand;
+	private String gameWinner;
+	private String roundWinner;
+	private int numOfDraws;
+	private boolean isDraw;
+	private int numOfRounds;
+	private int numOfGames;
+
+	private Deck deck;
 	private ArrayList<Player> players;
-	private ArrayList<Card> deck;
-	private ArrayList<Card> discardPile;
-	private String[] headerNames;
+	private ArrayList<Card> communalPile;
+	private ArrayList<Card> playingTable;
 
 	public TTModel() { // constructor
+		this.deck = new Deck();
 		this.players = new ArrayList<Player>();
-		this.discardPile = new ArrayList<Card>();
-		this.deck = new ArrayList<Card>();
-
+		this.communalPile = new ArrayList<Card>();
+		this.playingTable = new ArrayList<Card>();
+		this.numOfDraws = 0;
+		this.isDraw = false;
+		this.numOfRounds = 0;
+		this.numOfGames = 0;
 	}
 
 	public void startGame(int botCount) {
 		playerCount = botCount + 1;
 		players.add(new Player("Player1"));
 		for (int i = 0; i < botCount; i++) {
-			players.add(new Bot("Player" + (i + 2) +" (AI)"));
+			players.add(new Bot("Player" + (i + 2) + " (AI)"));
 		}
-		loadDeck();
-		dealCards();
-		selectRandomPlayer();
+		deck.loadDeck();
+		deck.dealCards(playerCount, players);
 	}
 
-	private void loadDeck() { // reads cards from txt file and creates card objects
-		BufferedReader br;
-		String filePath = new File("DogsDeck.txt").getAbsolutePath();
-		System.out.println("Loaded file from  " + filePath);
-		try {
-			br = new BufferedReader(new FileReader(filePath));
-			String read = null;
-			read = br.readLine();
-			headerNames = read.split("\\s+");
-
-			while ((read = br.readLine()) != null) {
-				numOfCards++;
-				String[] word = read.split("\\s+");
-				deck.add(new Card(word[0], word[1], word[2], word[3], word[4], word[5], headerNames));
-			}
-		} catch (IOException e) {
-			System.out.println("The file you have requested, does not exist");
+	public void selectPlayer() {
+		for (Player p : players) {
+			System.out.println("\n");
+			System.out.println("_____" + p.name + "'s hand");
+			System.out.println("_____" + p.hand.size() + " cards");
+			System.out.println("////////////////////////");
+			for (int i = 0; i < p.hand.size(); i++)
+				System.out.println(p.getHand().get(i).getName());
 		}
-	}
-
-	private void dealCards() { // shuffles and deals cards based on number of players
-		Collections.shuffle(deck);
-		cardsPerHand = numOfCards / playerCount;
-		int cardsLeftOver = numOfCards % playerCount;
-
-		int insertIndex = numOfCards - 1;
-		if (cardsLeftOver != 0) {
-			discardPile.add(deck.remove(insertIndex--));
-		}
-
-		do {
-			for (Player p : players) {
-				p.addHand(deck.remove(insertIndex--));
-			}
-		} while (deck.isEmpty() == false);
-/*
-		for (int j = 0; j < playerCount; j++) { // print players cards check
-			for (int i = 0; i < cardsPerHand; i++) {
-				System.out.println(players.get(j).getName());
-				System.out.println(players.get(j).getHand().get(i).getName());
+		System.out.println("\n");
+		System.out.println("Round num: " + this.numOfRounds + "\n_______________");
+		if (numOfRounds == 0) {
+			Random r = new Random();
+			this.activePlayerNum = r.nextInt(playerCount);
+		} else if (isDraw == true) {
+			;
+		} else {
+			if (activePlayerNum == (playerCount - 1)) {
+				this.activePlayerNum = 0;
+			} else {
+				this.activePlayerNum++;
 			}
 		}
-		if (discardPile.isEmpty() == false) {
-			System.out.println("discard pile = " + discardPile.get(0).getName());
-		}*/
-	}
-	
-
-	private void selectRandomPlayer() {
-		Random r = new Random();
-		activePlayer = players.get(r.nextInt(playerCount));
-	}
-
-	public Card compareCards(int stat) {
-		
-		for (Player p : players)
-			System.out.println(p.getName() + " :  " + p.getHand().get((p.getHand().size() - 1)).stats.get(stat));
-		return null;
-	}
-
-	public void endGame() {
+		System.out.println("active player num : " + this.activePlayerNum);
+		activePlayer = players.get(activePlayerNum);
 
 	}
 
+	public void compareCards(int stat) {
+		isDraw = false;
+		HashMap<Player, Integer> playerStats = new HashMap<Player, Integer>();
+		ArrayList<Player> roundWinners = new ArrayList<Player>();
+
+		for (Player p : players) {
+			System.out.println(p.getName() + " " + p.getTopCard().stats.get(stat));
+			playerStats.put(p, p.getTopCard().stats.get(stat));
+			playingTable.add(p.hand.remove(p.getTopCardIndex()));
+		}
+		int maxValueInMap = Collections.max(playerStats.values());
+		for (Entry<Player, Integer> entry : playerStats.entrySet()) { // Iterate through hashmap
+			if (entry.getValue() == maxValueInMap) {
+				roundWinners.add(entry.getKey());
+			}
+		}
+
+		if (roundWinners.size() < 2) {
+			roundWinners.get(0).roundsWon++;
+			roundWinner = roundWinners.get(0).name;
+			isDraw = false;
+			roundWinners.get(0).hand.addAll(0, communalPile);
+			roundWinners.get(0).hand.addAll(0, playingTable);
+			playingTable.clear();
+			communalPile.clear();
+		} else {
+			numOfDraws = getNumOfDraws() + 1;
+			isDraw = true;
+			roundWinner = null;
+			communalPile.addAll(playingTable);
+			playingTable.clear();
+		}
+		numOfRounds++;
+	}
+
+	public boolean hasWon() { //checker method called at the end of every round
+		for (Player p : players) {
+			if (p.hand.size() >= deck.numOfCards) { // are any of the players hand sizes = to the size of the original deck?
+				this.gameWinner = p.getName();
+				this.numOfGames++;
+				this.numOfRounds = 0;  //write to database server before this line
+				this.numOfDraws = 0;
+				return true;
+			}
+		}
+		return false;
+	}
 	// Getter methods
-	public int getPlayerCount() {
-		return playerCount;
-	}
-
-	public int getNumOfCards() {
-		return numOfCards;
-	}
 
 	public ArrayList<Player> getPlayers() {
 		return players;
-	}
-
-	public ArrayList<Card> getDeck() {
-		return deck;
-	}
-
-	public ArrayList<Card> getDiscardPile() {
-		return discardPile;
-	}
-
-	public String[] getHeaderNames() {
-		return headerNames;
 	}
 
 	public Player getActivePlayer() {
 		return activePlayer;
 	}
 
-	public int getActiveStat() {
-		return activeStat;
+	public int getNumOfDraws() {
+		return numOfDraws;
 	}
 
-	public int getCardsPerHand() {
-		return cardsPerHand;
+	public String getGameWinner() {
+		return gameWinner;
 	}
+
+	public String getRoundWinner() {
+		return roundWinner;
+	}
+
+	public int getNumOfGames() {
+		return numOfGames;
+	}
+
+	public int getNumOfRounds() {
+		return numOfRounds;
+	}
+
 }

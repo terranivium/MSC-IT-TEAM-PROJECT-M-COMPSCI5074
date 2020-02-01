@@ -4,27 +4,23 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Player {
-	private String name;
+	protected String name;
 	protected ArrayList<Card> hand; 
-	private int topCardIndex;
-	private int activeStat;
+	private Card topCard;
+	int roundsWon;
 
 	public Player(String name) {
 		this.name = name;
 		this.hand = new ArrayList<Card>();
+		this.roundsWon = 0;
 	}
 	
 	public int chooseCard() {
-		return this.activeStat;
+		return 0;
 	}
-
-	public void setActiveStat(int activeStat) {
-		this.activeStat = activeStat;
-	}
-
+	
 	public void addHand(Card card) {
 		this.hand.add(card);
-		topCardIndex = this.hand.size() - 1;
 	}
 
 	public ArrayList<Card> getHand() {
@@ -35,8 +31,18 @@ public class Player {
 		return this.name;
 	}
 
+	public Card getTopCard() {
+		int topCardIndex = this.hand.size() - 1;
+		topCard = hand.get(topCardIndex);
+		return topCard;
+	}
+	
 	public int getTopCardIndex() {
-		topCardIndex = this.hand.size() - 1;
+		int topCardIndex = this.hand.size() - 1;
 		return topCardIndex;
+	}
+
+	public int getRoundsWon() {
+		return roundsWon;
 	}
 }

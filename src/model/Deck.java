@@ -27,45 +27,52 @@ public class Deck {
 			br = new BufferedReader(new FileReader(filePath));
 			String read = null;
 			read = br.readLine();
-			headerNames = read.split("\\s+");
+			this.headerNames = read.split("\\s+");
 
 			while ((read = br.readLine()) != null) {
-				numOfCards++;
+				this.numOfCards++;
 				String[] word = read.split("\\s+");
-				unshuffledCards.add(new Card(word[0], word[1], word[2], word[3], word[4], word[5], headerNames));
-				this.shuffledCards = (ArrayList<Card>) unshuffledCards.clone();
-				Collections.shuffle(shuffledCards);
+				this.unshuffledCards.add(new Card(word[0], word[1], word[2], word[3], word[4], word[5], this.headerNames));
+				this.shuffledCards = (ArrayList<Card>) this.unshuffledCards.clone();
+				Collections.shuffle(this.shuffledCards);
 			}
 		} catch (IOException e) {
-			System.out.println("The file you have requested, does not exist");
+			e.printStackTrace();
 		}
 	}
 
 	void dealCards(int playerCount, ArrayList<Player> players) { // shuffles and deals cards based on number of players
-		int cardsLeftOver = numOfCards % playerCount;
+		int cardsLeftOver = this.numOfCards % playerCount;
 		Random rand = new Random();
 		int i = rand.nextInt(playerCount);
-		int insertIndex = numOfCards - 1;
+		int insertIndex = this.numOfCards - 1;
 		
 		if (cardsLeftOver != 0) {
-			players.get(i).addHand(shuffledCards.remove(insertIndex--));
+			players.get(i).addHand(this.shuffledCards.remove(insertIndex--));
 		}
 		
 		do {
 			for (Player p : players) {
-				p.addHand(shuffledCards.remove(insertIndex--));
+				p.addHand(this.shuffledCards.remove(insertIndex--));
 			}
-		} while (shuffledCards.isEmpty() == false);
+		} while (this.shuffledCards.isEmpty() == false);
 	}
 
 	// Getter methods
+	
 	public ArrayList<Card> getShuffledCards() {
-		return shuffledCards;
+		return this.shuffledCards;
 	}
 
 	public ArrayList<Card> getUnshuffledCards() {
-		return unshuffledCards;
+		return this.unshuffledCards;
 	}
-	
-	
+
+	public int getNumOfCards() {
+		return this.numOfCards;
+	}
+
+	public String[] getHeaderNames() {
+		return this.headerNames;
+	}
 }

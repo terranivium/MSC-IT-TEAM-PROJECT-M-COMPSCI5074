@@ -23,7 +23,7 @@ public class TopTrumpsCLIApplication {
 		boolean userWantsToQuit = false; // flag to check whether the user wants to quit the application
 		
 		// Create MVC instances
-		TTModel model = new TTModel(); // pass writeGameLogsToFile here
+		TTModel model = new TTModel(writeGameLogsToFile); // pass writeGameLogsToFile here
 		TTCLIView view = new TTCLIView(model);
 		TTController controller = new TTController(model, view);
 
@@ -38,10 +38,6 @@ public class TopTrumpsCLIApplication {
 			controller.runtimeMenu();
 
 			userWantsToQuit=true; // use this when the user wants to exit the game
-			
 		}
-
-
 	}
-
 }

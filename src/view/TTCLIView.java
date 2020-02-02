@@ -1,7 +1,5 @@
 package view;
 
-import java.util.Scanner;
-
 import model.Card;
 import model.Player;
 import model.TTModel;
@@ -17,7 +15,7 @@ public class TTCLIView{
 	// draw CLI main menu
 	public void drawMain(){
 		System.out.println("--------------------------------");
-		System.out.println("| Froggo Trumps, test_ver. 0.1 |");
+		System.out.println("| Doggo Trumps, test_ver. 0.12 |");
 		System.out.println("--------------------------------");
 		System.out.println("Select mode...--------------");
 		System.out.println("	1. New Player Game");
@@ -29,8 +27,7 @@ public class TTCLIView{
 
 	// draw AI select menu
 	public void drawAIMenu(){
-		System.out.println("Select AI players...--------");
-		System.out.println("	Max 1-4");
+		System.out.println("Select AI players (Max 1-4)...");
 	}
 
 
@@ -61,10 +58,30 @@ public class TTCLIView{
 		System.out.println("///////////////////////\n");
 	}
 	
-	public void comapreCards(){
-		
+	public void selectPlayer() {
+		for (Player p : this.model.getPlayers()) {
+			System.out.println("\n");
+			System.out.println("_____" + p.getName() + "'s hand"); // getname
+			System.out.println("_____" + p.getHand().size() + " cards"); // gethand
+			System.out.println("////////////////////////");
+			for (int i = 0; i < p.getHand().size(); i++) // gethand
+				System.out.println(p.getHand().get(i).getName());
+		}
+		System.out.println("\n");
+		System.out.println("Round num: " + this.model.getNumOfRounds() + "\n_______________");
 	}
-
-	public void newGameState(){
+	
+	public void compareCards(int stat) {
+		for (Player p : this.model.getPlayers()) {
+			System.out.println(p.getName() + " " + p.getTopCard().getStats().get(stat));
+		}
+	}
+	
+	public void endRuntime() {
+		System.out.println("Thank you for playing!");
+	}
+	
+	public void gameWinner() {
+		System.out.println("The winner of the game was " + this.model.getGameWinner());
 	}
 }

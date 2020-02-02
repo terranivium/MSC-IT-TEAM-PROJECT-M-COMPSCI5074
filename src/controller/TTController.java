@@ -8,8 +8,10 @@ import view.TTCLIView;
 
 public class TTController {
 
-	private TTModel model;
-	private TTCLIView view;
+	private TTModel model; // model instance
+	private TTCLIView view; // view instance
+	private Scanner systemInput = new Scanner(System.in); // User input instance
+	private int readInput; // Holds user input for condition checks
 
 	public TTController(TTModel model, TTCLIView view) {
 		this.model = model;
@@ -18,68 +20,68 @@ public class TTController {
 
 	// Menu loop
 	public void runtimeMenu() {
-		Scanner systemInput = new Scanner(System.in); // User input instance
-		int readInput; // Holds input int for conditions
 		this.view.drawMain(); // draw main menu
 		do {
-			readInput = systemInput.nextInt();
-			systemInput.nextLine();
-			if (readInput == 1) {
+			this.readInput = this.systemInput.nextInt();
+			this.systemInput.nextLine();
+			if (this.readInput == 1) {
 				this.view.drawAIMenu();
-				readInput = systemInput.nextInt();
-				systemInput.nextLine();
-				if (readInput >= 5 || readInput <= 0) {
+				this.readInput = this.systemInput.nextInt();
+				this.systemInput.nextLine();
+				if (this.readInput >= 5 || this.readInput <= 0) {
 					do {
 						this.view.notValid();
 						this.view.drawAIMenu();
-						readInput = systemInput.nextInt();
-						systemInput.nextLine();
-					} while (readInput >= 5 || readInput <= 0);
-					this.model.startGame(readInput);
+						this.readInput = this.systemInput.nextInt();
+						this.systemInput.nextLine();
+					} while (this.readInput >= 5 || this.readInput <= 0);
+					this.model.startGame(this.readInput);
 				} else {
-					this.model.startGame(readInput);
+					this.model.startGame(this.readInput);
 				}
-				runtimeGame();
-			} else if (readInput == 4) {
-				// closes scanner
-				systemInput.close();
+				this.runtimeGame();
+			} else if (this.readInput == 4) {
+				// closes scanner and runtime
+				this.view.endRuntime();
+				this.systemInput.close();
+				System.exit(0);
 			} else {
 				// to catch invalid input
 				this.view.notValid();
 				this.view.drawMain();
 			}
-		} while (readInput != 1 || readInput != 4);
+		} while (this.readInput != 1 || this.readInput != 4);
 	}
 
 	// Main game controller loop
 	public void runtimeGame() {
-		while (model.hasWon() == false) {
+		while (this.model.hasWon() == false) {
 			this.model.selectPlayer();
-			Scanner systemInput = new Scanner(System.in); // User input instance
-			int readInput;
+			this.view.selectPlayer();
 			this.view.playersTurnHeader();
 			if (this.model.getActivePlayer().getClass() == Player.class) {
 				this.view.viewCard(this.model.getActivePlayer().getTopCard());
 				this.view.selectStat();
-				readInput = systemInput.nextInt();
-				if (readInput > 5 || readInput < 1) {
+				this.readInput = this.systemInput.nextInt();
+				if (this.readInput > 5 || this.readInput < 1) {
 					do {
 						this.view.notValid();
 						this.view.selectStat();
-						readInput = systemInput.nextInt();
-					} while (readInput > 5 || readInput < 1);
+						this.readInput = this.systemInput.nextInt();
+					} while (this.readInput > 5 || this.readInput < 1);
 				}
 			} else {
 				this.view.viewCard(this.model.getActivePlayer().getTopCard());
-				readInput = this.model.getActivePlayer().chooseCard();
+				this.readInput = this.model.getActivePlayer().chooseCard();
 			}
-			this.model.compareCards(readInput);
-			this.view.newGameState();
+			this.view.compareCards(this.readInput);
+			this.model.compareCards(this.readInput);
 		} 
-		//System.out.println("The winner of the game was " + model.getGameWinner()); //game winner view goes here
+		this.view.gameWinner();
+		this.runtimeMenu();
 	}
 
 	public void runtimeStats() {
-		// method to write stats call loops for view and model
+		// for drawing stats in comandline, similar to write test log feature
 	}
 }

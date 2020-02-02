@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Player {
 	protected String name;
@@ -33,7 +32,7 @@ public class Player {
 
 	public Card getTopCard() {
 		int topCardIndex = this.hand.size() - 1;
-		topCard = hand.get(topCardIndex);
+		this.topCard = this.hand.get(topCardIndex);
 		return topCard;
 	}
 	
@@ -43,6 +42,6 @@ public class Player {
 	}
 
 	public int getRoundsWon() {
-		return roundsWon;
+		return this.roundsWon;
 	}
 }

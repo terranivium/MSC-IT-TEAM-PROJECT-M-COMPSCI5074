@@ -11,7 +11,7 @@ public class TTModel {
 	private int activePlayerNum;
 	private Player activePlayer;
 	private String gameWinner;
-	private String roundWinner;
+	private Player roundWinner;
 	private int numOfDraws;
 	private boolean isDraw;
 	private int numOfRounds;
@@ -31,6 +31,8 @@ public class TTModel {
 		this.isDraw = false;
 		this.numOfRounds = 0;
 		this.numOfGames = 0;
+		this.gameWinner = null;
+
 	}
 
 	public void startGame(int botCount) {
@@ -57,22 +59,15 @@ public class TTModel {
 		if (numOfRounds == 0) {
 			Random r = new Random();
 			this.activePlayerNum = r.nextInt(playerCount);
-		} else if (isDraw == true) {
+			activePlayer = players.get(activePlayerNum);
+		} else if (isDraw == true || activePlayer.equals(roundWinner)) {
 			;
 		} else {
-			if (activePlayerNum == (playerCount - 1)) {
-				this.activePlayerNum = 0;
-			} else {
-				this.activePlayerNum++;
-			}
+			this.activePlayer = roundWinner;
 		}
-		System.out.println("active player num : " + this.activePlayerNum);
-		activePlayer = players.get(activePlayerNum);
-
 	}
 
 	public void compareCards(int stat) {
-		isDraw = false;
 		HashMap<Player, Integer> playerStats = new HashMap<Player, Integer>();
 		ArrayList<Player> roundWinners = new ArrayList<Player>();
 
@@ -90,14 +85,14 @@ public class TTModel {
 
 		if (roundWinners.size() < 2) {
 			roundWinners.get(0).roundsWon++;
-			roundWinner = roundWinners.get(0).name;
+			roundWinner = roundWinners.get(0);
 			isDraw = false;
 			roundWinners.get(0).hand.addAll(0, communalPile);
 			roundWinners.get(0).hand.addAll(0, playingTable);
 			playingTable.clear();
 			communalPile.clear();
 		} else {
-			numOfDraws = getNumOfDraws() + 1;
+			numOfDraws++;
 			isDraw = true;
 			roundWinner = null;
 			communalPile.addAll(playingTable);
@@ -106,14 +101,20 @@ public class TTModel {
 		numOfRounds++;
 	}
 
-	public boolean hasWon() { //checker method called at the end of every round
+	public boolean hasWon() { // checker method called at the end of every round
 		for (Player p : players) {
-			if (p.hand.size() >= deck.numOfCards) { // are any of the players hand sizes = to the size of the original deck?
+			if (p.hand.size() >= deck.numOfCards) { // are any of the players hand sizes = to the size of the original
+													// deck?
 				this.gameWinner = p.getName();
 				this.numOfGames++;
-				this.numOfRounds = 0;  //write to database server before this line
+				this.numOfRounds = 0; // write to database server before this line
 				this.numOfDraws = 0;
 				return true;
+			}
+		}
+		for (int i = 0; i < players.size(); i++) {
+			if (players.get(i).hand.isEmpty()) {
+				this.players.remove(i);
 			}
 		}
 		return false;
@@ -136,8 +137,8 @@ public class TTModel {
 		return gameWinner;
 	}
 
-	public String getRoundWinner() {
-		return roundWinner;
+	public String getRoundWinnerName() {
+		return roundWinner.name;
 	}
 
 	public int getNumOfGames() {

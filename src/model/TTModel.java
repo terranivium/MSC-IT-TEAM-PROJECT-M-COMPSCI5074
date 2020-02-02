@@ -16,13 +16,16 @@ public class TTModel {
 	private boolean isDraw;
 	private int numOfRounds;
 	private int numOfGames;
+	
+	private boolean writeGameLogsToFile; // passed by TopTrumpsCLIApplication to constructor
+	// Simon, i'll leave implementing this to you for now
 
 	private Deck deck;
 	private ArrayList<Player> players;
 	private ArrayList<Card> communalPile;
 	private ArrayList<Card> playingTable;
 
-	public TTModel() { // constructor
+	public TTModel(boolean writeGameLogsToFile) { // constructor
 		this.deck = new Deck();
 		this.players = new ArrayList<Player>();
 		this.communalPile = new ArrayList<Card>();
@@ -32,38 +35,56 @@ public class TTModel {
 		this.numOfRounds = 0;
 		this.numOfGames = 0;
 		this.gameWinner = null;
-
+		this.writeGameLogsToFile = false;
+	}
+	
+	public ArrayList<Player> getPlayers() {
+		return this.players;
 	}
 
+	public Player getActivePlayer() {
+		return this.activePlayer;
+	}
+
+	public int getNumOfDraws() {
+		return this.numOfDraws;
+	}
+
+	public String getGameWinner() {
+		return this.gameWinner;
+	}
+
+	public String getRoundWinnerName() {
+		return this.roundWinner.getName();
+	}
+
+	public int getNumOfGames() {
+		return this.numOfGames;
+	}
+
+	public int getNumOfRounds() {
+		return this.numOfRounds;
+	}	
+
 	public void startGame(int botCount) {
-		playerCount = botCount + 1;
-		players.add(new Player("Player1"));
+		this.playerCount = botCount + 1;
+		this.players.add(new Player("Player1"));
 		for (int i = 0; i < botCount; i++) {
-			players.add(new Bot("Player" + (i + 2) + " (AI)"));
+			this.players.add(new Bot("Player" + (i + 2) + " (AI)"));
 		}
-		deck.loadDeck();
-		deck.dealCards(playerCount, players);
+		this.deck.loadDeck();
+		this.deck.dealCards(this.playerCount, this.players);
 	}
 
 	public void selectPlayer() {
-		for (Player p : players) {
-			System.out.println("\n");
-			System.out.println("_____" + p.name + "'s hand");
-			System.out.println("_____" + p.hand.size() + " cards");
-			System.out.println("////////////////////////");
-			for (int i = 0; i < p.hand.size(); i++)
-				System.out.println(p.getHand().get(i).getName());
-		}
-		System.out.println("\n");
-		System.out.println("Round num: " + this.numOfRounds + "\n_______________");
-		if (numOfRounds == 0) {
+		if (this.numOfRounds == 0) {
 			Random r = new Random();
-			this.activePlayerNum = r.nextInt(playerCount);
-			activePlayer = players.get(activePlayerNum);
-		} else if (isDraw == true || activePlayer.equals(roundWinner)) {
+			this.activePlayerNum = r.nextInt(this.playerCount);
+			this.activePlayer = this.players.get(this.activePlayerNum);
+		} else if (this.isDraw == true || this.activePlayer.equals(this.roundWinner)) {
 			;
 		} else {
-			this.activePlayer = roundWinner;
+			this.activePlayer = this.roundWinner;
 		}
 	}
 
@@ -71,10 +92,10 @@ public class TTModel {
 		HashMap<Player, Integer> playerStats = new HashMap<Player, Integer>();
 		ArrayList<Player> roundWinners = new ArrayList<Player>();
 
-		for (Player p : players) {
-			System.out.println(p.getName() + " " + p.getTopCard().stats.get(stat));
-			playerStats.put(p, p.getTopCard().stats.get(stat));
-			playingTable.add(p.hand.remove(p.getTopCardIndex()));
+		for (Player p : this.players) {
+			// System.out.println(p.getName() + " " + p.getTopCard().getStats().get(stat));  moved to view
+			playerStats.put(p, p.getTopCard().getStats().get(stat));
+			this.playingTable.add(p.getHand().remove(p.getTopCardIndex()));
 		}
 		int maxValueInMap = Collections.max(playerStats.values());
 		for (Entry<Player, Integer> entry : playerStats.entrySet()) { // Iterate through hashmap
@@ -84,26 +105,28 @@ public class TTModel {
 		}
 
 		if (roundWinners.size() < 2) {
-			roundWinners.get(0).roundsWon++;
-			roundWinner = roundWinners.get(0);
-			isDraw = false;
-			roundWinners.get(0).hand.addAll(0, communalPile);
-			roundWinners.get(0).hand.addAll(0, playingTable);
-			playingTable.clear();
-			communalPile.clear();
+//			int currentRounds = roundWinners.get(0).getRounds(); // using getters/setters
+//			roundWinners.get(0).setRounds(currentRounds+1);
+			roundWinners.get(0).roundsWon++; // replace with getter and setter values?
+			this.roundWinner = roundWinners.get(0);
+			this.isDraw = false;
+			roundWinners.get(0).getHand().addAll(0, this.communalPile); 
+			roundWinners.get(0).getHand().addAll(0, this.playingTable); 
+			this.playingTable.clear();
+			this.communalPile.clear();
 		} else {
-			numOfDraws++;
-			isDraw = true;
-			roundWinner = null;
-			communalPile.addAll(playingTable);
-			playingTable.clear();
+			this.numOfDraws++;
+			this.isDraw = true;
+			this.roundWinner = null;
+			this.communalPile.addAll(this.playingTable);
+			this.playingTable.clear();
 		}
-		numOfRounds++;
+		this.numOfRounds++;
 	}
 
 	public boolean hasWon() { // checker method called at the end of every round
-		for (Player p : players) {
-			if (p.hand.size() >= deck.numOfCards) { // are any of the players hand sizes = to the size of the original
+		for (Player p : this.players) {
+			if (p.getHand().size() >= this.deck.getNumOfCards()) { // are any of the players hand sizes = to the size of the original
 													// deck?
 				this.gameWinner = p.getName();
 				this.numOfGames++;
@@ -112,41 +135,11 @@ public class TTModel {
 				return true;
 			}
 		}
-		for (int i = 0; i < players.size(); i++) {
-			if (players.get(i).hand.isEmpty()) {
+		for (int i = 0; i < this.players.size(); i++) {
+			if (this.players.get(i).getHand().isEmpty()) {
 				this.players.remove(i);
 			}
 		}
 		return false;
 	}
-	// Getter methods
-
-	public ArrayList<Player> getPlayers() {
-		return players;
-	}
-
-	public Player getActivePlayer() {
-		return activePlayer;
-	}
-
-	public int getNumOfDraws() {
-		return numOfDraws;
-	}
-
-	public String getGameWinner() {
-		return gameWinner;
-	}
-
-	public String getRoundWinnerName() {
-		return roundWinner.name;
-	}
-
-	public int getNumOfGames() {
-		return numOfGames;
-	}
-
-	public int getNumOfRounds() {
-		return numOfRounds;
-	}
-
 }

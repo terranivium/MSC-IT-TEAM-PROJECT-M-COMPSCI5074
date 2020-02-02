@@ -14,16 +14,16 @@ public class TopTrumpsCLIApplication {
 	 */
 	public static void main(String[] args) {
 
-//		boolean writeGameLogsToFile = false; // Should we write game logs to file?
-//		if (args[0].equalsIgnoreCase("true")){
-//			writeGameLogsToFile = true; // Command line selection
-//		}
+		boolean writeGameLogsToFile = false; // Should we write game logs to file?
+		if (args[0].equalsIgnoreCase("true")){
+			writeGameLogsToFile = true; // Command line selection
+		}
 		
 		// State
 		boolean userWantsToQuit = false; // flag to check whether the user wants to quit the application
 		
 		// Create MVC instances
-		TTModel model = new TTModel(); // pass writeGameLogsToFile here
+		TTModel model = new TTModel(writeGameLogsToFile); // pass writeGameLogsToFile here
 		TTCLIView view = new TTCLIView(model);
 		TTController controller = new TTController(model, view);
 

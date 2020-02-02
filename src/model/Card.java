@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Card{
@@ -20,16 +19,14 @@ public class Card{
 		this.temperament = Integer.parseInt(temperament);
 		this.intelligence = Integer.parseInt(intelligence);
 		this.cuteness = Integer.parseInt(cuteness);
-		this.headerNames =headerNames;
+		this.headerNames = headerNames;
 
-		stats = new HashMap<Integer,Integer>();
-		stats.put(1, this.size);
-		stats.put(2, this.rarity);
-		stats.put(3, this.temperament);
-		stats.put(4, this.intelligence);
-		stats.put(5, this.cuteness);
-
-
+		this.stats = new HashMap<Integer,Integer>();
+		this.stats.put(1, this.size);
+		this.stats.put(2, this.rarity);
+		this.stats.put(3, this.temperament);
+		this.stats.put(4, this.intelligence);
+		this.stats.put(5, this.cuteness);
 	}
 
 	public String getName() {
@@ -63,6 +60,4 @@ public class Card{
 	public HashMap<Integer, Integer> getStats() {
 		return this.stats;
 	}
-
-
 }

@@ -53,7 +53,7 @@ public class TTController {
 
 	// Main game controller loop
 	public void runtimeGame() {
-		do {
+		while (model.hasWon() == false) {
 			this.model.selectPlayer();
 			Scanner systemInput = new Scanner(System.in); // User input instance
 			int readInput;
@@ -75,7 +75,8 @@ public class TTController {
 			}
 			this.model.compareCards(readInput);
 			this.view.newGameState();
-		} while (model.hasWon() == false);
+		} 
+		//System.out.println("The winner of the game was " + model.getGameWinner()); //game winner view goes here
 	}
 
 	public void runtimeStats() {

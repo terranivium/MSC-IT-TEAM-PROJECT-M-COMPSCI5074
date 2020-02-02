@@ -27,8 +27,7 @@ public class TTCLIView{
 
 	// draw AI select menu
 	public void drawAIMenu(){
-		System.out.println("Select AI players...");
-		System.out.println("	Max 1-4");
+		System.out.println("Select AI players (Max 1-4)...");
 	}
 
 

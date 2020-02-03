@@ -16,6 +16,9 @@ public class TTModel {
 	private boolean isDraw;
 	private int numOfRounds;
 	private int numOfGames;
+	//added by simon
+	private ArrayList<Integer> allWonRounds = new ArrayList<Integer>(); 
+	
 	
 	private boolean writeGameLogsToFile; // passed by TopTrumpsCLIApplication to constructor
 	// Simon, i'll leave implementing this to you for now
@@ -25,7 +28,30 @@ public class TTModel {
 	private ArrayList<Card> communalPile;
 	private ArrayList<Card> playingTable;
 
+	//previous constructor
+//	public TTModel(boolean writeGameLogsToFile) { // constructor
+//		this.deck = new Deck();
+//		this.players = new ArrayList<Player>();
+//		this.communalPile = new ArrayList<Card>();
+//		this.playingTable = new ArrayList<Card>();
+//		this.numOfDraws = 0;
+//		this.isDraw = false;
+//		this.numOfRounds = 0;
+//		this.numOfGames = 0;
+//		this.gameWinner = null;
+//		this.writeGameLogsToFile = false;
+//		
+//	}
+	
+	//new proposed constructor added by simon
+	//fixes bug where subsequent games would see players' hands retained from previous games.
+	//all variable initialisations placed in new method setNewGameStates;
 	public TTModel(boolean writeGameLogsToFile) { // constructor
+		setNewGameStates();
+	}
+	
+	//method to initialise all variables at start of new game
+	public void setNewGameStates() {
 		this.deck = new Deck();
 		this.players = new ArrayList<Player>();
 		this.communalPile = new ArrayList<Card>();
@@ -36,6 +62,7 @@ public class TTModel {
 		this.numOfGames = 0;
 		this.gameWinner = null;
 		this.writeGameLogsToFile = false;
+	
 	}
 	
 	public ArrayList<Player> getPlayers() {
@@ -64,7 +91,11 @@ public class TTModel {
 
 	public int getNumOfRounds() {
 		return this.numOfRounds;
-	}	
+	}
+	//method added by simon
+	public ArrayList<Integer> getAllWonRounds(){
+		return this.allWonRounds;
+	}
 
 	public void startGame(int botCount) {
 		this.playerCount = botCount + 1;
@@ -126,13 +157,21 @@ public class TTModel {
 
 	public boolean hasWon() { // checker method called at the end of every round
 		for (Player p : this.players) {
-			if (p.getHand().size() >= this.deck.getNumOfCards()) { // are any of the players hand sizes = to the size of the original
-													// deck?
+//			OLD - see below
+//			 (p.getHand().size() >= this.deck.getNumOfCards()) { // are any of the players hand sizes = to the size of the original
+//													// deck?
+			
+			// NEW - handles instances where final round is a draw
+			// are any of the players hand sizes + whatever is in the communal pile = to the size of the original deck
+			
+			if ((p.getHand().size() + communalPile.size()) >= this.deck.getNumOfCards()) { 
+//				
 				this.gameWinner = p.getName();
 				this.numOfGames++;
-				this.numOfRounds = 0; // write to database server before this line
-				this.numOfDraws = 0;
-				return true;
+				updateWonRounds(); //added by simon
+//				this.numOfRounds = 0; //  delete - now handled by setNewGameStates()
+//				this.numOfDraws = 0; // 
+				return true;		
 			}
 		}
 		for (int i = 0; i < this.players.size(); i++) {
@@ -141,5 +180,16 @@ public class TTModel {
 			}
 		}
 		return false;
+	}
+	
+			//method to get won rounds per player at end of game as needed by database. added by simon
+	public void updateWonRounds() {
+		 for (Player p : this.players) {
+			 int eachWonRounds = p.getRoundsWon();
+			 this.allWonRounds.add(eachWonRounds);
+ 
+		 }
+		 System.out.println("Array size is " +allWonRounds.size()); // temp debugging line
+		
 	}
 }

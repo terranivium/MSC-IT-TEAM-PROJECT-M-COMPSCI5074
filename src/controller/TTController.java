@@ -43,6 +43,22 @@ public class TTController {
 					this.model.startGame(this.readInput);
 				}
 				this.runtimeGame();
+			} else if (this.readInput == 2) { // for bot game
+				this.view.drawAIMenu();
+				this.readInput = this.systemInput.nextInt();
+				this.systemInput.nextLine();
+				if (this.readInput > 5 || this.readInput <= 0) {
+					do {
+						this.view.notValid();
+						this.view.drawAIMenu();
+						this.readInput = this.systemInput.nextInt();
+						this.systemInput.nextLine();
+					} while (this.readInput >= 5 || this.readInput <= 0);
+					//this.model.startBotGame(this.readInput);
+				}else {
+					//this.model.startBotGame(this.readInput);
+				}
+				//this.runtimeGame();
 			} else if (this.readInput == 4) {
 				// closes scanner and runtime
 				this.view.endRuntime();
@@ -81,8 +97,8 @@ public class TTController {
 			this.model.compareCards(this.readInput);
 		} 
 		this.view.gameWinner();
-		dbI.updateDb(this.model.getGameWinner(), this.model.getNumOfDraws(), this.model.getNumOfRounds(), this.model.getAllWonRounds());//calls on model methods to supply arguments to dbI for updating db.
-		dbI.dbRequest(); //testline - delete
+		this.dbI.updateDb(this.model.getGameWinner(), this.model.getNumOfDraws(), this.model.getNumOfRounds(), this.model.getAllWonRounds());//calls on model methods to supply arguments to dbI for updating db.
+		this.dbI.dbRequest(); // testline - delete
 		this.model.setNewGameStates();
 		this.runtimeMenu();
 	}

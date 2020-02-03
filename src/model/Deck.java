@@ -44,11 +44,19 @@ public class Deck {
 	void dealCards(int playerCount, ArrayList<Player> players) { // shuffles and deals cards based on number of players
 		int cardsLeftOver = this.numOfCards % playerCount;
 		Random rand = new Random();
-		int i = rand.nextInt(playerCount);
 		int insertIndex = this.numOfCards - 1;
 		
 		if (cardsLeftOver != 0) {
-			players.get(i).addHand(this.shuffledCards.remove(insertIndex--));
+			int i = rand.nextInt(playerCount);
+			for(int j = 0;j<cardsLeftOver;j++){
+				players.get(i).addHand(this.shuffledCards.remove(insertIndex--));
+				if(i >= playerCount){
+					i = 0;
+				}
+				else{
+					i++;
+				}
+			}
 		}
 		
 		do {

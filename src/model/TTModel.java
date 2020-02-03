@@ -47,7 +47,7 @@ public class TTModel {
 	//fixes bug where subsequent games would see players' hands retained from previous games.
 	//all variable initialisations placed in new method setNewGameStates;
 	public TTModel(boolean writeGameLogsToFile) { // constructor
-		setNewGameStates();
+		this.setNewGameStates();
 	}
 	
 	//method to initialise all variables at start of new game
@@ -106,6 +106,10 @@ public class TTModel {
 		this.deck.loadDeck();
 		this.deck.dealCards(this.playerCount, this.players);
 	}
+	
+	public void startBotGame(int botCount) {
+		
+	}
 
 	public void selectPlayer() {
 		if (this.numOfRounds == 0) {
@@ -136,9 +140,9 @@ public class TTModel {
 		}
 
 		if (roundWinners.size() < 2) {
-//			int currentRounds = roundWinners.get(0).getRounds(); // using getters/setters
-//			roundWinners.get(0).setRounds(currentRounds+1);
-			roundWinners.get(0).roundsWon++; // replace with getter and setter values?
+			int currentRounds = roundWinners.get(0).getRoundsWon();
+			roundWinners.get(0).setRoundsWon(currentRounds+1);
+			//roundWinners.get(0).roundsWon++; // replaced with getter and setter values
 			this.roundWinner = roundWinners.get(0);
 			this.isDraw = false;
 			roundWinners.get(0).getHand().addAll(0, this.communalPile); 

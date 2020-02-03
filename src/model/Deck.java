@@ -22,7 +22,7 @@ public class Deck {
 	void loadDeck() { // reads cards from .txt file and creates card objects
 		BufferedReader br;
 		String filePath = new File("DogsDeck.txt").getAbsolutePath();
-		System.out.println("Loaded file from  " + filePath);
+		System.out.println("Loaded file from  " + filePath + "\n");
 		try {
 			br = new BufferedReader(new FileReader(filePath));
 			String read = null;

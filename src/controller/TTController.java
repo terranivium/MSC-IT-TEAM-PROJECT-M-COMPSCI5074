@@ -2,7 +2,7 @@ package controller;
 
 import java.util.Scanner;
 
-import database_testlog.DatabaseInteractor;
+//import database_testlog.DatabaseInteractor;
 import model.Player;
 import model.TTModel;
 import view.TTCLIView;
@@ -13,13 +13,13 @@ public class TTController {
 	private TTCLIView view; // view instance
 	private Scanner systemInput = new Scanner(System.in); // User input instance
 	private int readInput; // Holds user input for condition checks
-	private DatabaseInteractor dbI = new DatabaseInteractor(); //instance of connector to database storing game statistics
-	
-	
+	// private DatabaseInteractor dbI = new DatabaseInteractor(); //instance of
+	// connector to database storing game statistics
+
 	public TTController(TTModel model, TTCLIView view) {
 		this.model = model;
 		this.view = view;
-		}
+	}
 
 	// Menu loop
 	public void runtimeMenu() {
@@ -47,18 +47,18 @@ public class TTController {
 				this.view.drawAIMenu();
 				this.readInput = this.systemInput.nextInt();
 				this.systemInput.nextLine();
-				if (this.readInput > 5 || this.readInput <= 0) {
+				if (this.readInput >= 6 || this.readInput <= 0) {
 					do {
 						this.view.notValid();
 						this.view.drawAIMenu();
 						this.readInput = this.systemInput.nextInt();
 						this.systemInput.nextLine();
 					} while (this.readInput >= 5 || this.readInput <= 0);
-					//this.model.startBotGame(this.readInput);
-				}else {
-					//this.model.startBotGame(this.readInput);
+					this.model.startBotGame(this.readInput);
+				} else {
+					this.model.startBotGame(this.readInput);
 				}
-				//this.runtimeGame();
+				this.runtimeGame();
 			} else if (this.readInput == 4) {
 				// closes scanner and runtime
 				this.view.endRuntime();
@@ -95,10 +95,12 @@ public class TTController {
 			}
 			this.view.compareCards(this.readInput);
 			this.model.compareCards(this.readInput);
-		} 
+		}
 		this.view.gameWinner();
-		this.dbI.updateDb(this.model.getGameWinner(), this.model.getNumOfDraws(), this.model.getNumOfRounds(), this.model.getAllWonRounds());//calls on model methods to supply arguments to dbI for updating db.
-		this.dbI.dbRequest(); // testline - delete
+		// this.dbI.updateDb(this.model.getGameWinner(), this.model.getNumOfDraws(),
+		// this.model.getNumOfRounds(), this.model.getAllWonRounds());//calls on model
+		// methods to supply arguments to dbI for updating db.
+		// this.dbI.dbRequest(); // testline - delete
 		this.model.setNewGameStates();
 		this.runtimeMenu();
 	}

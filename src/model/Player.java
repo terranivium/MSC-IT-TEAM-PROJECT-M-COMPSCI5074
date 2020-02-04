@@ -3,15 +3,31 @@
 import java.util.ArrayList;
 
 public class Player {
-	protected String name;
-	protected ArrayList<Card> hand; 
+	private String name;
+	private ArrayList<Card> hand; 
 	private Card topCard;
-	int roundsWon;
-
+	private int roundsWon;
+	
 	public Player(String name) {
 		this.name = name;
 		this.hand = new ArrayList<Card>();
 		this.roundsWon = 0;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setHand(ArrayList<Card> hand) {
+		this.hand = hand;
+	}
+
+	public void setTopCard(Card topCard) {
+		this.topCard = topCard;
+	}
+
+	public void setRoundsWon(int roundsWon) {
+		this.roundsWon = roundsWon;
 	}
 	
 	public int chooseCard() {

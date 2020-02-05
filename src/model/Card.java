@@ -2,7 +2,7 @@ package model;
 
 import java.util.HashMap;
 
-public class Card{
+public class Card {
 	private String name;
 	private int size;
 	private int rarity;
@@ -10,9 +10,10 @@ public class Card{
 	private int intelligence;
 	private int cuteness;
 	private String[] headerNames;
-	HashMap<Integer,Integer> stats;
+	HashMap<Integer, Integer> stats;
 
-	public Card(String name, String size, String rarity, String temperament, String intelligence, String cuteness, String[] headerNames){
+	public Card(String name, String size, String rarity, String temperament, String intelligence, String cuteness,
+			String[] headerNames) { // Constructor
 		this.name = name;
 		this.size = Integer.parseInt(size);
 		this.rarity = Integer.parseInt(rarity);
@@ -21,13 +22,15 @@ public class Card{
 		this.cuteness = Integer.parseInt(cuteness);
 		this.headerNames = headerNames;
 
-		this.stats = new HashMap<Integer,Integer>();
+		this.stats = new HashMap<Integer, Integer>(); // hash map used to relate key inputs to selected stats
 		this.stats.put(1, this.size);
 		this.stats.put(2, this.rarity);
 		this.stats.put(3, this.temperament);
 		this.stats.put(4, this.intelligence);
 		this.stats.put(5, this.cuteness);
 	}
+
+	// Getter and Setter Methods
 
 	public String getName() {
 		return this.name;

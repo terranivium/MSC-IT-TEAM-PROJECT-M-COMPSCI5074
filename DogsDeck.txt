@@ -25,7 +25,7 @@ Labrador 7 1 7 9 7
 Maltese 1 4 6 4 7
 MiniatureSchnauzer 3 3 6 8 7
 Newfoundland 10 8 9 7 10
-Papillion 1 7 6 9 9
+Papillon 1 7 6 9 9
 Pekingese 1 5 4 3 6
 Pomeranian 1 4 5 7 8
 Poodle 6 1 9 10 8
@@ -36,6 +36,6 @@ SaintBernard 10 8 10 4 10
 Samoyed	5 7 7 7 10
 SharPei 5 8 4 5 8
 ShibaInu 2 7 3 5 8
-ShihTzu 2 2 6 3 6
+ShihTzu 2 2 6 3 10
 Staffie 4 2 8 7 9
 YorkshireTerrier 1 2 3 7 5

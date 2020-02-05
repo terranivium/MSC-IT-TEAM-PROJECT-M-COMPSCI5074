@@ -1,3 +1,25 @@
+// desired solution.
+// in jdk12.0.2 successfully creates log file
+// in jdk1.8 results in console:
+//
+//"Problem opening file.
+//java.nio.file.AccessDeniedException: toptrumps.log.lck
+//	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:83)
+//	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:97)
+//	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:102)
+//	at sun.nio.fs.WindowsFileSystemProvider.newFileChannel(WindowsFileSystemProvider.java:115)
+//	at java.nio.channels.FileChannel.open(FileChannel.java:287)
+//	at java.nio.channels.FileChannel.open(FileChannel.java:335)
+//	at java.util.logging.FileHandler.openFiles(FileHandler.java:478)
+//	at java.util.logging.FileHandler.<init>(FileHandler.java:310)
+//	at TestLogger.main(TestLogger.java:23)
+//Feb 05, 2020 3:49:21 PM TestLogger main
+//INFO: Test input
+//Feb 05, 2020 3:49:21 PM TestLogger main
+//INFO: More test input
+//Exception in thread "main" java.lang.NullPointerException
+//	at TestLogger.main(TestLogger.java:42)"
+
 package database_testlog;
 
 import java.io.IOException;

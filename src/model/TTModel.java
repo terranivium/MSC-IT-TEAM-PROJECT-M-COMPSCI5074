@@ -23,6 +23,7 @@ public class TTModel {
 	private ArrayList<Player> playersToRemove;
 	private ArrayList<Card> communalPile;
 	private ArrayList<Card> playingTable;
+	private ArrayList<Card> winnersCards;
 
 	public TTModel(boolean writeGameLogsToFile) { // constructor
 		this.setNewGameStates();
@@ -34,6 +35,7 @@ public class TTModel {
 		this.playersToRemove = new ArrayList<Player>();
 		this.communalPile = new ArrayList<Card>();
 		this.playingTable = new ArrayList<Card>();
+		this.winnersCards = new ArrayList<Card>();
 		this.numOfDraws = 0;
 		this.isDraw = false;
 		this.numOfRounds = 0;
@@ -103,14 +105,18 @@ public class TTModel {
 		if (roundWinners.size() < 2) { // if there is only one winner
 			int currentRounds = roundWinners.get(0).getRoundsWon(); // add to the players personal win tally
 			roundWinners.get(0).setRoundsWon(currentRounds + 1);
+			ArrayList<Card> winnersCards = new ArrayList<Card>();
 			this.roundWinner = roundWinners.get(0); // set the round winning variable to the winning players name
 			this.isDraw = false; // not a draw
-			roundWinners.get(0).getHand().addAll(0, this.communalPile); // add all the cards from the communal pile and
+			this.winnersCards.addAll(this.communalPile);
+			this.winnersCards.addAll(this.playingTable);
+			Collections.shuffle(winnersCards); // randomise return cards
+			roundWinners.get(0).getHand().addAll(0, this.winnersCards); // add all the cards from the communal pile and
 																		// playing table to back of winning player's
-																		// hand
-			roundWinners.get(0).getHand().addAll(0, this.playingTable);
-			this.playingTable.clear();
+																		// hand in a random order
+			this.playingTable.clear(); // clear all array lists for new round
 			this.communalPile.clear();
+			this.winnersCards.clear();
 		} else { // if there are more than two winners (draw)
 			this.numOfDraws++;
 			this.isDraw = true;

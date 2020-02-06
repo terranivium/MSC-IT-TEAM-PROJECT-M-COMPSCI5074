@@ -1,8 +1,6 @@
 package view;
 
-import model.Card;
-import model.Player;
-import model.TTModel;
+import model.*;
 
 public class TTCLIView{
 
@@ -19,8 +17,8 @@ public class TTCLIView{
 		System.out.println("--------------------------------");
 		System.out.println("Select mode...--------------");
 		System.out.println("	1. New Player Game");
-		//System.out.println("	2. AI vs AI Autoplay") // Bot class
-		//System.out.println("	3. View runtime stats") // DB
+		System.out.println("	2. AI vs AI Autoplay"); // Bot class
+		//System.out.println("	3. View runtime stats"); // DB
 		System.out.println("	4. Quit");
 		System.out.println("----------------------------");
 	}

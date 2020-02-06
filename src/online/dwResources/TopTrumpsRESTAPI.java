@@ -12,9 +12,13 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import online.configuration.TopTrumpsJSONConfiguration;
+import view.TTOnlineView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+
+import controller.TTController;
+import model.TTModel;
 
 @Path("/toptrumps") // Resources specified here should be hosted at http://localhost:7777/toptrumps
 @Produces(MediaType.APPLICATION_JSON) // This resource returns JSON content
@@ -36,15 +40,24 @@ public class TopTrumpsRESTAPI {
 	ObjectWriter oWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
 	
 	/**
-	 * Contructor method for the REST API. This is called first. It provides
+	 * Constructor method for the REST API. This is called first. It provides
 	 * a TopTrumpsJSONConfiguration from which you can get the location of
 	 * the deck file and the number of AI players.
 	 * @param conf
 	 */
+	private TTModel model;
+	private TTOnlineView view;
+	private TTController controller;
+	
 	public TopTrumpsRESTAPI(TopTrumpsJSONConfiguration conf) {
 		// ----------------------------------------------------
 		// Add relevant initalization here
 		// ----------------------------------------------------
+		
+		boolean writeGameLogsToFile = false;
+		this.model = new TTModel(writeGameLogsToFile); // pass writeGameLogsToFile here
+		this.view = new TTOnlineView(model);
+		this.controller = new TTController(model, view);
 	}
 	
 	// ----------------------------------------------------
@@ -82,6 +95,29 @@ public class TopTrumpsRESTAPI {
 	 */
 	public String helloWord(@QueryParam("Word") String Word) throws IOException {
 		return "Hello "+Word;
+	}
+	
+	@GET
+	@Path("/")
+	/**
+	 * @param None
+	 * @return - A String
+	 * @throws IOException
+	 */
+	public String drawMain() throws IOException {
+		this.view.drawMain();
+		List<String> drawMainOutput = this.view.getOutputBuffer();
+		String listAsJSONString = oWriter.writeValueAsString(drawMainOutput);
+
+		return listAsJSONString;
+	}
+	
+	public String drawAIMenu() throws IOException{
+		this.view.drawAIMenu();
+		List<String> drawMainOutput = this.view.getOutputBuffer();
+		String listAsJSONString = oWriter.writeValueAsString(drawMainOutput);
+
+		return listAsJSONString;
 	}
 	
 }

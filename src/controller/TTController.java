@@ -6,19 +6,28 @@ import java.util.Scanner;
 import model.Player;
 import model.TTModel;
 import view.TTCLIView;
+import view.TTOnlineView;
 
 public class TTController {
 
 	private TTModel model; // model instance
 	private TTCLIView view; // view instance
+	private TTOnlineView onlineView;
 	private Scanner systemInput = new Scanner(System.in); // User input instance
 	private int readInput; // Holds user input for condition checks
 	// private DatabaseInteractor dbI = new DatabaseInteractor(); //instance of
 	// connector to database storing game statistics
 
+	// CLI Constructor
 	public TTController(TTModel model, TTCLIView view) {
 		this.model = model;
 		this.view = view;
+	}
+	
+	// Online Constructor
+	public TTController(TTModel model, TTOnlineView onlineView) {
+		this.model = model;
+		this.onlineView = onlineView;
 	}
 
 	// Menu loop

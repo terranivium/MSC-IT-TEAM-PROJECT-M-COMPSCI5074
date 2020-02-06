@@ -20,12 +20,14 @@
 
 	</head>
 
-    <body onload="initalize()"> <!-- Call the initalize method when the page loads -->
+    <body onload="initalize()"> 
     	
     	<div class="container">
 
 			<!-- Add your HTML Here -->
-		
+			
+				<button type="button">Click Me!</button>
+
 		</div>
 		
 		<script type="text/javascript">
@@ -38,8 +40,9 @@
 				// --------------------------------------------------------------------------
 				
 				// For example, lets call our sample methods
-				helloJSONList();
-				helloWord("Student");
+				//helloJSONList();
+				//helloWord("Student");
+				drawMain();
 				
 			}
 			
@@ -119,6 +122,48 @@
 				
 				// We have done everything we need to prepare the CORS request, so send it
 				xhr.send();		
+			}
+			
+			function drawMain() {
+				// First create a CORS request, this is the message we are going to send (a get request in this case)
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/); // Request type and URL+parameters
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
+
+				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
+				// to do when the response arrives 
+				xhr.onload = function(e) {
+ 					var responseText = xhr.response; // the text of the response
+					alert(responseText); // lets produce an alert
+					
+				};
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();		
+			}
+			
+			function drawAIMenu() {
+				// First create a CORS request, this is the message we are going to send (a get request in this case)
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/); // Request type and URL+parameters
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
+
+				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
+				// to do when the response arrives 
+				xhr.onload = function(e) {
+ 					var responseText = xhr.response; // the text of the response
+					alert(responseText); // lets produce an alert
+					
+				};
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();	
 			}
 
 		</script>

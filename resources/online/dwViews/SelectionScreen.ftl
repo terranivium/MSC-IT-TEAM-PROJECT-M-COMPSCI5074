@@ -22,20 +22,26 @@
 
     <body onload="initalize()"> <!-- Call the initalize method when the page loads -->
     	
-    	<div class="container">
+    	<div class="menucontainer">
 
 			<!-- Add your HTML Here -->
-			<div class="container2">
+			<div class="mainbuttons">
 			
 			<center>
-			<p id="element"></p>
+			<p id="gametitle"></p>
 			
 			<input class="mybutton" type="button" value="New Game Start" 
 			onclick="window.location.href='toptrumps/game'" />
 			<input class="mybutton" type="button" value="View Runtime Stats" 
-			onclick="window.location.href='toptrumps/stats'" />
+			onclick="window.location.href='toptrumps/stats'" /><br>
+			<label for="bots">Number of bots:</label>
+			
+			<input type="number" id="botCount" 
+			name="bots"
+       			min="10" max="100">
 			</center>
 			</div>
+			
 		
 		</div>
 		
@@ -93,15 +99,14 @@
 				// to do when the response arrives 
 				xhr.onload = function(e) {
  					var responseText = xhr.response; // the text of the response
- 					document.getElementById("element").innerHTML = responseText;
+ 					document.getElementById("gametitle").innerHTML = responseText;
  					console.log(responseText);
-					// alert(responseText); // lets produce an alert
-					
 				};
 				
 				// We have done everything we need to prepare the CORS request, so send it
 				xhr.send();	
 			}
+			
 		</script>
 		
 		</body>

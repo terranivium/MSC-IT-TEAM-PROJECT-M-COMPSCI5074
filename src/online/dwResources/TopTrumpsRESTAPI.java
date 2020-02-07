@@ -137,14 +137,26 @@ public class TopTrumpsRESTAPI {
 	}
 	
 	@GET
-	@Path("/setNewGameStates")
+	@Path("/setNewGameState")
 	/**
 	 * @param None
 	 * @return - A String
 	 * @throws IOException
 	 */
-	public void setNewGameState() throws IOException{
+	public void setNewGameStates() throws IOException{
 		this.model.setNewGameStates();
+	}
+	
+	@GET
+	@Path("/startBotGame")
+	/**
+	 * @param botCount - an int
+	 * @return - A String
+	 * @throws IOException
+	 */
+	public int startBotGame(@QueryParam("botCount") int botCount) throws IOException{
+		this.model.startBotGame(botCount);
+		return botCount;
 	}
 	
 	

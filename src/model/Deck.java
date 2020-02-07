@@ -11,7 +11,7 @@ import java.util.Random;
 public class Deck {
 	private ArrayList<Card> unshuffledCards;
 	private ArrayList<Card> shuffledCards;
-	int numOfCards;
+	private int numOfCards;
 	private String[] headerNames;
 
 	public Deck() { // Constructor
@@ -32,18 +32,7 @@ public class Deck {
 			while ((read = br.readLine()) != null) { // while there is another line in the txt file to read
 				this.numOfCards++; // count number of cards in deck
 				String[] word = read.split("\\s+");
-				this.unshuffledCards
-						.add(new Card(word[0], word[1], word[2], word[3], word[4], word[5], this.headerNames)); // creates
-																												// two
-																												// identical
-																												// array
-																												// lists
-																												// for
-																												// the
-																												// shuffled
-																												// and
-																												// un-shuffled
-																												// states
+				this.unshuffledCards.add(new Card(word[0], word[1], word[2], word[3], word[4], word[5], this.headerNames)); // creates two identical arraylists for the two different states 																				
 				this.shuffledCards = (ArrayList<Card>) this.unshuffledCards.clone();
 				Collections.shuffle(this.shuffledCards); // shuffles cards
 			}

@@ -10,7 +10,7 @@ public class TTModel {
 	private int playerCount; // model attributes
 	private int activePlayerNum;
 	private Player activePlayer;
-	private String gameWinner;
+	private Player gameWinner;
 	private Player roundWinner;
 	private int numOfDraws;
 	private int numOfRounds;
@@ -18,7 +18,7 @@ public class TTModel {
 	private boolean writeGameLogsToFile; // passed by TopTrumpsCLIApplication to constructor
 	private boolean isDraw;
 	private Deck deck;
-	private ArrayList<Integer> allWonRounds = new ArrayList<Integer>();
+	private ArrayList<Integer> allWonRounds;
 	private ArrayList<Player> players;
 	private ArrayList<Player> playersToRemove;
 	private ArrayList<Card> communalPile;
@@ -26,6 +26,7 @@ public class TTModel {
 	private ArrayList<Card> winnersCards;
 
 	public TTModel(boolean writeGameLogsToFile) { // constructor
+		this.writeGameLogsToFile = writeGameLogsToFile;
 		this.setNewGameStates();
 	}
 
@@ -36,6 +37,7 @@ public class TTModel {
 		this.communalPile = new ArrayList<Card>();
 		this.playingTable = new ArrayList<Card>();
 		this.winnersCards = new ArrayList<Card>();
+		this.allWonRounds = new ArrayList<Integer>();
 		this.numOfDraws = 0;
 		this.isDraw = false;
 		this.numOfRounds = 0;
@@ -131,7 +133,7 @@ public class TTModel {
 		for (Player p : this.players) {
 			if (p.getHand().size() >= this.deck.getNumOfCards() + this.communalPile.size()) { // does any of the players
 																								// have all the cards?
-				this.gameWinner = p.getName(); // won the game
+				this.gameWinner = p; // won the game
 				this.numOfGames++; // increment number of games
 				updateWonRounds();
 				return true;
@@ -166,7 +168,7 @@ public class TTModel {
 	}
 
 	public String getGameWinner() {
-		return this.gameWinner;
+		return this.gameWinner.getName();
 	}
 
 	public String getRoundWinnerName() {
@@ -183,5 +185,9 @@ public class TTModel {
 
 	public ArrayList<Integer> getAllWonRounds() {
 		return this.allWonRounds;
+	}
+	
+	public String[] getDeckHeaderNames() {
+		return this.deck.getHeaderNames(); 
 	}
 }

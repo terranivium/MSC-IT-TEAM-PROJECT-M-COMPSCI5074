@@ -85,7 +85,7 @@ public class TTController {
 	public void runtimeGame() {
 		while (this.model.hasWon() == false) {
 			this.model.selectPlayer();
-			this.view.selectPlayer();
+			//this.view.selectPlayer();
 			this.view.playersTurnHeader();
 			if (this.model.getActivePlayer().getClass() == Player.class) {
 				this.view.viewCard(this.model.getActivePlayer().getTopCard());

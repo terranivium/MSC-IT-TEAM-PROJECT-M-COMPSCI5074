@@ -47,7 +47,6 @@ public class TopTrumpsRESTAPI {
 	 */
 	private TTModel model;
 	private TTOnlineView view;
-	private TTController controller;
 	
 	public TopTrumpsRESTAPI(TopTrumpsJSONConfiguration conf) {
 		// ----------------------------------------------------
@@ -57,7 +56,6 @@ public class TopTrumpsRESTAPI {
 		boolean writeGameLogsToFile = false;
 		this.model = new TTModel(writeGameLogsToFile); // pass writeGameLogsToFile here
 		this.view = new TTOnlineView(model);
-		this.controller = new TTController(model, view);
 	}
 	
 	// ----------------------------------------------------
@@ -98,7 +96,7 @@ public class TopTrumpsRESTAPI {
 	}
 	
 	@GET
-	@Path("/")
+	@Path("/drawMain")
 	/**
 	 * @param None
 	 * @return - A String
@@ -108,10 +106,17 @@ public class TopTrumpsRESTAPI {
 		this.view.drawMain();
 		List<String> drawMainOutput = this.view.getOutputBuffer();
 		String listAsJSONString = oWriter.writeValueAsString(drawMainOutput);
-
+		
 		return listAsJSONString;
 	}
 	
+	@GET
+	@Path("/drawAIMenu")
+	/**
+	 * @param None
+	 * @return - A String
+	 * @throws IOException
+	 */
 	public String drawAIMenu() throws IOException{
 		this.view.drawAIMenu();
 		List<String> drawMainOutput = this.view.getOutputBuffer();
@@ -119,5 +124,29 @@ public class TopTrumpsRESTAPI {
 
 		return listAsJSONString;
 	}
+	
+	@GET
+	@Path("/selectPlayer")
+	/**
+	 * @param None
+	 * @return - A String
+	 * @throws IOException
+	 */
+	public void selectPlayer() throws IOException{
+		this.model.selectPlayer();
+	}
+	
+	@GET
+	@Path("/setNewGameStates")
+	/**
+	 * @param None
+	 * @return - A String
+	 * @throws IOException
+	 */
+	public void setNewGameState() throws IOException{
+		this.model.setNewGameStates();
+	}
+	
+	
 	
 }

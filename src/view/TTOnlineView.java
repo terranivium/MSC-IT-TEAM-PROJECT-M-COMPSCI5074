@@ -21,19 +21,24 @@ public class TTOnlineView {
 	
 	public void drawMain() {
 		this.outputBuffer.clear();
-		this.outputBuffer.add("--------------------------------------");
 		this.outputBuffer.add("| Doggo Trumps, online test_ver. 0.1 |");
-		this.outputBuffer.add("--------------------------------------");
-		this.outputBuffer.add("Select mode...--------------");
-		this.outputBuffer.add("	1. New Player Game");
-		//System.out.println("	2. AI vs AI Autoplay"); // Bot class
-		//System.out.println("	3. View runtime stats"); // DB
-		this.outputBuffer.add("--------------------------------------");
 	}
 	
 	public void drawAIMenu(){
 		this.outputBuffer.clear();
-		this.outputBuffer.add("Select AI players (Max 1-4)...");
+		this.outputBuffer.add("Select AI players (Max 1-4)...\n");
 	}
+
+	public void selectStat(){
+		this.outputBuffer.clear();
+		this.outputBuffer.add("Please select a stat to play between 1 and 5...\n");
+	}
+
+	public void notValid(){
+		this.outputBuffer.clear();
+		this.outputBuffer.add("Please select a valid menu option...\n");
+	}
+
+
 	
 }

@@ -9,8 +9,7 @@ public class Card {
 	private int temperament;
 	private int intelligence;
 	private int cuteness;
-	private String[] headerNames;
-	HashMap<Integer, Integer> stats;
+	private HashMap<Integer, Integer> stats;
 
 	public Card(String name, String size, String rarity, String temperament, String intelligence, String cuteness,
 			String[] headerNames) { // Constructor
@@ -20,9 +19,8 @@ public class Card {
 		this.temperament = Integer.parseInt(temperament);
 		this.intelligence = Integer.parseInt(intelligence);
 		this.cuteness = Integer.parseInt(cuteness);
-		this.headerNames = headerNames;
 
-		this.stats = new HashMap<Integer, Integer>(); // hash map used to relate key inputs to selected stats
+		this.stats = new HashMap<Integer, Integer>(); // hash map used by bot players to navigate the stats and return a key value like the human 
 		this.stats.put(1, this.size);
 		this.stats.put(2, this.rarity);
 		this.stats.put(3, this.temperament);
@@ -54,10 +52,6 @@ public class Card {
 
 	public int getCuteness() {
 		return this.cuteness;
-	}
-
-	public String[] getHeaderNames() {
-		return this.headerNames;
 	}
 
 	public HashMap<Integer, Integer> getStats() {

@@ -1,19 +1,21 @@
-	package model;
+package model;
 
 import java.util.ArrayList;
 
-public class Player {
+public class Player { // Player attributes
 	private String name;
-	private ArrayList<Card> hand; 
+	private ArrayList<Card> hand;
 	private Card topCard;
-	private int roundsWon;
-	
-	public Player(String name) {
+	private int roundsWon; // personal stat for tracking number of rounds won
+
+	public Player(String name) { // Constructor
 		this.name = name;
 		this.hand = new ArrayList<Card>();
 		this.roundsWon = 0;
 	}
-	
+
+	// Getter and Setter Methods
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -29,11 +31,11 @@ public class Player {
 	public void setRoundsWon(int roundsWon) {
 		this.roundsWon = roundsWon;
 	}
-	
-	public int chooseCard() {
+
+	public int chooseCard() { // redundant code , method is never called
 		return 0;
 	}
-	
+
 	public void addHand(Card card) {
 		this.hand.add(card);
 	}
@@ -46,12 +48,12 @@ public class Player {
 		return this.name;
 	}
 
-	public Card getTopCard() {
+	public Card getTopCard() { // returns the top card in a Players hand arraylists
 		int topCardIndex = this.hand.size() - 1;
 		this.topCard = this.hand.get(topCardIndex);
 		return topCard;
 	}
-	
+
 	public int getTopCardIndex() {
 		int topCardIndex = this.hand.size() - 1;
 		return topCardIndex;

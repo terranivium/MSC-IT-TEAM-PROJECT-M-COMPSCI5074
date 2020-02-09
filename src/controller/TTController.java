@@ -103,7 +103,8 @@ public class TTController {
 				this.readInput = this.model.getActivePlayer().chooseCard();
 			}
 			this.view.compareCards(this.readInput);
-			this.model.compareCards(this.readInput);
+			this.model.playCards(this.readInput);
+			this.model.compareCards();
 		}
 		this.view.gameWinner();
 		// this.dbI.updateDb(this.model.getGameWinner(), this.model.getNumOfDraws(),

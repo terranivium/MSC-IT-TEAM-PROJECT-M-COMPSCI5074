@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import online.configuration.TopTrumpsJSONConfiguration;
 import view.TTOnlineView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
@@ -47,6 +48,7 @@ public class TopTrumpsRESTAPI {
 	 */
 	private TTModel model;
 	private TTOnlineView view;
+	private int botCount;
 	
 	public TopTrumpsRESTAPI(TopTrumpsJSONConfiguration conf) {
 		// ----------------------------------------------------
@@ -56,6 +58,8 @@ public class TopTrumpsRESTAPI {
 		boolean writeGameLogsToFile = false;
 		this.model = new TTModel(writeGameLogsToFile); // pass writeGameLogsToFile here
 		this.view = new TTOnlineView(model);
+		this.botCount = conf.getNumAIPlayers();
+		this.model.setNewGameStates();
 	}
 	
 	// ----------------------------------------------------
@@ -74,7 +78,7 @@ public class TopTrumpsRESTAPI {
 		
 		List<String> listOfWords = new ArrayList<String>();
 		listOfWords.add("Hello");
-		listOfWords.add("World!");
+		listOfWords.add("World!!");
 		
 		// We can turn arbatory Java objects directly into JSON strings using
 		// Jackson seralization, assuming that the Java objects are not too complex.
@@ -93,6 +97,62 @@ public class TopTrumpsRESTAPI {
 	 */
 	public String helloWord(@QueryParam("Word") String Word) throws IOException {
 		return "Hello "+Word;
+	}
+	
+	@GET
+	@Path("/startGame")
+	/**
+	 * Here is an example of how to read parameters provided in an HTML Get request.
+	 * @param Word - A word
+	 * @return - A String
+	 * @throws IOException
+	 */
+	public void startGame(){
+		this.model.startGame(botCount);
+	}
+	
+	@GET
+	@Path("/selectPlayer")
+	/**
+	 * @param None
+	 * @return - A String
+	 * @throws IOException
+	 */
+	public void selectPlayer() throws IOException{
+		this.model.selectPlayer();
+	}
+	
+	@GET
+	@Path("/playCards")
+	/**
+	 * @param None
+	 * @return - A String
+	 * @throws IOException
+	 */
+	public void playCards(int stat) throws IOException{
+		this.model.playCards(stat);
+	}
+	
+	@GET
+	@Path("/compareCards")
+	/**
+	 * @param None
+	 * @return - A String
+	 * @throws IOException
+	 */
+	public void compareCards() throws IOException{
+		this.model.compareCards();
+	}
+	
+	@GET
+	@Path("/hasWon")
+	/**
+	 * @param None
+	 * @return - A String
+	 * @throws IOException
+	 */
+	public void hasWon() throws IOException{
+		this.model.hasWon();
 	}
 	
 	@GET
@@ -126,17 +186,6 @@ public class TopTrumpsRESTAPI {
 	}
 	
 	@GET
-	@Path("/selectPlayer")
-	/**
-	 * @param None
-	 * @return - A String
-	 * @throws IOException
-	 */
-	public void selectPlayer() throws IOException{
-		this.model.selectPlayer();
-	}
-	
-	@GET
 	@Path("/setNewGameState")
 	/**
 	 * @param None
@@ -148,17 +197,41 @@ public class TopTrumpsRESTAPI {
 	}
 	
 	@GET
-	@Path("/startBotGame")
+	@Path("/showCard")
 	/**
-	 * @param botCount - an int
-	 * @return - A String
+	 * Here is an example of a simple REST get request that returns a String.
+	 * We also illustrate here how we can convert Java objects to JSON strings.
+	 * @return - List of words as JSON
 	 * @throws IOException
 	 */
-	public int startBotGame(@QueryParam("botCount") int botCount) throws IOException{
-		this.model.startBotGame(botCount);
-		return botCount;
+	public String showCard() throws IOException {
+		String topCardAsJSONString = oWriter.writeValueAsString(this.model.getActivePlayer().getTopCard().getName());
+		return topCardAsJSONString;
 	}
 	
+	@GET
+	@Path("/updateActivePlayer")
+	/**
+	 * Here is an example of a simple REST get request that returns a String.
+	 * We also illustrate here how we can convert Java objects to JSON strings.
+	 * @return - List of words as JSON
+	 * @throws IOException
+	 */
+	public String updateActivePlayer() throws IOException {
+		String activePlayerAsJSONString = oWriter.writeValueAsString(this.model.getActivePlayer().getName() + " is currently the active player");
+		return activePlayerAsJSONString;
+	}
 	
-	
+	@GET
+	@Path("/updateRoundCounter")
+	/**
+	 * Here is an example of a simple REST get request that returns a String.
+	 * We also illustrate here how we can convert Java objects to JSON strings.
+	 * @return - List of words as JSON
+	 * @throws IOException
+	 */
+	public String updateRoundCounter() throws IOException {
+		String roundCounterAsJSONString = oWriter.writeValueAsString("It is currently Round: " + (this.model.getNumOfRounds() + 1));
+		return roundCounterAsJSONString;
+	}
 }

@@ -21,6 +21,7 @@ public class TTModel {
 	private ArrayList<Integer> allWonRounds;
 	private ArrayList<Player> players;
 	private ArrayList<Player> playersToRemove;
+	ArrayList<Player> roundWinners;
 	private ArrayList<Card> communalPile;
 	private ArrayList<Card> playingTable;
 	private ArrayList<Card> winnersCards;
@@ -34,6 +35,7 @@ public class TTModel {
 		this.deck = new Deck();
 		this.players = new ArrayList<Player>();
 		this.playersToRemove = new ArrayList<Player>();
+		this.roundWinners = new ArrayList<Player>();
 		this.communalPile = new ArrayList<Card>();
 		this.playingTable = new ArrayList<Card>();
 		this.winnersCards = new ArrayList<Card>();
@@ -85,9 +87,8 @@ public class TTModel {
 		}
 	}
 
-	public void compareCards(int stat) {
+	public void playCards(int stat) {
 		HashMap<Player, Integer> playerStats = new HashMap<Player, Integer>();
-		ArrayList<Player> roundWinners = new ArrayList<Player>();
 
 		for (Player p : this.players) {
 			playerStats.put(p, p.getTopCard().getStats().get(stat));
@@ -103,7 +104,8 @@ public class TTModel {
 				roundWinners.add(entry.getKey()); // adds all the players with the highest value to a new array list
 			}
 		}
-
+	}
+	public void compareCards() {
 		if (roundWinners.size() < 2) { // if there is only one winner
 			int currentRounds = roundWinners.get(0).getRoundsWon(); // add to the players personal win tally
 			roundWinners.get(0).setRoundsWon(currentRounds + 1);
@@ -190,4 +192,18 @@ public class TTModel {
 	public String[] getDeckHeaderNames() {
 		return this.deck.getHeaderNames(); 
 	}
+
+	public ArrayList<Card> getUnshuffledCards() {
+		return deck.getUnshuffledCards();
+	}
+
+	public ArrayList<Card> getPlayingTable() {
+		return playingTable;
+	}
+
+	public Deck getDeck() {
+		return deck;
+	}
+	
+	
 }

@@ -11,7 +11,7 @@ import java.util.Random;
 public class Deck {
 	private ArrayList<Card> unshuffledCards;
 	private ArrayList<Card> shuffledCards;
-	int numOfCards;
+	private int numOfCards;
 	private String[] headerNames;
 
 	public Deck() { // Constructor
@@ -19,7 +19,7 @@ public class Deck {
 		this.shuffledCards = new ArrayList<Card>();
 	}
 
-	void loadDeck() { // reads cards from .txt file and creates card objects
+	public void loadDeck() { // reads cards from .txt file and creates card objects
 		BufferedReader br;
 		String filePath = new File("DogsDeck.txt").getAbsolutePath(); // finds absolute path based off expected string
 		System.out.println("Loaded file from  " + filePath + "\n");
@@ -32,18 +32,7 @@ public class Deck {
 			while ((read = br.readLine()) != null) { // while there is another line in the txt file to read
 				this.numOfCards++; // count number of cards in deck
 				String[] word = read.split("\\s+");
-				this.unshuffledCards
-						.add(new Card(word[0], word[1], word[2], word[3], word[4], word[5], this.headerNames)); // creates
-																												// two
-																												// identical
-																												// array
-																												// lists
-																												// for
-																												// the
-																												// shuffled
-																												// and
-																												// un-shuffled
-																												// states
+				this.unshuffledCards.add(new Card(word[0], word[1], word[2], word[3], word[4], word[5], this.headerNames)); // creates two identical arraylists for the two different states 																				
 				this.shuffledCards = (ArrayList<Card>) this.unshuffledCards.clone();
 				Collections.shuffle(this.shuffledCards); // shuffles cards
 			}
@@ -52,7 +41,7 @@ public class Deck {
 		}
 	}
 
-	void dealCards(int playerCount, ArrayList<Player> players) { // shuffles and deals cards based on number of players
+	public void dealCards(int playerCount, ArrayList<Player> players) { // shuffles and deals cards based on number of players
 		int cardsLeftOver = this.numOfCards % playerCount; // checks to see if the deck is divided equally
 		Random rand = new Random();
 		int insertIndex = this.numOfCards - 1;

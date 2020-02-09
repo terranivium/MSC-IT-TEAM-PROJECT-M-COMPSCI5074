@@ -38,12 +38,13 @@ public class TTModel {
 		this.communalPile = new ArrayList<Card>();
 		this.playingTable = new ArrayList<Card>();
 		this.winnersCards = new ArrayList<Card>();
+		this.allWonRounds = new ArrayList<Integer>();
 		this.numOfDraws = 0;
 		this.isDraw = false;
 		this.numOfRounds = 0;
 		this.numOfGames = 0;
 		this.gameWinner = null;
-		//this.writeGameLogsToFile = false; - controller currently handling this. 
+		//this.writeGameLogsToFile = false; - controller currently handling this.
 
 	}
 
@@ -188,30 +189,30 @@ public class TTModel {
 	public ArrayList<Integer> getAllWonRounds() {
 		return this.allWonRounds;
 	}
-	
+
 	//new methods needed for use when logging.
-	public Deck getDeck() 
-	{ 
+	public Deck getDeck()
+	{
 		return this.deck;
 	}
-	
+
 	public ArrayList<Card> getCommunalPile()
 	{
 		return this.communalPile;
 	}
-	
+
 	public ArrayList<Card> getPlayingTable()
 	{
 		return this.playingTable;
 	}
-	
+
 	public HashMap<Player, Integer> getPlayerStats()
 	{
 		return this.playerStats;
 	}
-	
+
 	public int getCategoryChosen() {
 		return this.categoryChosen;
 	}
-	
+
 }

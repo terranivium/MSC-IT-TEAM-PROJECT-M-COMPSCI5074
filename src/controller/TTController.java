@@ -7,6 +7,7 @@ import database_testlog.TestLogger;
 import model.Player;
 import model.TTModel;
 import view.TTCLIView;
+import view.TTOnlineView;
 
 public class TTController {
 
@@ -16,14 +17,14 @@ public class TTController {
 	private Scanner systemInput = new Scanner(System.in); // User input instance
 	private int readInput; // Holds user input for condition checks
 	private TestLogger testLogger;
-	
+
 	// private DatabaseInteractor dbI = new DatabaseInteractor(); //instance of
 	// connector to database storing game statistics
 
 	public TTController(TTModel model, TTCLIView view, boolean writeGameLogsToFile) {
 		this.model = model;
 		this.view = view;
-		
+
 		if (writeGameLogsToFile)
 		{
 		this.writeGameLogsToFile = writeGameLogsToFile;
@@ -49,15 +50,15 @@ public class TTController {
 						this.systemInput.nextLine();
 					} while (this.readInput >= 5 || this.readInput <= 0);
 					this.model.startGame(this.readInput);
-					
+
 				} else {
 					this.model.startGame(this.readInput);
-//					if (this.writeGameLogsToFile) 
+//					if (this.writeGameLogsToFile)
 //						{
 //							logPreRoundsActivity();
 //						}
 				}
-				this.runtimeGame(); 
+				this.runtimeGame();
 			} else if (this.readInput == 2) { // for bot game
 				this.view.drawAIMenu();
 				this.readInput = this.systemInput.nextInt();
@@ -94,7 +95,7 @@ public class TTController {
 
 	// Main game controller loop
 	public void runtimeGame() {
-		
+
 		//checks to see if log file has been requested
 		System.out.println(writeGameLogsToFile);
 		while (this.model.hasWon() == false) {
@@ -115,15 +116,15 @@ public class TTController {
 			} else {
 				this.view.viewCard(this.model.getActivePlayer().getTopCard());
 				this.readInput = this.model.getActivePlayer().chooseCard();
-//				if (this.writeGameLogsToFile) 
+//				if (this.writeGameLogsToFile)
 //				{
 //					logRoundReport();
 //				}
 			}
 			this.view.compareCards(this.readInput);
 			this.model.compareCards(this.readInput);
-			
-			
+
+
 		}
 		this.view.gameWinner();
 		// this.dbI.updateDb(this.model.getGameWinner(), this.model.getNumOfDraws(),
@@ -137,8 +138,8 @@ public class TTController {
 	public void runtimeStats() {
 		// for drawing stats in comandline, similar to write test log feature
 	}
-	
-	
+
+
 	//methods for generating log.
 //	private void logPreRoundsActivity()
 //	{
@@ -146,7 +147,7 @@ public class TTController {
 //		this.testLogger.writeShuffledDeck(this.model.getDeck().getShuffledCards());
 //		this.testLogger.writeDealtHands(this.model.getPlayers());
 //	}
-//	
+//
 //	private void logRoundReport()
 //	{
 //		this.testLogger.writePlayingTable(this.model.getPlayers(),this.model.getPlayingTable(), this.model.getDeck().getHeaderNames(), this.model.getNumOfRounds());

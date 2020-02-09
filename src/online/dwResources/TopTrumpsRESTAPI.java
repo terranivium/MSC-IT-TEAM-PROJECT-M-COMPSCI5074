@@ -56,7 +56,7 @@ public class TopTrumpsRESTAPI {
 		// ----------------------------------------------------
 		
 		boolean writeGameLogsToFile = false;
-		this.model = new TTModel(writeGameLogsToFile); // pass writeGameLogsToFile here
+		this.model = new TTModel(); // pass writeGameLogsToFile here
 		this.view = new TTOnlineView(model);
 		this.botCount = conf.getNumAIPlayers();
 		this.model.setNewGameStates();
@@ -205,7 +205,7 @@ public class TopTrumpsRESTAPI {
 	 * @throws IOException
 	 */
 	public String showCard() throws IOException {
-		String topCardAsJSONString = oWriter.writeValueAsString(this.model.getActivePlayer().getTopCard().getName());
+		String topCardAsJSONString = oWriter.writeValueAsString(this.model.getActivePlayer().getTopCard().getDescription());
 		return topCardAsJSONString;
 	}
 	
@@ -231,7 +231,7 @@ public class TopTrumpsRESTAPI {
 	 * @throws IOException
 	 */
 	public String updateRoundCounter() throws IOException {
-		String roundCounterAsJSONString = oWriter.writeValueAsString("It is currently Round: " + (this.model.getNumOfRounds() + 1));
+		String roundCounterAsJSONString = oWriter.writeValueAsString("It is currently Round: " + ((this.model.getNumOfRounds()) + 1));
 		return roundCounterAsJSONString;
 	}
 }

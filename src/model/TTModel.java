@@ -10,23 +10,24 @@ public class TTModel {
 	private int playerCount; // model attributes
 	private int activePlayerNum;
 	private Player activePlayer;
-	private Player gameWinner;
+	private String gameWinner;
 	private Player roundWinner;
 	private int numOfDraws;
 	private int numOfRounds;
 	private int numOfGames;
-	private boolean writeGameLogsToFile; // passed by TopTrumpsCLIApplication to constructor
+	//private boolean writeGameLogsToFile; // passed by TopTrumpsCLIApplication to constructor - controller currently handling this
 	private boolean isDraw;
 	private Deck deck;
-	private ArrayList<Integer> allWonRounds;
+	private ArrayList<Integer> allWonRounds = new ArrayList<Integer>();
 	private ArrayList<Player> players;
 	private ArrayList<Player> playersToRemove;
 	private ArrayList<Card> communalPile;
 	private ArrayList<Card> playingTable;
 	private ArrayList<Card> winnersCards;
-
-	public TTModel(boolean writeGameLogsToFile) { // constructor
-		this.writeGameLogsToFile = writeGameLogsToFile;
+	private int categoryChosen; //instance variable set by argument supplied to compareCards, needed for use in TestLogger
+	private HashMap<Player, Integer> playerStats = new HashMap<Player, Integer>(); 	//migrated from compareCards so as to give an instance
+																					//variable, which can then be called as a getter
+	public TTModel() { // constructor												//for use in TestLogger
 		this.setNewGameStates();
 	}
 
@@ -37,13 +38,12 @@ public class TTModel {
 		this.communalPile = new ArrayList<Card>();
 		this.playingTable = new ArrayList<Card>();
 		this.winnersCards = new ArrayList<Card>();
-		this.allWonRounds = new ArrayList<Integer>();
 		this.numOfDraws = 0;
 		this.isDraw = false;
 		this.numOfRounds = 0;
 		this.numOfGames = 0;
 		this.gameWinner = null;
-		this.writeGameLogsToFile = false;
+		//this.writeGameLogsToFile = false; - controller currently handling this.
 
 	}
 
@@ -83,10 +83,12 @@ public class TTModel {
 		} else { // if a different player has won compared to the previous round
 			this.activePlayer = this.roundWinner; // set the starting player to be the winner of the last round
 		}
+		this.numOfRounds++; // increment rounds [migrated from selectPlayer, to give 1st round as numbered 1 in all outputs]
 	}
 
 	public void compareCards(int stat) {
-		HashMap<Player, Integer> playerStats = new HashMap<Player, Integer>();
+		//HashMap<Player, Integer> playerStats = new HashMap<Player, Integer>(); - migrated to class instance variable for use in TestLogger
+		playerStats.clear(); // clears the instance variable at the beginning of each comparison, prior to adding new stats as before
 		ArrayList<Player> roundWinners = new ArrayList<Player>();
 
 		for (Player p : this.players) {
@@ -126,14 +128,14 @@ public class TTModel {
 			this.communalPile.addAll(this.playingTable); // add all cards to communal pile array list
 			this.playingTable.clear();
 		}
-		this.numOfRounds++; // increment rounds
+		//this.numOfRounds++; // increment rounds [migrated to selectPlayer, to give 1st round as numbered 1 in all outputs]
 	}
 
 	public boolean hasWon() { // checker method called at the end of every round
 		for (Player p : this.players) {
-			if (p.getHand().size() >= this.deck.getNumOfCards() + this.communalPile.size()) { // does any of the players
+			if ((p.getHand().size() + this.communalPile.size()) >= this.deck.getNumOfCards() ) { // does any of the players
 																								// have all the cards?
-				this.gameWinner = p; // won the game
+				this.gameWinner = p.getName(); // won the game
 				this.numOfGames++; // increment number of games
 				updateWonRounds();
 				return true;
@@ -168,7 +170,7 @@ public class TTModel {
 	}
 
 	public String getGameWinner() {
-		return this.gameWinner.getName();
+		return this.gameWinner;
 	}
 
 	public String getRoundWinnerName() {
@@ -186,8 +188,30 @@ public class TTModel {
 	public ArrayList<Integer> getAllWonRounds() {
 		return this.allWonRounds;
 	}
-	
-	public String[] getDeckHeaderNames() {
-		return this.deck.getHeaderNames(); 
+
+	//new methods needed for use when logging.
+	public Deck getDeck()
+	{
+		return this.deck;
 	}
+
+	public ArrayList<Card> getCommunalPile()
+	{
+		return this.communalPile;
+	}
+
+	public ArrayList<Card> getPlayingTable()
+	{
+		return this.playingTable;
+	}
+
+	public HashMap<Player, Integer> getPlayerStats()
+	{
+		return this.playerStats;
+	}
+
+	public int getCategoryChosen() {
+		return this.categoryChosen;
+	}
+
 }

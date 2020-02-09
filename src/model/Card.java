@@ -11,8 +11,7 @@ public class Card {
 	private int cuteness;
 	private HashMap<Integer, Integer> stats;
 
-	public Card(String name, String size, String rarity, String temperament, String intelligence, String cuteness,
-			String[] headerNames) { // Constructor
+	public Card(String name, String size, String rarity, String temperament, String intelligence, String cuteness) { // Constructor
 		this.name = name;
 		this.size = Integer.parseInt(size);
 		this.rarity = Integer.parseInt(rarity);

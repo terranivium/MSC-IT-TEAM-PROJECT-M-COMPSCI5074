@@ -38,6 +38,7 @@ public class TTModel {
 		this.communalPile = new ArrayList<Card>();
 		this.playingTable = new ArrayList<Card>();
 		this.winnersCards = new ArrayList<Card>();
+		this.allWonRounds = new ArrayList<Integer>();
 		this.numOfDraws = 0;
 		this.isDraw = false;
 		this.numOfRounds = 0;

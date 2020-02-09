@@ -19,7 +19,7 @@ public class Deck {
 		this.shuffledCards = new ArrayList<Card>();
 	}
 
-	void loadDeck() { // reads cards from .txt file and creates card objects
+	public void loadDeck() { // reads cards from .txt file and creates card objects
 		BufferedReader br;
 		String filePath = new File("DogsDeck.txt").getAbsolutePath(); // finds absolute path based off expected string
 		System.out.println("Loaded file from  " + filePath + "\n");
@@ -41,7 +41,7 @@ public class Deck {
 		}
 	}
 
-	void dealCards(int playerCount, ArrayList<Player> players) { // shuffles and deals cards based on number of players
+	public void dealCards(int playerCount, ArrayList<Player> players) { // shuffles and deals cards based on number of players
 		int cardsLeftOver = this.numOfCards % playerCount; // checks to see if the deck is divided equally
 		Random rand = new Random();
 		int insertIndex = this.numOfCards - 1;

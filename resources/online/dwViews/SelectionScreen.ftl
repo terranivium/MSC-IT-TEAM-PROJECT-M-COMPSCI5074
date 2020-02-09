@@ -34,11 +34,6 @@
 			onclick="window.location.href='toptrumps/game'" />
 			<input class="mybutton" type="button" value="View Runtime Stats" 
 			onclick="window.location.href='toptrumps/stats'" /><br>
-			<label for="bots">Number of bots:</label>
-			
-			<input type="number" id="botCount" 
-			name="bots"
-       			min="10" max="100">
 			</center>
 			</div>
 			
@@ -107,6 +102,26 @@
 				xhr.send();	
 			}
 			
+			function helloJSONList() {
+			
+				// First create a CORS request, this is the message we are going to send (a get request in this case)
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/helloJSONList"); // Request type and URL
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
+
+				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
+				// to do when the response arrives 
+				xhr.onload = function(e) {
+ 					var responseText = xhr.response; // the text of the response
+					alert(responseText); // lets produce an alert
+				};
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();		
+			}
 		</script>
 		
 		</body>

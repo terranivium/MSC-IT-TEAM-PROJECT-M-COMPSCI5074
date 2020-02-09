@@ -7,6 +7,7 @@ import database_testlog.TestLogger;
 import model.Player;
 import model.TTModel;
 import view.TTCLIView;
+import view.TTOnlineView;
 
 public class TTController {
 

@@ -11,63 +11,63 @@ import java.util.Random;
 public class Deck {
 	private ArrayList<Card> unshuffledCards;
 	private ArrayList<Card> shuffledCards;
-	int numOfCards;
+	private int numOfCards;
 	private String[] headerNames;
 
-	public Deck() {
+	public Deck() { // Constructor
 		this.unshuffledCards = new ArrayList<Card>();
 		this.shuffledCards = new ArrayList<Card>();
 	}
 
-	void loadDeck() { // reads cards from .txt file and creates card objects
+	public void loadDeck() { // reads cards from .txt file and creates card objects
 		BufferedReader br;
-		String filePath = new File("DogsDeck.txt").getAbsolutePath();
+		String filePath = new File("DogsDeck.txt").getAbsolutePath(); // finds absolute path based off expected string
 		System.out.println("Loaded file from  " + filePath + "\n");
 		try {
 			br = new BufferedReader(new FileReader(filePath));
 			String read = null;
-			read = br.readLine();
+			read = br.readLine(); // reads first line of text into a string array
 			this.headerNames = read.split("\\s+");
 
-			while ((read = br.readLine()) != null) {
-				this.numOfCards++;
+			while ((read = br.readLine()) != null) { // while there is another line in the txt file to read
+				this.numOfCards++; // count number of cards in deck
 				String[] word = read.split("\\s+");
-				this.unshuffledCards.add(new Card(word[0], word[1], word[2], word[3], word[4], word[5], this.headerNames));
+				this.unshuffledCards.add(new Card(word[0], word[1], word[2], word[3], word[4], word[5], this.headerNames)); // creates two identical arraylists for the two different states 																				
 				this.shuffledCards = (ArrayList<Card>) this.unshuffledCards.clone();
-				Collections.shuffle(this.shuffledCards);
+				Collections.shuffle(this.shuffledCards); // shuffles cards
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	void dealCards(int playerCount, ArrayList<Player> players) { // shuffles and deals cards based on number of players
-		int cardsLeftOver = this.numOfCards % playerCount;
+	public void dealCards(int playerCount, ArrayList<Player> players) { // shuffles and deals cards based on number of players
+		int cardsLeftOver = this.numOfCards % playerCount; // checks to see if the deck is divided equally
 		Random rand = new Random();
 		int insertIndex = this.numOfCards - 1;
-		
-		if (cardsLeftOver != 0) {
-			int i = rand.nextInt(playerCount);
-			for(int j = 0;j<cardsLeftOver;j++){
+
+		if (cardsLeftOver != 0) { // if there is a card left over
+			int i = rand.nextInt(playerCount); // select a random player to give to card to
+			for (int j = 0; j < cardsLeftOver; j++) { // if there are more than one cards left over, pass the next spare
+														// to the next person in the circle
 				players.get(i).addHand(this.shuffledCards.remove(insertIndex--));
-				if(i >= playerCount){
+				if (i >= playerCount) {
 					i = 0;
-				}
-				else{
+				} else {
 					i++;
 				}
 			}
 		}
-		
-		do {
+
+		do { // deal cards to all the players
 			for (Player p : players) {
 				p.addHand(this.shuffledCards.remove(insertIndex--));
 			}
-		} while (this.shuffledCards.isEmpty() == false);
+		} while (this.shuffledCards.isEmpty() == false); // until the deck is empty
 	}
 
 	// Getter methods
-	
+
 	public ArrayList<Card> getShuffledCards() {
 		return this.shuffledCards;
 	}

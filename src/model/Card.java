@@ -2,55 +2,58 @@ package model;
 
 import java.util.HashMap;
 
-public class Card{
-	private String name;
-	private int size;
-	private int rarity;
-	private int temperament;
-	private int intelligence;
-	private int cuteness;
+public class Card {
+	private String description;
+	private int categoryOne;
+	private int categoryTwo;
+	private int categoryThree;
+	private int categoryFour;
+	private int categoryFive;
 	private String[] headerNames;
-	HashMap<Integer,Integer> stats;
+	HashMap<Integer, Integer> stats;
 
-	public Card(String name, String size, String rarity, String temperament, String intelligence, String cuteness, String[] headerNames){
-		this.name = name;
-		this.size = Integer.parseInt(size);
-		this.rarity = Integer.parseInt(rarity);
-		this.temperament = Integer.parseInt(temperament);
-		this.intelligence = Integer.parseInt(intelligence);
-		this.cuteness = Integer.parseInt(cuteness);
+	public Card(String name, String categoryOne, String categoryTwo, String categoryThree, String categoryFour, String categoryFive,
+			String[] headerNames) { // Constructor
+		this.description = name;
+		this.categoryOne = Integer.parseInt(categoryOne);
+		this.categoryTwo = Integer.parseInt(categoryTwo);
+		this.categoryThree = Integer.parseInt(categoryThree);
+		this.categoryFour= Integer.parseInt(categoryFour);
+		this.categoryFive = Integer.parseInt(categoryFive);
 		this.headerNames = headerNames;
 
-		this.stats = new HashMap<Integer,Integer>();
-		this.stats.put(1, this.size);
-		this.stats.put(2, this.rarity);
-		this.stats.put(3, this.temperament);
-		this.stats.put(4, this.intelligence);
-		this.stats.put(5, this.cuteness);
+		this.stats = new HashMap<Integer, Integer>(); // hash map used to relate key inputs to selected stats
+		this.stats.put(1, this.categoryOne);
+		this.stats.put(2, this.categoryTwo);
+		this.stats.put(3, this.categoryThree);
+		this.stats.put(4, this.categoryFour);
+		this.stats.put(5, this.categoryFive);
 	}
 
-	public String getName() {
-		return this.name;
+	// Getter and Setter Methods
+
+	public String getDescription() {
+		return this.description;
 	}
 
-	public int getSize() {
-		return this.size;
+	public int getCategoryOne() {
+		return this.categoryOne;
 	}
 
-	public int getRarity() {
-		return this.rarity;
+	public int getCategoryTwo() {
+		return this.categoryTwo;
 	}
 
-	public int getTemperament() {
-		return this.temperament;
+	public int getCategoryThree() {
+		return this.categoryThree;
 	}
 
-	public int getIntelligence() {
-		return this.intelligence;
+	public int getCategoryFour() {
+		return this.categoryFour;
 	}
 
-	public int getCuteness() {
-		return this.cuteness;
+	public int getCategoryFive() {
+		return this.categoryFive;
 	}
 
 	public String[] getHeaderNames() {

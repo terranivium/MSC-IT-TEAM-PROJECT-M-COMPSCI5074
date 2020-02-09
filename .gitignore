@@ -3,3 +3,6 @@ target/
 *.iml
 .classpath
 .settings/
+.DS_Store
+bin/
+

@@ -2,7 +2,7 @@
 
 	<head>
 		<!-- Web page title -->
-    	<title>Doggo Trumps</title>
+    	<title>Doggo Trumps - Statistics</title>
     	
     	<!-- Import JQuery, as it provides functions you will probably find useful (see https://jquery.com/) -->
     	<script src="https://code.jquery.com/jquery-2.1.1.js"></script>
@@ -21,12 +21,51 @@
 	</head>
 
     <body onload="initalize()"> <!-- Call the initalize method when the page loads -->
+    
+    <style>
+		
+		body {
+			background-color: #e6e6e6;
+		}
+		
+  		.navbar {
+  			padding: 2rem;
+  			background-color: #4d4d4d;
+  		}
+  		
+  		.container {
+  			text-align: center
+  			
+  		}
+  		
+  		.footer {
+  			position: absolute;
+  			right: 0;
+  			bottom: 0;
+  			left: 0;
+  			width: 100%;
+  			padding: 2rem;
+  			background-color: #4d4d4d;
+  			color: #ffffff;
+  		}
+  		
+  		</style>
+    	
+    	
+    	<nav class="navbar navbar-expand-lg navbar-inverse bg-inverse">
+        	<a class="navbar-brand" href="http://localhost:7777/toptrumps">
+            <img src="https://i.pinimg.com/originals/ec/7e/79/ec7e79072d498c26433d9658d83d4a8b.png" width="250" height="100" alt="Doggo Trumps">
+        </a>
+   		</nav>
     	
     	<div class="container">
 
-			<!-- Add your HTML Here -->
 		
 		</div>
+		
+		<div class="footer">
+Made by Git What You Give</br>Jessica Lavin - Daniel Mitchell - Simon Manton Milne - Wesley Scott
+</div>
 		
 		<script type="text/javascript">
 		

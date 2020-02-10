@@ -21,25 +21,61 @@
 	</head>
 
     <body onload="initalize()"> 
-    	
-    	<div class="container">
 
-			<!-- Add your HTML Here -->
-			<h1 id="cardList">players top card</h1>
+    <!-- game screen CSS -->
+
+	<style>
+
+		body {
+			background-color: #e6e6e6;
+		}
+
+  		.navbar {
+  			padding: 2rem;
+  			background-color: #4d4d4d;
+  		}
+
+  		.container {
+  			text-align: center;
+
+  		}
+
+  		.footer {
+  			position: absolute;
+  			right: 0;
+  			bottom: 0;
+  			left: 0;
+  			width: 100%;
+  			padding: 2rem;
+  			background-color: #4d4d4d;
+  			color: #ffffff;
+			font-family: Arial;
+			font-size: 14px;
+  		}
+
+  		</style>
+
+  		<!-- game screen HTML -->
+
+    	<nav class="navbar navbar-expand-lg navbar-inverse bg-inverse">
+        	<a class="navbar-brand" href="http://localhost:7777/toptrumps">
+            <img src="https://i.pinimg.com/originals/ec/7e/79/ec7e79072d498c26433d9658d83d4a8b.png" width="250" height="100" alt="Doggo Trumps">
+        </a>
+   		</nav>
+
+    	<div class="container">
+   			<h1 id="cardList">players top card</h1>
 			<h2 id="roundCounter">round counter</h2>
 			<h2 id="activePlayer">active player</h2>
 			<input onclick="showCard();updateActivePlayer();updateRoundCounter()" type="button" value="Show Player Card" id="myButton1"></input>
-<<<<<<< Updated upstream
 
-=======
 			<input onclick="playCardsOne('1')" type="button" value="Select Option 1" id="selectButton1"></input>
 			<input onclick="setNewGameStates();startGame();selectPlayer()" type="button" value="Reset" id="resetButton"></input>
-		
+
 		</div>
-		
+
 		<div class="footer">
 			Made by Git What You Give</br>Jessica Lavin - Daniel Mitchell - Simon Manton Milne - Wesley Scott
->>>>>>> Stashed changes
 		</div>
 		
 		<script type="text/javascript">
@@ -163,33 +199,33 @@
 				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
 				// to do when the response arrives 
 				xhr.onload = function(e) {
- 					var responseText = xhr.response; // the text of the response
- 					document.getElementById("cardList").innerHTML = responseText;
+ 					 // the text of the response
+					document.getElementById("cardList").innerHTML = xhr.response;
 				};
 				
 				// We have done everything we need to prepare the CORS request, so send it
 				xhr.send();
 			}
-			
+
 			function playCardsOne(stat) {
 				// First create a CORS request, this is the message we are going to send (a get request in this case)
 				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/playCards?Stat="+stat); // Request type and URL+parameters
-				
+
 				// Message is not sent yet, but we can check that the browser supports CORS
 				if (!xhr) {
   					alert("CORS not supported");
 				}
 
 				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
-				// to do when the response arrives 
+				// to do when the response arrives
 				xhr.onload = function(e) {
- 					var responseText = xhr.response; // the text of the response
- 					document.getElementById("roundCounter").innerHTML = responseText;
+ 					 // the text of the response
+					document.getElementById("roundCounter").innerHTML = xhr.response;
 					alert("cards played");
 				};
-				
+
 				// We have done everything we need to prepare the CORS request, so send it
-				xhr.send();		
+				xhr.send();
 			}
 			
 			function updateActivePlayer() {
@@ -204,8 +240,8 @@
 				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
 				// to do when the response arrives 
 				xhr.onload = function(e) {
- 					var responseText = xhr.response; // the text of the response
- 					document.getElementById("activePlayer").innerHTML = responseText;
+ 					 // the text of the response
+					document.getElementById("activePlayer").innerHTML = xhr.response;
 				};
 				
 				// We have done everything we need to prepare the CORS request, so send it
@@ -224,8 +260,8 @@
 				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
 				// to do when the response arrives 
 				xhr.onload = function(e) {
- 					var responseText = xhr.response; // the text of the response
- 					document.getElementById("roundCounter").innerHTML = responseText;
+ 					 // the text of the response
+					document.getElementById("roundCounter").innerHTML = xhr.response;
 				};
 				
 				// We have done everything we need to prepare the CORS request, so send it

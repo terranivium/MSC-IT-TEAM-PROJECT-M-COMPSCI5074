@@ -13,7 +13,8 @@ public class TTController {
 
 	private TTModel model; // model instance
 	private TTCLIView view; // view instance
-	private boolean writeGameLogsToFile; //boolean used in constructor to determine if controller should execute text logging.
+	private boolean writeGameLogsToFile; // boolean used in constructor to determine if controller should execute text
+											// logging.
 	private Scanner systemInput = new Scanner(System.in); // User input instance
 	private int readInput; // Holds user input for condition checks
 	private TestLogger testLogger;
@@ -25,10 +26,9 @@ public class TTController {
 		this.model = model;
 		this.view = view;
 
-		if (writeGameLogsToFile)
-		{
-		this.writeGameLogsToFile = writeGameLogsToFile;
-		testLogger = new TestLogger();
+		if (writeGameLogsToFile) {
+			this.writeGameLogsToFile = writeGameLogsToFile;
+			testLogger = new TestLogger();
 		}
 	}
 
@@ -39,13 +39,13 @@ public class TTController {
 			this.readInput = this.systemInput.nextInt();
 			this.systemInput.nextLine();
 			if (this.readInput == 1) {
-				this.view.drawAIMenu();
+				this.view.drawHumanMenu();
 				this.readInput = this.systemInput.nextInt();
 				this.systemInput.nextLine();
 				if (this.readInput >= 5 || this.readInput <= 0) {
 					do {
 						this.view.notValid();
-						this.view.drawAIMenu();
+						this.view.drawHumanMenu();
 						this.readInput = this.systemInput.nextInt();
 						this.systemInput.nextLine();
 					} while (this.readInput >= 5 || this.readInput <= 0);
@@ -59,17 +59,17 @@ public class TTController {
 //						}
 				}
 				this.runtimeGame();
-			} else if (this.readInput == 2) { // for bot game
+			} else if (this.readInput == 2) { // for bot vs bot game
 				this.view.drawAIMenu();
 				this.readInput = this.systemInput.nextInt();
 				this.systemInput.nextLine();
-				if (this.readInput >= 6 || this.readInput <= 0) {
+				if (this.readInput >= 6 || this.readInput <= 1) {
 					do {
 						this.view.notValid();
 						this.view.drawAIMenu();
 						this.readInput = this.systemInput.nextInt();
 						this.systemInput.nextLine();
-					} while (this.readInput >= 5 || this.readInput <= 0);
+					} while (this.readInput >= 6 || this.readInput <= 1);
 					this.model.startBotGame(this.readInput);
 //					if (this.writeGameLogsToFile)
 //					{
@@ -83,7 +83,7 @@ public class TTController {
 				// closes scanner, runtime
 				this.view.endRuntime();
 				this.systemInput.close();
-				//this.testLogger.closeLog(); - will be used to close testLogger.
+				// this.testLogger.closeLog(); - will be used to close testLogger.
 				System.exit(0);
 			} else {
 				// to catch invalid input
@@ -96,7 +96,7 @@ public class TTController {
 	// Main game controller loop
 	public void runtimeGame() {
 
-		//checks to see if log file has been requested
+		// checks to see if log file has been requested
 		System.out.println(writeGameLogsToFile);
 		while (this.model.hasWon() == false) {
 			this.model.selectPlayer();
@@ -122,9 +122,8 @@ public class TTController {
 //				}
 			}
 			this.view.compareCards(this.readInput);
-			this.model.compareCards(this.readInput);
-
-
+			this.model.playCards(this.readInput);
+			this.model.selectWinners();
 		}
 		this.view.gameWinner();
 		// this.dbI.updateDb(this.model.getGameWinner(), this.model.getNumOfDraws(),
@@ -139,8 +138,7 @@ public class TTController {
 		// for drawing stats in comandline, similar to write test log feature
 	}
 
-
-	//methods for generating log.
+	// methods for generating log.
 //	private void logPreRoundsActivity()
 //	{
 //		this.testLogger.writeLoadedDeck(this.model.getDeck().getUnshuffledCards(), this.model.getDeck().getHeaderNames());

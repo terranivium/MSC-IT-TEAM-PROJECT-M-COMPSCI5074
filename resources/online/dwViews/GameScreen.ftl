@@ -29,7 +29,17 @@
 			<h2 id="roundCounter">round counter</h2>
 			<h2 id="activePlayer">active player</h2>
 			<input onclick="showCard();updateActivePlayer();updateRoundCounter()" type="button" value="Show Player Card" id="myButton1"></input>
+<<<<<<< Updated upstream
 
+=======
+			<input onclick="playCardsOne('1')" type="button" value="Select Option 1" id="selectButton1"></input>
+			<input onclick="setNewGameStates();startGame();selectPlayer()" type="button" value="Reset" id="resetButton"></input>
+		
+		</div>
+		
+		<div class="footer">
+			Made by Git What You Give</br>Jessica Lavin - Daniel Mitchell - Simon Manton Milne - Wesley Scott
+>>>>>>> Stashed changes
 		</div>
 		
 		<script type="text/javascript">
@@ -159,6 +169,27 @@
 				
 				// We have done everything we need to prepare the CORS request, so send it
 				xhr.send();
+			}
+			
+			function playCardsOne(stat) {
+				// First create a CORS request, this is the message we are going to send (a get request in this case)
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/playCards?Stat="+stat); // Request type and URL+parameters
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
+
+				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
+				// to do when the response arrives 
+				xhr.onload = function(e) {
+ 					var responseText = xhr.response; // the text of the response
+ 					document.getElementById("roundCounter").innerHTML = responseText;
+					alert("cards played");
+				};
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();		
 			}
 			
 			function updateActivePlayer() {

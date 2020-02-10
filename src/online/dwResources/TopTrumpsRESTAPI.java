@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -125,23 +126,25 @@ public class TopTrumpsRESTAPI {
 	@GET
 	@Path("/playCards")
 	/**
-	 * @param None
+	 * Here is an example of how to read parameters provided in an HTML Get request.
+	 * @param Word - A word
 	 * @return - A String
 	 * @throws IOException
 	 */
-	public void playCards(int stat) throws IOException{
-		this.model.playCards(stat);
+	public void playCards(@QueryParam("Stat") int Stat) throws IOException {
+		System.out.println("This is the value of the stat sent from api:" + Stat);
+		this.model.playCards(Stat);
 	}
 	
 	@GET
-	@Path("/compareCards")
+	@Path("/selectWinners")
 	/**
 	 * @param None
 	 * @return - A String
 	 * @throws IOException
 	 */
-	public void compareCards() throws IOException{
-		this.model.compareCards();
+	public void selectWinners() throws IOException{
+		this.model.selectWinners();
 	}
 	
 	@GET
@@ -231,7 +234,7 @@ public class TopTrumpsRESTAPI {
 	 * @throws IOException
 	 */
 	public String updateRoundCounter() throws IOException {
-		String roundCounterAsJSONString = oWriter.writeValueAsString("It is currently Round: " + ((this.model.getNumOfRounds()) + 1));
+		String roundCounterAsJSONString = oWriter.writeValueAsString("It is currently Round: " + (this.model.getNumOfRounds()));
 		return roundCounterAsJSONString;
 	}
 }

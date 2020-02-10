@@ -15,26 +15,19 @@ public class TTModel {
 	private int numOfDraws;
 	private int numOfRounds;
 	private int numOfGames;
-	// private boolean writeGameLogsToFile; // passed by TopTrumpsCLIApplication to
-	// constructor - controller currently handling this
 	private boolean isDraw;
 	private Deck deck;
-	private ArrayList<Integer> allWonRounds = new ArrayList<Integer>();
+	private ArrayList<Integer> allWonRounds;
 	private ArrayList<Player> players;
 	private ArrayList<Player> playersToRemove;
-	ArrayList<Player> roundWinners;
+	private ArrayList<Player> roundWinners;
 	private ArrayList<Card> communalPile;
 	private ArrayList<Card> playingTable;
 	private ArrayList<Card> winnersCards;
-	
-	private int categoryChosen; // instance variable set by argument supplied to compareCards, needed for use in
-								// TestLogger
-	private HashMap<Player, Integer> playerStats = new HashMap<Player, Integer>(); // migrated from compareCards so as
-																					// to give an instance
-																					// variable, which can then be
-																					// called as a getter
+	private int categoryChosen; // instance variable set by argument supplied to compareCards, needed for use in TestLogger
+	private HashMap<Player, Integer> playerStats;
 
-	public TTModel() { // constructor //for use in TestLogger
+	public TTModel() { // constructor
 		this.setNewGameStates();
 	}
 
@@ -47,13 +40,15 @@ public class TTModel {
 		this.playingTable = new ArrayList<Card>();
 		this.winnersCards = new ArrayList<Card>();
 		this.allWonRounds = new ArrayList<Integer>();
+		this.allWonRounds = new ArrayList<Integer>();
+		this.playerStats = new HashMap<Player, Integer>();
 		this.numOfDraws = 0;
-		this.isDraw = false;
-		this.numOfRounds = 0;
+		this.numOfRounds = 1; //changed from 0
 		this.numOfGames = 0;
+		this.isDraw = false;
 		this.gameWinner = null;
-		// this.writeGameLogsToFile = false; - controller currently handling this.
-
+		this.activePlayer = null;
+		this.roundWinner = null;
 	}
 
 	public void startGame(int botCount) { // method is called to generate a Player and Bot objects based on the botCount
@@ -80,7 +75,7 @@ public class TTModel {
 	}
 
 	public void selectPlayer() {
-		if (this.numOfRounds == 0) { // If it is the first round
+		if (this.numOfRounds == 1) { // If it is the first round //changed from 0
 			Random r = new Random();
 			this.activePlayerNum = r.nextInt(this.playerCount); // select a random player to start first
 			this.activePlayer = this.players.get(this.activePlayerNum);
@@ -92,14 +87,12 @@ public class TTModel {
 		} else { // if a different player has won compared to the previous round
 			this.activePlayer = this.roundWinner; // set the starting player to be the winner of the last round
 		}
-		this.numOfRounds++; // increment rounds [migrated from selectPlayer, to give 1st round as numbered 1
-							// in all outputs]
+		
 	}
 
 	public void playCards(int stat) {
-		//HashMap<Player, Integer> playerStats = new HashMap<Player, Integer>(); - migrated to class instance variable for use in TestLogger
-		playerStats.clear(); // clears the instance variable at the beginning of each comparison, prior to adding new stats as before
-		ArrayList<Player> roundWinners = new ArrayList<Player>();
+		playerStats.clear(); // clears the instance variable at the beginning of each comparison, prior to
+								// adding new stats as before
 
 		for (Player p : this.players) {
 			playerStats.put(p, p.getTopCard().getStats().get(stat));
@@ -112,22 +105,24 @@ public class TTModel {
 																		// value matches the maxValueInMap, and get the
 																		// key of that entry
 			if (entry.getValue() == maxValueInMap) {
-				roundWinners.add(entry.getKey()); // adds all the players with the highest value to a new array list
+				this.roundWinners.add(entry.getKey()); // adds all the players with the highest value to a new array
+														// list
 			}
 		}
 	}
 
-	public void compareCards() {
-		if (roundWinners.size() < 2) { // if there is only one winner
+	public void selectWinners() {
+		System.out.println(this.roundWinners.size());
+		if (this.roundWinners.size() < 2) { // if there is only one winner
 			int currentRounds = roundWinners.get(0).getRoundsWon(); // add to the players personal win tally
-			roundWinners.get(0).setRoundsWon(currentRounds + 1);
+			this.roundWinners.get(0).setRoundsWon(currentRounds + 1);
 			ArrayList<Card> winnersCards = new ArrayList<Card>();
-			this.roundWinner = roundWinners.get(0); // set the round winning variable to the winning players name
+			this.roundWinner = this.roundWinners.get(0); // set the round winning variable to the winning players name
 			this.isDraw = false; // not a draw
 			this.winnersCards.addAll(this.communalPile);
 			this.winnersCards.addAll(this.playingTable);
 			Collections.shuffle(winnersCards); // randomise return cards
-			roundWinners.get(0).getHand().addAll(0, this.winnersCards); // add all the cards from the communal pile and
+			this.roundWinners.get(0).getHand().addAll(0, this.winnersCards); // add all the cards from the communal pile and
 																		// playing table to back of winning player's
 																		// hand in a random order
 			this.playingTable.clear(); // clear all array lists for new round
@@ -140,8 +135,8 @@ public class TTModel {
 			this.communalPile.addAll(this.playingTable); // add all cards to communal pile array list
 			this.playingTable.clear();
 		}
-		// this.numOfRounds++; // increment rounds [migrated to selectPlayer, to give
-		// 1st round as numbered 1 in all outputs]
+		this.numOfRounds++;  //moved from selectPlayer
+		this.roundWinners.clear();
 	}
 
 	public boolean hasWon() { // checker method called at the end of every round

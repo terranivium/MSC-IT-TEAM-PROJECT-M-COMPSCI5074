@@ -22,6 +22,8 @@
 
     <body onload="initalize()"> <!-- Call the initalize method when the page loads -->
     
+    <!-- statistics CSS -->
+    
     <style>
 		
 		body {
@@ -34,8 +36,18 @@
   		}
   		
   		.container {
-  			text-align: center
-  			
+  			text-align: center;
+			font-family: Arial;
+  		}
+  		
+  		.results {
+  			background-color: #ffffe6;
+  			border-style: solid;
+  			border-width: 1px;
+			border-radius:6px;
+  			width: 600px;
+  			display: inline-block;
+			font-size:20px;
   		}
   		
   		.footer {
@@ -47,25 +59,65 @@
   			padding: 2rem;
   			background-color: #4d4d4d;
   			color: #ffffff;
+			font-family: Arial;
+			font-size: 14px;
   		}
   		
-  		</style>
+  		.myButton {
+  			width: 600px;
+			box-shadow:inset 0px 1px 0px 0px #fce2c1;
+			background:linear-gradient(to bottom, #ffc477 5%, #fb9e25 100%);
+			background-color:#ffc477;
+			border-radius:6px;
+			border:1px solid #eeb44f;
+			display:inline-block;
+			cursor:pointer;
+			color:#ffffff;
+			font-size:20px;
+			font-weight:bold;
+			padding:6px 24px;
+			text-decoration:none;
+			text-shadow:0px 1px 0px #cc9f52;
+		}
+		
+		.myButton:hover {
+			background:linear-gradient(to bottom, #fb9e25 5%, #ffc477 100%);
+			background-color:#fb9e25;
+		}
+		
+		.myButton:active {
+			position:relative;
+			top:1px;
+		}
+		
+	<!-- statistics HTML -->
+  		
+  	</style>	
     	
-    	
-    	<nav class="navbar navbar-expand-lg navbar-inverse bg-inverse">
-        	<a class="navbar-brand" href="http://localhost:7777/toptrumps">
+		<nav class="navbar navbar-expand-lg navbar-inverse bg-inverse">
+			<a class="navbar-doggotrumps" href="http://localhost:7777/toptrumps">
             <img src="https://i.pinimg.com/originals/ec/7e/79/ec7e79072d498c26433d9658d83d4a8b.png" width="250" height="100" alt="Doggo Trumps">
-        </a>
+        	</a>
    		</nav>
     	
     	<div class="container">
-
-		
+    		
+    		<br></br>
+    		
+    		<div class="buttons">
+    			<input class="mybutton" type="button" value="&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp New Game &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp" 
+				onclick="window.location.href='/toptrumps/game'" />
+    		</div>
+    		
+    		<div class="results">
+    			Add results here...
+    		</div>
+    	
 		</div>
 		
 		<div class="footer">
-Made by Git What You Give</br>Jessica Lavin - Daniel Mitchell - Simon Manton Milne - Wesley Scott
-</div>
+			Made by Git What You Give</br>Jessica Lavin - Daniel Mitchell - Simon Manton Milne - Wesley Scott
+		</div>
 		
 		<script type="text/javascript">
 		

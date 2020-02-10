@@ -1,3 +1,5 @@
+<!-- COMPLETED -->
+
 <html>
 
 	<head>
@@ -30,26 +32,27 @@
 		}
 		
   		.navbar {
-  			padding: 2rem;
-  			background-color: #4d4d4d;
+			padding: 2rem;
+			background-color: #4d4d4d;
   		}
   		
   		.menucontainer {
   			text-align: center;	
-			font-family:Arial;
-			font-size:20px;
-  			
+			font-family: Arial;
+			font-size: 20px;
   		}
   		
   		.footer {
-  			position: absolute;
   			right: 0;
   			bottom: 0;
   			left: 0;
   			width: 100%;
+  			position: absolute;
   			padding: 2rem;
   			background-color: #4d4d4d;
-  			color: #ffffff;
+  			color: #ffffff;	
+			font-family: Arial;
+			font-size: 14px;
   		}
 		
 			
@@ -79,37 +82,30 @@
 			position:relative;
 			top:1px;
 		}
-		
-            
-        </style>
+		           
+	</style>
 
 	<!-- selection screen HTML -->
-	
-	 	<nav class="navbar navbar-expand-lg navbar-inverse bg-inverse">
-        	<a class="navbar-brand" href="http://localhost:7777/toptrumps">
+		
+		<nav class="navbar navbar-expand-lg navbar-inverse bg-inverse">
+			<a class="navbar-doggotrumps" href="http://localhost:7777/toptrumps">
             <img src="https://i.pinimg.com/originals/ec/7e/79/ec7e79072d498c26433d9658d83d4a8b.png" width="250" height="100" alt="Doggo Trumps">
-        </a>
+        	</a>
    		</nav>
             	
     	<div class="menucontainer">
-    	
-    	<br></br>
-    	
-    	<p><b>Welcome to Doggo Top Trumps!</b></p>
-    	
-    	<p>Would you like to play a new game or see previous game statistics?</p>
-		
-				<input class="mybutton" type="button" value="New Game" 
-				onclick="window.location.href='toptrumps/game'" />
-			
-				<input class="mybutton" type="button" value="Game Statistics" 
-				onclick="window.location.href='toptrumps/stats'"/>
-			
+    		<br></br>
+	    	<p><b>Welcome to Doggo Top Trumps!</b></p>
+	    	<p>Would you like to play a new game or see previous game statistics?</p>
+			<input class="mybutton" type="button" value="New Game" 
+			onclick="window.location.href='toptrumps/game'" />
+			<input class="mybutton" type="button" value="Game Statistics" 
+			onclick="window.location.href='toptrumps/stats'"/>
 		</div>
 		
-<div class="footer">
-Made by Git What You Give</br>Jessica Lavin - Daniel Mitchell - Simon Manton Milne - Wesley Scott
-</div>
+		<div class="footer">
+			Made by Git What You Give</br>Jessica Lavin - Daniel Mitchell - Simon Manton Milne - Wesley Scott
+		</div>
 		
 		<script type="text/javascript">
 		

@@ -22,7 +22,7 @@
 
     <body onload="initalize()"> 
     
-    <!-- selection screen CSS -->
+    <!-- game screen CSS -->
 	
 	<style>
 		
@@ -36,7 +36,7 @@
   		}
   		
   		.container {
-  			text-align: center
+  			text-align: center;
   			
   		}
   		
@@ -49,9 +49,13 @@
   			padding: 2rem;
   			background-color: #4d4d4d;
   			color: #ffffff;
+			font-family: Arial;
+			font-size: 14px;
   		}
   		
   		</style>
+  		
+  		<!-- game screen HTML -->
     	
     	<nav class="navbar navbar-expand-lg navbar-inverse bg-inverse">
         	<a class="navbar-brand" href="http://localhost:7777/toptrumps">
@@ -60,19 +64,15 @@
    		</nav>
     	
     	<div class="container">
-
-			<!-- Add your HTML Here -->
-   		
-   		<h1 id="cardList">players top card</h1>
+   			<h1 id="cardList">players top card</h1>
 			<h2 id="roundCounter">round counter</h2>
 			<h2 id="activePlayer">active player</h2>
 			<input onclick="showCard();updateActivePlayer();updateRoundCounter()" type="button" value="Show Player Card" id="myButton1"></input>
-
 		</div>
 		
 		<div class="footer">
-Made by Git What You Give</br>Jessica Lavin - Daniel Mitchell - Simon Manton Milne - Wesley Scott
-</div>
+			Made by Git What You Give</br>Jessica Lavin - Daniel Mitchell - Simon Manton Milne - Wesley Scott
+		</div>
 		
 		<script type="text/javascript">
 		

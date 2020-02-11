@@ -60,12 +60,6 @@ public class TTCLIView {
 		System.out.println("///////////////////////\n");
 	}
 
-	public void compareCards(int stat) {
-		for (Player p : this.model.getPlayers()) {
-			System.out.println(p.getName() + " " + p.getTopCard().getStats().get(stat));
-		}
-	}
-
 	public void endRuntime() {
 		System.out.println("Thank you for playing!");
 	}

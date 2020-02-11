@@ -76,6 +76,7 @@ public class TTModel {
 			this.players.add(new Bot("Player" + (i + 1) + " (AI)"));
 		}
 		this.deck.loadDeck(); // calls method to read and create card objects
+		this.deck.shuffleDeck(); //calls method to shuffle deck
 		this.deck.dealCards(this.playerCount, this.players);
 	}
 
@@ -96,12 +97,13 @@ public class TTModel {
 	}
 
 	public void playCards(int stat) {
-		this.logWriter.set
-		playerStats.clear(); // clears the instance variable at the beginning of each comparison, prior to
-								// adding new stats as before
-
+		this.logWriter.setPlayersHands(this.players, this.numOfRounds);
+		this.logWriter.setChosenCategory(stat);
+		this.playerStats.clear(); // clears the instance variable at the beginning of each comparison, prior to
+		this.logWriter.resetEveryoneValues();						// adding new stats as before
 		for (Player p : this.players) {
-			playerStats.put(p, p.getTopCard().getStats().get(stat));
+			this.playerStats.put(p, p.getTopCard().getStats().get(stat));
+			this.logWriter.setEveryoneValues(p.getName() + " has the card value: " + p.getTopCard().getStats().get(stat));
 			this.playingTable.add(p.getHand().remove(p.getTopCardIndex())); // remove all the players top cards and add
 																			// the to an array list
 		}
@@ -120,10 +122,10 @@ public class TTModel {
 
 	public void selectWinners() {
 		if (this.roundWinners.size() < 2) { // if there is only one winner
-			int currentRounds = roundWinners.get(0).getRoundsWon(); // add to the players personal win tally
-			this.roundWinners.get(0).setRoundsWon(currentRounds + 1);
+			this.roundWinners.get(0).incrementRoundsWon();
 			ArrayList<Card> winnersCards = new ArrayList<Card>();
 			this.roundWinner = this.roundWinners.get(0); // set the round winning variable to the winning players name
+			this.logWriter.setRoundWinner(this.roundWinner.getName());
 			this.isDraw = false; // not a draw
 			this.winnersCards.addAll(this.communalPile);
 			this.winnersCards.addAll(this.playingTable);
@@ -150,8 +152,7 @@ public class TTModel {
 	public boolean hasWon() { // checker method called at the end of every round
 		for (Player p : this.players) {
 			if ((p.getHand().size() + this.communalPile.size()) >= this.deck.getNumOfCards()) { // does any of the
-																								// playershave all the cards?
-				this.logWriter.setGameWinner(p);																				
+																								// playershave all the cards?																				
 				this.gameWinner = p.getName(); // won the game
 				this.numOfGames++; // increment number of games
 				updateWonRounds();
@@ -211,20 +212,14 @@ public class TTModel {
 		return this.deck;
 	}
 
-	public ArrayList<Card> getCommunalPile() {
-		return this.communalPile;
+	public LogWriter getLogWriter() {
+		return logWriter;
 	}
+	
 
-	public ArrayList<Card> getPlayingTable() {
-		return this.playingTable;
-	}
 
-	public HashMap<Player, Integer> getPlayerStats() {
-		return this.playerStats;
-	}
+	
 
-	public int getCategoryChosen() {
-		return this.categoryChosen;
-	}
+	
 
 }

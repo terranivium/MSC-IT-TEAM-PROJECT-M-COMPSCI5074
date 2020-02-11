@@ -143,8 +143,11 @@ public class TopTrumpsRESTAPI {
 	 * @return - A String
 	 * @throws IOException
 	 */
-	public void selectWinners() throws IOException{
+	public String selectWinners() throws IOException{
 		this.model.selectWinners();
+		System.out.println("The winner of the round was" + model.getRoundWinnerName());
+		String roundWinnerAsJSONString = oWriter.writeValueAsString(this.model.getRoundWinnerName());
+		return roundWinnerAsJSONString;
 	}
 	
 	@GET

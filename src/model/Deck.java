@@ -26,7 +26,6 @@ public class Deck {
 			String read = null;
 			read = br.readLine(); // reads first line of text into a string array
 			this.headerNames = read.split("\\s+");
-
 			while ((read = br.readLine()) != null) { // while there is another line in the txt file to read
 				this.numOfCards++; // count number of cards in deck
 				String[] word = read.split("\\s+");

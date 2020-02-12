@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LogWriter {
+private String [] headerNames;
 private ArrayList<Card> deckOnLoad; 
 private ArrayList<Card>	deckShuffle; 
 private ArrayList<Card> communalPile; 
@@ -15,6 +16,7 @@ private String everyoneHands;
 private String roundWinner;
 
 public LogWriter() {
+	this.headerNames = new String[5];
 	this.deckOnLoad = new ArrayList<Card>();
 	this.deckShuffle = new ArrayList<Card>();	
 	this.communalPile =new ArrayList<Card>();
@@ -82,20 +84,26 @@ public void setDeckShuffle(ArrayList<Card> deck) {
 
 public String getPlayingTable() {
 	String playingTableString = new String();
-	playingTableString = "__Everyones Top Card Played__\n";
+	playingTableString = "__Everyones Top Card Played__\n____________________________\n";
 	int i = 1;
 	for(Card c:this.playingTable) {
-		playingTableString = playingTableString + "Player" + i + " : " + c.getDescription() + "\n";
+		playingTableString = playingTableString + "/////Player" + i + "///// \n" 
+				+ this.headerNames[0] + " : " + c.getDescription() + "\n"
+				+ this.headerNames[1] + " : " + c.getCategoryOne() + "\n"
+				+ this.headerNames[2] + " : " + c.getCategoryTwo() + "\n"
+				+ this.headerNames[3] + " : " + c.getCategoryThree() + "\n"
+				+ this.headerNames[4] + " : " + c.getCategoryFour() + "\n"
+				+ this.headerNames[5] + " : " + c.getCategoryFive() + "\n____________________________\n";
 		i++;
 	}
 	return playingTableString;
 }
 
 
-public void setPlayingTable(ArrayList<Card> playingTable) {
+public void setPlayingTable(ArrayList<Card> playingTable, String[] headerNames) {
+	this.headerNames = headerNames;
 	this.playingTable = (ArrayList<Card>) playingTable.clone();
 }
-
 
 public ArrayList<String> getEveryoneValues() {
 	return this.everyoneValues;

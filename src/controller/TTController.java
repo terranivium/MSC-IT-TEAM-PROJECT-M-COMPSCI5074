@@ -122,14 +122,14 @@ public class TTController {
 			}
 			this.model.playCards(this.readInput);
 			this.model.selectWinners();
-			System.out.println(this.model.getLogWriter().getDeckOnLoad());
-			System.out.println(this.model.getLogWriter().getDeckShuffle());
-			System.out.println(this.model.getLogWriter().getEveryoneHands());
-			System.out.println(this.model.getLogWriter().getCommunalPile());
-			System.out.println(this.model.getLogWriter().getPlayingTable());
-			System.out.println(this.model.getLogWriter().getChosenCategory());
-			System.out.println(this.model.getLogWriter().getEveryoneValues());
-			System.out.println(this.model.getLogWriter().getRoundWinner());
+			System.out.println(this.model.getlogWriter().getDeckOnLoad());
+			System.out.println(this.model.getlogWriter().getDeckShuffle());
+			System.out.println(this.model.getlogWriter().getEveryoneHands());
+			System.out.println(this.model.getlogWriter().getCommunalPile());
+			System.out.println(this.model.getlogWriter().getPlayingTable());
+			System.out.println(this.model.getlogWriter().getChosenCategory());
+			System.out.println(this.model.getlogWriter().getEveryoneValues());
+			System.out.println(this.model.getlogWriter().getRoundWinner());
 		}
 		this.view.gameWinner();
 		// this.dbI.updateDb(this.model.getGameWinner(), this.model.getNumOfDraws(),

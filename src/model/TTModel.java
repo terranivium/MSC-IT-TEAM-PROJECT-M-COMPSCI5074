@@ -15,6 +15,7 @@ public class TTModel {
 	private int numOfDraws;
 	private int numOfRounds;
 	private int numOfGames;
+	//private boolean writeGameLogsToFile; // passed by TopTrumpsCLIApplication to constructor - controller currently handling this
 	private boolean isDraw;
 	private Deck deck;
 	private ArrayList<Integer> allWonRounds;
@@ -24,10 +25,11 @@ public class TTModel {
 	private ArrayList<Card> communalPile;
 	private ArrayList<Card> playingTable;
 	private ArrayList<Card> winnersCards;
-	private HashMap<Player, Integer> playerStats;
-	private LogWriter logWriter;
+	private int categoryChosen; //instance variable set by argument supplied to compareCards, needed for use in TestLogger
+	private HashMap<Player, Integer> playerStats = new HashMap<Player, Integer>(); 	//migrated from compareCards so as to give an instance
+    private LogWriter logWriter;																				//variable, which can then be called as a getter
 
-	public TTModel() { // constructor
+    public TTModel() { // constructor												//for use in TestLogger
 		this.setNewGameStates();
 	}
 
@@ -40,9 +42,8 @@ public class TTModel {
 		this.playingTable = new ArrayList<Card>();
 		this.winnersCards = new ArrayList<Card>();
 		this.allWonRounds = new ArrayList<Integer>();
-		this.allWonRounds = new ArrayList<Integer>();
 		this.playerStats = new HashMap<Player, Integer>();
-		this.logWriter = new LogWriter();
+		//this.logWriter = new LogWriter();
 		this.numOfDraws = 0;
 		this.numOfRounds = 1; //changed from 0
 		this.numOfGames = 0;
@@ -63,11 +64,13 @@ public class TTModel {
 			this.players.add(new Bot("Player" + (i + 2) + " (AI)"));
 		}
 		this.deck.loadDeck(); // calls method in deck object to generate card objects
-		this.logWriter.setDeckOnLoad(this.deck.getCards());
+        this.logWriter = new LogWriter(this.deck);
+		//this.logWriter.setDeckOnLoad(this.deck.getCards());
 		this.deck.shuffleDeck(); //calls method to shuffle deck
 		this.logWriter.setDeckShuffle(this.deck.getCards());
-		this.deck.dealCards(this.playerCount, this.players); // calls method to deal cards amongst
+        this.deck.dealCards(this.playerCount, this.players); // calls method to deal cards amongst
 		System.err.println("PLAYER SIZE  STARTGAME" + this.players.size()); //ONLINE TEST
+        this.logWriter.setPlayersHands(this.players, this.numOfRounds);
 	}
 
 	public void startBotGame(int botCount) { // method is called when a bot vs bot game is required, no player objects
@@ -80,9 +83,13 @@ public class TTModel {
 		this.deck.loadDeck(); // calls method to read and create card objects
 		this.deck.shuffleDeck(); //calls method to shuffle deck
 		this.deck.dealCards(this.playerCount, this.players);
+		this.logWriter.setPlayersHands(this.players, this.numOfRounds); // added here as TestLogger needs to see hands on initial deal, before play, otherwise null.
 	}
 
 	public void selectPlayer() {
+        if (this.numOfRounds == 0) {
+            this.numOfRounds++;
+        }
 		if (this.numOfRounds == 1) { // If it is the first round //changed from 0
 			Random r = new Random();
 			System.err.println("player count select player= " + this.playerCount); //ONLINE TEST
@@ -99,11 +106,11 @@ public class TTModel {
 		} else { // if a different player has won compared to the previous round
 			this.activePlayer = this.roundWinner; // set the starting player to be the winner of the last round
 		}
-		
+
 	}
 
 	public void playCards(int stat) {
-		this.logWriter.setPlayersHands(this.players, this.numOfRounds);
+		//this.logWriter.setPlayersHands(this.players, this.numOfRounds);
 		this.logWriter.setChosenCategory(stat);
 		this.playerStats.clear(); // clears the instance variable at the beginning of each comparison, prior to
 		this.logWriter.resetEveryoneValues();						// adding new stats as before
@@ -139,6 +146,7 @@ public class TTModel {
 			this.roundWinners.get(0).getHand().addAll(0, this.winnersCards); // add all the cards from the communal pile and
 																		// playing table to back of winning player's
 																		// hand in a random order
+			this.logWriter.setPlayersHands(this.players, this.numOfRounds); //moved here as testlogger needs to see this at the end of a game loop.
 			this.playingTable.clear(); // clear all array lists for new round
 			this.communalPile.clear();
 			this.logWriter.setCommunalPile(communalPile);
@@ -147,9 +155,11 @@ public class TTModel {
 			this.numOfDraws++;
 			this.isDraw = true;
 			this.roundWinner = null;
+			this.logWriter.setRoundWinner(null); //added due to bug where LogWriter never learnt of draws.
 			this.communalPile.addAll(this.playingTable); // add all cards to communal pile array list
 			this.logWriter.setCommunalPile(this.communalPile);
 			this.playingTable.clear();
+			this.logWriter.setPlayersHands(this.players, this.numOfRounds);////moved here as testlogger needs to see this at the end of a game loop.
 		}
 		this.numOfRounds++;  //moved from selectPlayer
 		this.roundWinners.clear();
@@ -158,7 +168,7 @@ public class TTModel {
 	public boolean hasWon() { // checker method called at the end of every round
 		for (Player p : this.players) {
 			if ((p.getHand().size() + this.communalPile.size()) >= this.deck.getNumOfCards()) { // does any of the
-																								// playershave all the cards?																				
+																								// playershave all the cards?
 				this.gameWinner = p.getName(); // won the game
 				this.numOfGames++; // increment number of games
 				updateWonRounds();
@@ -219,14 +229,28 @@ public class TTModel {
 		return this.deck;
 	}
 
-	public LogWriter getlogWriter() {
-		return logWriter;
+    public LogWriter getlogWriter() {
+        return logWriter;
+    }
+
+	public ArrayList<Card> getCommunalPile()
+	{
+		return this.communalPile;
 	}
 	
-
-
+	public ArrayList<Card> getPlayingTable()
+	{
+		return this.playingTable;
+	}
 	
-
+	public HashMap<Player, Integer> getPlayerStats()
+	{
+		return this.playerStats;
+	}
+	
+	public int getCategoryChosen() {
+		return this.categoryChosen;
+	}
 	
 
 }

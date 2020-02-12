@@ -27,15 +27,12 @@ public class DatabaseInteractor {
 	Connection dbConnection = null;
 	//TTModel model;
 	
-	// temp usage on our local systems. Set you own credentials. 
-	private static String location = "jdbc:postgresql://localhost:5432/postgres";
-	private static String username = "postgres";
-	private static String password = "guitar";
+
 	
-	//yacata details for when we get round to that.
-//	private String location = "jdbc:postgresql://yacata.dcs.gla.ac.uk:5432/";
-//	private String username = "m_19_0005557m";
-//	private String password = "0005557m";
+	//Richard server details for when we get round to that.
+	private String location = "jdbc:postgresql://52.24.215.108:5432/";
+	private String username = "YouGitWhatYouGive";
+	private String password = "YouGitWhatYouGive";
 
 	
 	
@@ -108,6 +105,7 @@ public class DatabaseInteractor {
 	
 	//method to request statistics from database server. Calls additional methods openConnection() and endConnection().
 	//This is the method that should be called when stats retrieval is requested, as it handles the entire procedure.
+	//returns the results as an int array.
 	
 	public int[] dbRequest()
 		{	
@@ -152,6 +150,7 @@ public class DatabaseInteractor {
 			}
 						
 		}
+		endConnection();	
 		return results;
 	}
 	

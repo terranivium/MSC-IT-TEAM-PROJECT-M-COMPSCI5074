@@ -70,10 +70,10 @@ public class TTController {
 						this.systemInput.nextLine();
 					} while (this.readInput >= 5 || this.readInput <= 0);
 					this.model.startBotGame(this.readInput);
-//					if (this.writeGameLogsToFile)
-//					{
-//						logPreRoundsActivity();
-//					}
+					if (this.writeGameLogsToFile)
+					{
+						logPreRoundsActivity();
+					}
 				} else {
 					this.model.startBotGame(this.readInput);
 				}
@@ -126,16 +126,13 @@ public class TTController {
 			
 		}
 		this.view.gameWinner();
-		// this.dbI.updateDb(this.model.getGameWinner(), this.model.getNumOfDraws(),
-		// this.model.getNumOfRounds(), this.model.getAllWonRounds());//calls on model
-		// methods to supply arguments to dbI for updating db.
 		// this.dbI.dbRequest(); // testline - delete
 		this.model.setNewGameStates();
 		this.runtimeMenu();
 	}
 
 	public void runtimeStats() {
-		// for drawing stats in comandline, similar to write test log feature
+		// for drawing stats in commandline, similar to write test log feature
 	}
 	
 	

@@ -31,11 +31,14 @@ public class DatabaseInteractor {
 	private static String location = "jdbc:postgresql://localhost:5432/postgres";
 	private static String username = "postgres";
 	private static String password = "guitar";
+
 	
 	//yacata details for when we get round to that.
 //	private String location = "jdbc:postgresql://yacata.dcs.gla.ac.uk:5432/";
 //	private String username = "m_19_0005557m";
 //	private String password = "0005557m";
+	//Richard server details for when we get round to that.
+	private String location = "jdbc:postgresql://52.24.215.108:5432/";
 
 	
 	

@@ -26,7 +26,7 @@ public class TTModel {
 	private ArrayList<Card> winnersCards;
 	private int categoryChosen; // instance variable set by argument supplied to compareCards, needed for use in TestLogger
 	private HashMap<Player, Integer> playerStats;
-	private LogWriter logWriter;
+	//private LogWriter logWriter;
 
 	public TTModel() { // constructor
 		this.setNewGameStates();
@@ -43,7 +43,7 @@ public class TTModel {
 		this.allWonRounds = new ArrayList<Integer>();
 		this.allWonRounds = new ArrayList<Integer>();
 		this.playerStats = new HashMap<Player, Integer>();
-		this.logWriter = new LogWriter();
+		//this.logWriter = new LogWriter();
 		this.numOfDraws = 0;
 		this.numOfRounds = 1; //changed from 0
 		this.numOfGames = 0;
@@ -62,9 +62,9 @@ public class TTModel {
 			this.players.add(new Bot("Player" + (i + 2) + " (AI)"));
 		}
 		this.deck.loadDeck(); // calls method in deck object to generate card objects
-		this.logWriter.setDeckOnLoad(this.deck.getCards());
+		//this.logWriter.setDeckOnLoad(this.deck.getCards());
 		this.deck.shuffleDeck(); //calls method to shuffle deck
-		this.logWriter.setDeckShuffle(this.deck.getCards());
+		//this.logWriter.setDeckShuffle(this.deck.getCards());
 		this.deck.dealCards(this.playerCount, this.players); // calls method to deal cards amongst
 	}
 
@@ -97,17 +97,17 @@ public class TTModel {
 	}
 
 	public void playCards(int stat) {
-		this.logWriter.setPlayersHands(this.players, this.numOfRounds);
-		this.logWriter.setChosenCategory(stat);
+		//this.logWriter.setPlayersHands(this.players, this.numOfRounds);
+		//this.logWriter.setChosenCategory(stat);
 		this.playerStats.clear(); // clears the instance variable at the beginning of each comparison, prior to
-		this.logWriter.resetEveryoneValues();						// adding new stats as before
+		//this.logWriter.resetEveryoneValues();						// adding new stats as before
 		for (Player p : this.players) {
 			this.playerStats.put(p, p.getTopCard().getStats().get(stat));
-			this.logWriter.setEveryoneValues(p.getName() + " has the card value: " + p.getTopCard().getStats().get(stat));
+			//this.logWriter.setEveryoneValues(p.getName() + " has the card value: " + p.getTopCard().getStats().get(stat));
 			this.playingTable.add(p.getHand().remove(p.getTopCardIndex())); // remove all the players top cards and add
 																			// the to an array list
 		}
-		this.logWriter.setPlayingTable(this.playingTable);
+		//this.logWriter.setPlayingTable(this.playingTable);
 		int maxValueInMap = Collections.max(playerStats.values()); // calculate the highest value from the cards
 																	// presented by the players
 		for (Entry<Player, Integer> entry : playerStats.entrySet()) { // Iterate through hashmap value to find what
@@ -125,7 +125,7 @@ public class TTModel {
 			this.roundWinners.get(0).incrementRoundsWon();
 			ArrayList<Card> winnersCards = new ArrayList<Card>();
 			this.roundWinner = this.roundWinners.get(0); // set the round winning variable to the winning players name
-			this.logWriter.setRoundWinner(this.roundWinner.getName());
+			//this.logWriter.setRoundWinner(this.roundWinner.getName());
 			this.isDraw = false; // not a draw
 			this.winnersCards.addAll(this.communalPile);
 			this.winnersCards.addAll(this.playingTable);
@@ -135,14 +135,14 @@ public class TTModel {
 																		// hand in a random order
 			this.playingTable.clear(); // clear all array lists for new round
 			this.communalPile.clear();
-			this.logWriter.setCommunalPile(communalPile);
+			//this.logWriter.setCommunalPile(communalPile);
 			this.winnersCards.clear();
 		} else { // if there are more than two winners (draw)
 			this.numOfDraws++;
 			this.isDraw = true;
 			this.roundWinner = null;
 			this.communalPile.addAll(this.playingTable); // add all cards to communal pile array list
-			this.logWriter.setCommunalPile(this.communalPile);
+			//this.logWriter.setCommunalPile(this.communalPile);
 			this.playingTable.clear();
 		}
 		this.numOfRounds++;  //moved from selectPlayer
@@ -212,14 +212,8 @@ public class TTModel {
 		return this.deck;
 	}
 
-	public LogWriter getLogWriter() {
-		return logWriter;
-	}
-	
-
-
-	
-
-	
-
+//	public LogWriter getLogWriter() {
+//		return this.logWriter;
+//	}
+//	
 }

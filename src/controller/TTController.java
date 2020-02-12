@@ -2,12 +2,12 @@ package controller;
 
 import java.util.Scanner;
 
+import database_testlog.DatabaseInteractor;
 import database_testlog.TestLogger;
 //import database_testlog.DatabaseInteractor;
 import model.Player;
 import model.TTModel;
 import view.TTCLIView;
-import view.TTOnlineView;
 
 public class TTController {
 
@@ -19,7 +19,7 @@ public class TTController {
 	private int readInput; // Holds user input for condition checks
 	private TestLogger testLogger;
 
-	// private DatabaseInteractor dbI = new DatabaseInteractor(); //instance of
+	private DatabaseInteractor dbI = new DatabaseInteractor(); //instance of
 	// connector to database storing game statistics
 
 	public TTController(TTModel model, TTCLIView view, boolean writeGameLogsToFile) {
@@ -79,6 +79,20 @@ public class TTController {
 					this.model.startBotGame(this.readInput);
 				}
 				this.runtimeGame();
+			} else if (this.readInput == 3) {
+				this.view.dbiDraw(this.dbI.dbRequest());
+				this.readInput = this.systemInput.nextInt();
+				this.systemInput.nextLine();
+				if(this.readInput == 1) {
+					this.runtimeMenu();
+				} else {
+					do {
+						this.view.notValid();
+						this.view.dbiDraw(this.dbI.dbRequest());
+						this.readInput = this.systemInput.nextInt();
+						this.systemInput.nextLine();	
+					}while(this.readInput!=1);
+				}
 			} else if (this.readInput == 4) {
 				// closes scanner, runtime
 				this.view.endRuntime();
@@ -122,20 +136,18 @@ public class TTController {
 			}
 			this.model.playCards(this.readInput);
 			this.model.selectWinners();
-			System.out.println(this.model.getLogWriter().getDeckOnLoad());
-			System.out.println(this.model.getLogWriter().getDeckShuffle());
-			System.out.println(this.model.getLogWriter().getEveryoneHands());
-			System.out.println(this.model.getLogWriter().getCommunalPile());
-			System.out.println(this.model.getLogWriter().getPlayingTable());
-			System.out.println(this.model.getLogWriter().getChosenCategory());
-			System.out.println(this.model.getLogWriter().getEveryoneValues());
-			System.out.println(this.model.getLogWriter().getRoundWinner());
+			//System.out.println(this.model.getLogWriter().getDeckOnLoad());
+			//System.out.println(this.model.getLogWriter().getDeckShuffle());
+			//System.out.println(this.model.getLogWriter().getEveryoneHands());
+			//System.out.println(this.model.getLogWriter().getCommunalPile());
+			//System.out.println(this.model.getLogWriter().getPlayingTable());
+			//System.out.println(this.model.getLogWriter().getChosenCategory());
+			//System.out.println(this.model.getLogWriter().getEveryoneValues());
+			//System.out.println(this.model.getLogWriter().getRoundWinner());
 		}
 		this.view.gameWinner();
-		// this.dbI.updateDb(this.model.getGameWinner(), this.model.getNumOfDraws(),
-		// this.model.getNumOfRounds(), this.model.getAllWonRounds());//calls on model
+		this.dbI.updateDb(this.model.getGameWinner(), this.model.getNumOfDraws(), this.model.getNumOfRounds(), this.model.getAllWonRounds());
 		// methods to supply arguments to dbI for updating db.
-		// this.dbI.dbRequest(); // testline - delete
 		this.model.setNewGameStates();
 		this.runtimeMenu();
 	}

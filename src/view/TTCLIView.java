@@ -1,5 +1,7 @@
 package view;
 
+import java.util.Arrays;
+
 import model.*;
 
 public class TTCLIView {
@@ -13,14 +15,14 @@ public class TTCLIView {
 	// draw CLI main menu
 	public void drawMain() {
 		System.out.println("--------------------------------");
-		System.out.println("| Doggo Trumps, test_ver. 0.12 |");
+		System.out.println("|  Doggo Trumps, cli_ver. 1.0  |");
 		System.out.println("--------------------------------");
-		System.out.println("Select mode...--------------");
+		System.out.println("Select mode...");
 		System.out.println("	1. New Player Game");
-		System.out.println("	2. AI vs AI Autoplay"); // Bot class
-		// System.out.println(" 3. View runtime stats"); // DB
+		System.out.println("	2. AI vs AI Autoplay"); 
+		System.out.println(" 	3. View runtime stats");
 		System.out.println("	4. Quit");
-		System.out.println("----------------------------");
+		System.out.println("--------------------------------");
 	}
 
 	// draw AI select menu
@@ -66,5 +68,12 @@ public class TTCLIView {
 
 	public void gameWinner() {
 		System.out.println("The winner of the game was " + this.model.getGameWinner());
+	}
+	
+	public void dbiDraw(int[] results) {
+		System.out.println("Total Games|Human Wins|AI Wins|Avg. Draws|Highest No. Rounds"); //testline - to delete
+		System.out.println(Arrays.toString(results)); //testline - to delete
+		System.out.println();
+		System.out.println("Press 1 key to return to main menu");
 	}
 }

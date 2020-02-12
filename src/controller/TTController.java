@@ -2,6 +2,7 @@ package controller;
 
 import java.util.Scanner;
 
+import database_testlog.DatabaseInteractor;
 import database_testlog.TestLogger;
 //import database_testlog.DatabaseInteractor;
 import model.Player;
@@ -16,9 +17,15 @@ public class TTController {
 	private Scanner systemInput = new Scanner(System.in); // User input instance
 	private int readInput; // Holds user input for condition checks
 	private TestLogger testLogger;
+<<<<<<< Updated upstream
 	
 	// private DatabaseInteractor dbI = new DatabaseInteractor(); //instance of
 	// connector to database storing game statistics
+=======
+
+	private DatabaseInteractor dbI = new DatabaseInteractor(); //instance of
+	//connector to database storing game statistics
+>>>>>>> Stashed changes
 
 	public TTController(TTModel model, TTCLIView view, boolean writeGameLogsToFile) {
 		this.model = model;
@@ -52,10 +59,17 @@ public class TTController {
 					
 				} else {
 					this.model.startGame(this.readInput);
+<<<<<<< Updated upstream
 //					if (this.writeGameLogsToFile) 
 //						{
 //							logPreRoundsActivity();
 //						}
+=======
+					if (this.writeGameLogsToFile)
+						{
+							logPreRoundsActivity();
+						}
+>>>>>>> Stashed changes
 				}
 				this.runtimeGame(); 
 			} else if (this.readInput == 2) { // for bot game
@@ -82,7 +96,11 @@ public class TTController {
 				// closes scanner, runtime
 				this.view.endRuntime();
 				this.systemInput.close();
+<<<<<<< Updated upstream
 				//this.testLogger.closeLog(); - will be used to close testLogger.
+=======
+				this.testLogger.closeLog(); //close logger for exit.
+>>>>>>> Stashed changes
 				System.exit(0);
 			} else {
 				// to catch invalid input
@@ -115,6 +133,7 @@ public class TTController {
 			} else {
 				this.view.viewCard(this.model.getActivePlayer().getTopCard());
 				this.readInput = this.model.getActivePlayer().chooseCard();
+<<<<<<< Updated upstream
 //				if (this.writeGameLogsToFile) 
 //				{
 //					logRoundReport();
@@ -124,8 +143,40 @@ public class TTController {
 			this.model.compareCards(this.readInput);
 			
 			
+=======
+			}
+	
+			this.model.playCards(this.readInput);
+			this.model.selectWinners();
+			
+			if (this.writeGameLogsToFile)
+				{
+					logRoundReport();
+				}
+			
+			//below system.out can be removed
+			System.out.println("The current round is " + this.model.getNumOfRounds());
+			if (this.model.getNumOfRounds() == 1)
+			{
+				System.out.println(this.model.getLogWriter().getDeckOnLoad());
+				System.out.println(this.model.getLogWriter().getDeckShuffle());
+			}
+			System.out.println(this.model.getLogWriter().getPlayingTable());
+			System.out.println(this.model.getLogWriter().getChosenCategory());
+			System.out.println(this.model.getLogWriter().getEveryoneValues());
+			System.out.println(this.model.getLogWriter().getRoundWinner());
+			System.out.println(this.model.getLogWriter().getEveryoneHands());
+			System.out.println(this.model.getLogWriter().getCommunalPile());
+>>>>>>> Stashed changes
 		}
 		this.view.gameWinner();
+		if (this.writeGameLogsToFile)
+		{
+			this.testLogger.writeGameWinner(this.model.getGameWinner());
+		}
+		
+		this.dbI.updateDb(this.model.getGameWinner(), this.model.getNumOfDraws(), this.model.getNumOfRounds(), this.model.getAllWonRounds());//calls on model
+																											// methods to supply arguments to dbI for updating db.
 		// this.dbI.dbRequest(); // testline - delete
 		this.model.setNewGameStates();
 		this.runtimeMenu();
@@ -134,6 +185,7 @@ public class TTController {
 	public void runtimeStats() {
 		// for drawing stats in commandline, similar to write test log feature
 	}
+<<<<<<< Updated upstream
 	
 	
 	//methods for generating log.
@@ -149,4 +201,25 @@ public class TTController {
 //		this.testLogger.writePlayingTable(this.model.getPlayers(),this.model.getPlayingTable(), this.model.getDeck().getHeaderNames(), this.model.getNumOfRounds());
 //		this.testLogger.writeCategoryChosen(this.model.getPlayerStats(), this.model.getActivePlayer(), this.model.getCategoryChosen(), this.model.getDeck().getHeaderNames());
 //	}
+=======
+
+	// methods for generating log.
+	private void logPreRoundsActivity()
+	{
+		this.testLogger.writeLoadedDeck(this.model.getLogWriter().getDeckOnLoad());
+		this.testLogger.writeShuffledDeck(this.model.getLogWriter().getDeckShuffle());
+		this.testLogger.writeDealtHands(this.model.getLogWriter().getEveryoneHands());
+	}
+
+	private void logRoundReport()
+	{
+		this.testLogger.writeRoundNumber(this.model.getNumOfRounds());
+		this.testLogger.writePlayingTable(this.model.getLogWriter().getPlayingTable());
+		this.testLogger.writeCategoryChosen(this.model.getLogWriter().getChosenCategory());
+		this.testLogger.writeValuesForCategory(this.model.getLogWriter().getEveryoneValues());
+		this.testLogger.writeRoundWinner(this.model.getLogWriter().getRoundWinner());
+		this.testLogger.writeResultingHands(this.model.getLogWriter().getEveryoneHands());
+		this.testLogger.writeCommunalPile(this.model.getLogWriter().getCommunalPile());
+	}
+>>>>>>> Stashed changes
 }

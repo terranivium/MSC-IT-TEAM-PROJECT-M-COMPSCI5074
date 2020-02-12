@@ -100,7 +100,6 @@ public class TTController {
 		System.out.println(writeGameLogsToFile);
 		while (this.model.hasWon() == false) {
 			this.model.selectPlayer();
-			this.view.selectPlayer();
 			this.view.playersTurnHeader();
 			if (this.model.getActivePlayer().getClass() == Player.class) {
 				this.view.viewCard(this.model.getActivePlayer().getTopCard());
@@ -121,9 +120,16 @@ public class TTController {
 //					logRoundReport();
 //				}
 			}
-			this.view.compareCards(this.readInput);
 			this.model.playCards(this.readInput);
 			this.model.selectWinners();
+			System.out.println(this.model.getLogWriter().getDeckOnLoad());
+			System.out.println(this.model.getLogWriter().getDeckShuffle());
+			System.out.println(this.model.getLogWriter().getEveryoneHands());
+			System.out.println(this.model.getLogWriter().getCommunalPile());
+			System.out.println(this.model.getLogWriter().getPlayingTable());
+			System.out.println(this.model.getLogWriter().getChosenCategory());
+			System.out.println(this.model.getLogWriter().getEveryoneValues());
+			System.out.println(this.model.getLogWriter().getRoundWinner());
 		}
 		this.view.gameWinner();
 		// this.dbI.updateDb(this.model.getGameWinner(), this.model.getNumOfDraws(),

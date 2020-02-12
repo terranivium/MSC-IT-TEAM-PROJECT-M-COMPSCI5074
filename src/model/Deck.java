@@ -9,14 +9,12 @@ import java.util.Collections;
 import java.util.Random;
 
 public class Deck {
-	private ArrayList<Card> unshuffledCards;
-	private ArrayList<Card> shuffledCards;
+	private ArrayList<Card> cards;
 	private int numOfCards;
 	private String[] headerNames;
 
 	public Deck() { // Constructor
-		this.unshuffledCards = new ArrayList<Card>();
-		this.shuffledCards = new ArrayList<Card>();
+		this.cards = new ArrayList<Card>();
 	}
 
 	public void loadDeck() { // reads cards from .txt file and creates card objects
@@ -32,13 +30,15 @@ public class Deck {
 			while ((read = br.readLine()) != null) { // while there is another line in the txt file to read
 				this.numOfCards++; // count number of cards in deck
 				String[] word = read.split("\\s+");
-				this.unshuffledCards.add(new Card(word[0], word[1], word[2], word[3], word[4], word[5], this.headerNames)); // creates two identical arraylists for the two different states 																				
-				this.shuffledCards = (ArrayList<Card>) this.unshuffledCards.clone();
-				Collections.shuffle(this.shuffledCards); // shuffles cards
+				this.cards.add(new Card(word[0], word[1], word[2], word[3], word[4], word[5], this.headerNames)); // creates two identical arraylists for the two different states 																				
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void shuffleDeck() {
+		Collections.shuffle(this.cards); // shuffles cards
 	}
 
 	public void dealCards(int playerCount, ArrayList<Player> players) { // shuffles and deals cards based on number of players
@@ -50,7 +50,7 @@ public class Deck {
 			int i = rand.nextInt(playerCount); // select a random player to give to card to
 			for (int j = 0; j < cardsLeftOver; j++) { // if there are more than one cards left over, pass the next spare
 														// to the next person in the circle
-				players.get(i).addHand(this.shuffledCards.remove(insertIndex--));
+				players.get(i).addHand(this.cards.remove(insertIndex--));
 				if (i >= playerCount) {
 					i = 0;
 				} else {
@@ -61,21 +61,15 @@ public class Deck {
 
 		do { // deal cards to all the players
 			for (Player p : players) {
-				p.addHand(this.shuffledCards.remove(insertIndex--));
+				p.addHand(this.cards.remove(insertIndex--));
 			}
-		} while (this.shuffledCards.isEmpty() == false); // until the deck is empty
+		} while (this.cards.isEmpty() == false); // until the deck is empty
 	}
-
 	// Getter methods
-
-	public ArrayList<Card> getShuffledCards() {
-		return this.shuffledCards;
+	public ArrayList<Card> getCards() {
+		return cards;
 	}
-
-	public ArrayList<Card> getUnshuffledCards() {
-		return this.unshuffledCards;
-	}
-
+	
 	public int getNumOfCards() {
 		return this.numOfCards;
 	}

@@ -60,25 +60,6 @@ public class TTCLIView {
 		System.out.println("///////////////////////\n");
 	}
 
-	public void selectPlayer() {
-		for (Player p : this.model.getPlayers()) {
-			System.out.println("\n");
-			System.out.println("_____" + p.getName() + "'s hand"); // getname
-			System.out.println("_____" + p.getHand().size() + " cards"); // gethand
-			System.out.println("////////////////////////");
-			for (int i = 0; i < p.getHand().size(); i++) // gethand
-				System.out.println(p.getHand().get(i).getDescription());
-		}
-		System.out.println("\n");
-		System.out.println("Round num: " + this.model.getNumOfRounds() + "\n_______________");
-	}
-
-	public void compareCards(int stat) {
-		for (Player p : this.model.getPlayers()) {
-			System.out.println(p.getName() + " " + p.getTopCard().getStats().get(stat));
-		}
-	}
-
 	public void endRuntime() {
 		System.out.println("Thank you for playing!");
 	}

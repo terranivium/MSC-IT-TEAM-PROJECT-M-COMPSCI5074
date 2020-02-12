@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 import database_testlog.DatabaseInteractor;
 import database_testlog.TestLogger;
-//import database_testlog.DatabaseInteractor;
 import model.Player;
 import model.TTModel;
 import view.TTCLIView;
@@ -18,11 +17,8 @@ public class TTController {
 	private int readInput; // Holds user input for condition checks
 	private TestLogger testLogger;
 
-	// private DatabaseInteractor dbI = new DatabaseInteractor(); //instance of
-	// connector to database storing game statistics
-
 	private DatabaseInteractor dbI = new DatabaseInteractor(); //instance of
-	//connector to database storing game statistics
+	// connector to database storing game statistics
 
 	public TTController(TTModel model, TTCLIView view, boolean writeGameLogsToFile) {
 		this.model = model;
@@ -81,6 +77,20 @@ public class TTController {
 					this.model.startBotGame(this.readInput);
 				}
 				this.runtimeGame();
+			} else if (this.readInput == 3) {
+				this.view.dbiDraw(this.dbI.dbRequest());
+				this.readInput = this.systemInput.nextInt();
+				this.systemInput.nextLine();
+				if(this.readInput == 1) {
+					this.runtimeMenu();
+				} else {
+					do {
+						this.view.notValid();
+						this.view.dbiDraw(this.dbI.dbRequest());
+						this.readInput = this.systemInput.nextInt();
+						this.systemInput.nextLine();
+					}while(this.readInput!=1);
+				}
 			} else if (this.readInput == 4) {
 				// closes scanner, runtime
 				this.view.endRuntime();
@@ -97,8 +107,8 @@ public class TTController {
 
 	// Main game controller loop
 	public void runtimeGame() {
-		
-		//checks to see if log file has been requested
+
+		// checks to see if log file has been requested
 		System.out.println(writeGameLogsToFile);
 		while (this.model.hasWon() == false) {
 			this.model.selectPlayer();
@@ -117,7 +127,7 @@ public class TTController {
 			} else {
 				this.view.viewCard(this.model.getActivePlayer().getTopCard());
 				this.readInput = this.model.getActivePlayer().chooseCard();
-//				if (this.writeGameLogsToFile) 
+//				if (this.writeGameLogsToFile)
 //				{
 //					logRoundReport();
 //				}

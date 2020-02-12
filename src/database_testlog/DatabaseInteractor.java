@@ -17,15 +17,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
-
-//import model.*; 
 
 
 public class DatabaseInteractor {
 
 	Connection dbConnection = null;
-	//TTModel model;
 	
 
 	
@@ -130,8 +126,6 @@ public class DatabaseInteractor {
 						results[3] = rs.getInt("avgdraws");
 						results[4] = rs.getInt("max");
 					}
-			System.out.println("total games|human wins|ai wins|avgdraws|highest_num_rounds"); //testline - to delete
-			System.out.println(Arrays.toString(results)); //testline - to delete
 		}
 		catch (SQLException e) 
 		{

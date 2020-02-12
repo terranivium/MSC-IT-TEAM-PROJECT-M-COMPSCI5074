@@ -47,12 +47,12 @@ public class TTCLIView {
 	public void viewCard(Card selectCard) {
 		// View for the current card/this turn card
 		System.out.println("///////////////////////");
-		System.out.println(selectCard.getHeaderNames()[0] + " : " + selectCard.getDescription());
-		System.out.println("1. " + selectCard.getHeaderNames()[1] + " : " + selectCard.getCategoryOne());
-		System.out.println("2. " + selectCard.getHeaderNames()[2] + " : " + selectCard.getCategoryTwo());
-		System.out.println("3. " + selectCard.getHeaderNames()[3] + " : " + selectCard.getCategoryThree());
-		System.out.println("4. " + selectCard.getHeaderNames()[4] + " : " + selectCard.getCategoryFour());
-		System.out.println("5. " + selectCard.getHeaderNames()[5] + " : " + selectCard.getCategoryFive());
+		System.out.println(model.getDeck().getHeaderNames()[0] + " : " + selectCard.getDescription());
+		System.out.println("1. " + model.getDeck().getHeaderNames()[1] + " : " + selectCard.getCategoryOne());
+		System.out.println("2. " + model.getDeck().getHeaderNames()[2] + " : " + selectCard.getCategoryTwo());
+		System.out.println("3. " + model.getDeck().getHeaderNames()[3] + " : " + selectCard.getCategoryThree());
+		System.out.println("4. " + model.getDeck().getHeaderNames()[4] + " : " + selectCard.getCategoryFour());
+		System.out.println("5. " + model.getDeck().getHeaderNames()[5] + " : " + selectCard.getCategoryFive());
 		System.out.println("///////////////////////\n");
 	}
 

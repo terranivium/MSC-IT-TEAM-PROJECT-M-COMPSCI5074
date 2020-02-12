@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 import database_testlog.DatabaseInteractor;
 import database_testlog.TestLogger;
-//import database_testlog.DatabaseInteractor;
 import model.Player;
 import model.TTModel;
 import view.TTCLIView;
@@ -90,7 +89,7 @@ public class TTController {
 						this.view.notValid();
 						this.view.dbiDraw(this.dbI.dbRequest());
 						this.readInput = this.systemInput.nextInt();
-						this.systemInput.nextLine();	
+						this.systemInput.nextLine();
 					}while(this.readInput!=1);
 				}
 			} else if (this.readInput == 4) {
@@ -136,14 +135,14 @@ public class TTController {
 			}
 			this.model.playCards(this.readInput);
 			this.model.selectWinners();
-			//System.out.println(this.model.getLogWriter().getDeckOnLoad());
-			//System.out.println(this.model.getLogWriter().getDeckShuffle());
-			//System.out.println(this.model.getLogWriter().getEveryoneHands());
-			//System.out.println(this.model.getLogWriter().getCommunalPile());
-			//System.out.println(this.model.getLogWriter().getPlayingTable());
-			//System.out.println(this.model.getLogWriter().getChosenCategory());
-			//System.out.println(this.model.getLogWriter().getEveryoneValues());
-			//System.out.println(this.model.getLogWriter().getRoundWinner());
+			System.out.println(this.model.getlogWriter().getDeckOnLoad());
+			System.out.println(this.model.getlogWriter().getDeckShuffle());
+			System.out.println(this.model.getlogWriter().getEveryoneHands());
+			System.out.println(this.model.getlogWriter().getCommunalPile());
+			System.out.println(this.model.getlogWriter().getPlayingTable());
+			System.out.println(this.model.getlogWriter().getChosenCategory());
+			System.out.println(this.model.getlogWriter().getEveryoneValues());
+			System.out.println(this.model.getlogWriter().getRoundWinner());
 		}
 		this.view.gameWinner();
 		this.dbI.updateDb(this.model.getGameWinner(), this.model.getNumOfDraws(), this.model.getNumOfRounds(), this.model.getAllWonRounds());

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LogWriter {
+private String [] headerNames;
 private ArrayList<Card> deckOnLoad; 
 private ArrayList<Card>	deckShuffle; 
 private ArrayList<Card> communalPile; 
@@ -13,10 +14,13 @@ private String chosenCategory;
 private ArrayList<String> everyoneValues;
 private String everyoneHands;
 private String roundWinner;
-private String[] headerNames;
 
 public LogWriter(Deck loadedDeck) {
 	this.deckOnLoad = new ArrayList<Card>(loadedDeck.getCards());
+
+public LogWriter() {
+	this.headerNames = new String[5];
+	this.deckOnLoad = new ArrayList<Card>();
 	this.deckShuffle = new ArrayList<Card>();	
 	this.communalPile =new ArrayList<Card>();
 	this.playingTable = new ArrayList<Card>();
@@ -24,26 +28,17 @@ public LogWriter(Deck loadedDeck) {
 	this.everyoneHands = new String();
 	this.everyoneValues = new ArrayList<String>();
 	this.roundWinner = null;
-	this.headerNames = loadedDeck.getHeaderNames();
-	
-	chosenCategoryMap.put(1, this.headerNames[1]); //[0] is not included as it contains "Description", corresponding to the name of each card.
-	chosenCategoryMap.put(2, this.headerNames[2]);
-	chosenCategoryMap.put(3, this.headerNames[3]);
-	chosenCategoryMap.put(4, this.headerNames[4]);
-	chosenCategoryMap.put(5, this.headerNames[5]);
+
+	chosenCategoryMap.put(1, "Size");
+	chosenCategoryMap.put(2, "Rarity");
+	chosenCategoryMap.put(3, "Temperment");
+	chosenCategoryMap.put(4, "Intelligence");
+	chosenCategoryMap.put(5, "Cuteness");
 }
 
 
-public void setPlayersHands(ArrayList<Player>players, int roundNum) {
-	
-	if (roundNum == 0)
-	{
-		this.everyoneHands = "Beginning game state \n" + "_______________\n";
-	} else 
-		{
-		this.everyoneHands = "[End round " + roundNum + "]\n" + "_______________\n";
-		}
-	
+public void setPlayersHands(ArrayList<Player>players, int roundNum) { 
+	this.everyoneHands = "Round num: " + roundNum + "\n" + "_______________\n";
 	for (Player p : players) {
 		this.everyoneHands += "\n__" + p.getName() + "'s hand__\n__" + p.getHand().size() + " cards__\n////////////////////////\n";
 		for (int i = 0; i < p.getHand().size(); i++) 
@@ -59,21 +54,21 @@ public String getEveryoneHands() {
 
 
 public String getDeckOnLoad() {
-	
+
 	String deckOnLoadString = new String();
 	deckOnLoadString = "__Unshuffled Cards__\n";
-	
+
 	StringBuffer sb = new StringBuffer();
-	
+
 	for (int i = 0; i < headerNames.length; i++)
 		{
 			sb.append(headerNames[i] + " ");
 		}
 		String categories = sb.toString();
-	
+
 		StringBuilder deckBuilder = new StringBuilder(deckOnLoadString);
 		deckBuilder.append(categories + "\n");
-	
+
 	for(Card c:this.deckOnLoad)
 		{
 		deckBuilder.append(c.getDescription() + " ");
@@ -83,7 +78,7 @@ public String getDeckOnLoad() {
 		deckBuilder.append(c.getCategoryFour() + " ");
 		deckBuilder.append(c.getCategoryFive() + "\n");
 	}
-		
+
 	return deckBuilder.toString();
 }
 
@@ -104,27 +99,33 @@ public String getDeckShuffle() {
 }
 
 
-public void  setDeckShuffle(ArrayList<Card> deck) {
+public void setDeckShuffle(ArrayList<Card> deck) {
 	this.deckShuffle = (ArrayList<Card>) deck.clone();
 }
 
 
 public String getPlayingTable() {
 	String playingTableString = new String();
-	playingTableString = "__Everyones Top Card Played__\n";
+	playingTableString = "__Everyones Top Card Played__\n____________________________\n";
 	int i = 1;
 	for(Card c:this.playingTable) {
-		playingTableString = playingTableString + "Player" + i + " : " + c.getDescription() + "\n";
+		playingTableString = playingTableString + "/////Player" + i + "///// \n"
+				+ this.headerNames[0] + " : " + c.getDescription() + "\n"
+				+ this.headerNames[1] + " : " + c.getCategoryOne() + "\n"
+				+ this.headerNames[2] + " : " + c.getCategoryTwo() + "\n"
+				+ this.headerNames[3] + " : " + c.getCategoryThree() + "\n"
+				+ this.headerNames[4] + " : " + c.getCategoryFour() + "\n"
+				+ this.headerNames[5] + " : " + c.getCategoryFive() + "\n____________________________\n";
 		i++;
 	}
 	return playingTableString;
 }
 
 
-public void setPlayingTable(ArrayList<Card> playingTable) {
+public void setPlayingTable(ArrayList<Card> playingTable, String[] headerNames) {
+	this.headerNames = headerNames;
 	this.playingTable = (ArrayList<Card>) playingTable.clone();
 }
-
 
 public ArrayList<String> getEveryoneValues() {
 	return this.everyoneValues;
@@ -165,7 +166,7 @@ public String getRoundWinner() {
 	return "The winner of the round was: " + this.roundWinner;
 	}
 	else
-	return "Draw - No one won the round";
+	return "No one won the round";
 	
 }
 

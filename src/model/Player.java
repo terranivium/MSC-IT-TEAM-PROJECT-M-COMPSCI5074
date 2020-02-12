@@ -11,6 +11,7 @@ public class Player { // Player attributes
 	public Player(String name) { // Constructor
 		this.name = name;
 		this.hand = new ArrayList<Card>();
+		this.topCard = null;
 		this.roundsWon = 0;
 	}
 
@@ -28,8 +29,8 @@ public class Player { // Player attributes
 		this.topCard = topCard;
 	}
 
-	public void setRoundsWon(int roundsWon) {
-		this.roundsWon = roundsWon;
+	public void incrementRoundsWon() {
+		this.roundsWon++;
 	}
 
 	public int chooseCard() { // redundant code , method is never called

@@ -90,10 +90,10 @@
 				// --------------------------------------------------------------------------
 				// You can call other methods you want to run when the page first loads here
 				// --------------------------------------------------------------------------
-				startGame();
-				selectPlayer();
+				initializeGame()
 				updateRoundCounter();
 				updateActivePlayer();
+				
 			}
 			
 			// -----------------------------------------
@@ -130,9 +130,9 @@
 		<!-- Here are examples of how to call REST API Methods -->
 		<script type="text/javascript">
 			
-			function setNewGameStates() {
+			function initializeGame() {
 				// First create a CORS request, this is the message we are going to send (a get request in this case)
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/setNewGameStates"); // Request type and URL+parameters
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/initializeGame"); // Request type and URL+parameters
 				
 				// Message is not sent yet, but we can check that the browser supports CORS
 				if (!xhr) {
@@ -143,6 +143,8 @@
 				// to do when the response arrives 
 				xhr.onload = function(e) {
  					var responseText = xhr.response; // the text of the response
+					alert("New Game Started"); // lets produce an alert
+					
 				};
 				
 				// We have done everything we need to prepare the CORS request, so send it
@@ -162,7 +164,7 @@
 				// to do when the response arrives 
 				xhr.onload = function(e) {
  					var responseText = xhr.response; // the text of the response
-					//alert("New Game Started"); // lets produce an alert
+					alert("New Game Started"); // lets produce an alert
 					
 				};
 				

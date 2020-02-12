@@ -24,7 +24,6 @@ public class TTModel {
 	private ArrayList<Card> communalPile;
 	private ArrayList<Card> playingTable;
 	private ArrayList<Card> winnersCards;
-	private int categoryChosen; // instance variable set by argument supplied to compareCards, needed for use in TestLogger
 	private HashMap<Player, Integer> playerStats;
 	private LogWriter logWriter;
 
@@ -55,7 +54,9 @@ public class TTModel {
 
 	public void startGame(int botCount) { // method is called to generate a Player and Bot objects based on the botCount
 											// parameter passed from the controller
+		System.err.println("botCount= " + botCount); //ONLINE TEST
 		this.playerCount = botCount + 1;
+		System.err.println("playerCount= " + playerCount); //ONLINE TEST
 		this.players.add(new Player("Player1"));
 
 		for (int i = 0; i < botCount; i++) {
@@ -66,6 +67,7 @@ public class TTModel {
 		this.deck.shuffleDeck(); //calls method to shuffle deck
 		this.logWriter.setDeckShuffle(this.deck.getCards());
 		this.deck.dealCards(this.playerCount, this.players); // calls method to deal cards amongst
+		System.err.println("PLAYER SIZE  STARTGAME" + this.players.size()); //ONLINE TEST
 	}
 
 	public void startBotGame(int botCount) { // method is called when a bot vs bot game is required, no player objects
@@ -83,8 +85,12 @@ public class TTModel {
 	public void selectPlayer() {
 		if (this.numOfRounds == 1) { // If it is the first round //changed from 0
 			Random r = new Random();
+			System.err.println("player count select player= " + this.playerCount); //ONLINE TEST
 			this.activePlayerNum = r.nextInt(this.playerCount); // select a random player to start first
+			System.err.println("ACTIVE PLAYER NUM   " + this.activePlayerNum); //ONLINE TEST
+			System.err.println("PLAYER SIZE  SELECT PLAYER" + this.players.size()); //ONLINE TEST
 			this.activePlayer = this.players.get(this.activePlayerNum);
+			System.err.println("active player is " + this.activePlayer); //ONLINE TEST
 		} else if (this.isDraw == true || this.activePlayer.equals(this.roundWinner)) { // if it is a draw from the
 																						// previous round or the
 																						// previous rounds winner has
@@ -107,7 +113,7 @@ public class TTModel {
 			this.playingTable.add(p.getHand().remove(p.getTopCardIndex())); // remove all the players top cards and add
 																			// the to an array list
 		}
-		this.logWriter.setPlayingTable(this.playingTable);
+		this.logWriter.setPlayingTable(this.playingTable, this.getDeck().getHeaderNames());
 		int maxValueInMap = Collections.max(playerStats.values()); // calculate the highest value from the cards
 																	// presented by the players
 		for (Entry<Player, Integer> entry : playerStats.entrySet()) { // Iterate through hashmap value to find what
@@ -180,6 +186,7 @@ public class TTModel {
 	}
 
 	public Player getActivePlayer() {
+		System.err.println("the active player is gettter" + this.activePlayer); //ONLINE TEST
 		return this.activePlayer;
 	}
 
@@ -212,7 +219,7 @@ public class TTModel {
 		return this.deck;
 	}
 
-	public LogWriter getLogWriter() {
+	public LogWriter getlogWriter() {
 		return logWriter;
 	}
 	

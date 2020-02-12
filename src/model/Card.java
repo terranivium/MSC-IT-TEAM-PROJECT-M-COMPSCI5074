@@ -9,7 +9,6 @@ public class Card {
 	private int categoryThree;
 	private int categoryFour;
 	private int categoryFive;
-	private String[] headerNames;
 	HashMap<Integer, Integer> stats;
 
 	public Card(String name, String categoryOne, String categoryTwo, String categoryThree, String categoryFour, String categoryFive,
@@ -20,7 +19,6 @@ public class Card {
 		this.categoryThree = Integer.parseInt(categoryThree);
 		this.categoryFour= Integer.parseInt(categoryFour);
 		this.categoryFive = Integer.parseInt(categoryFive);
-		this.headerNames = headerNames;
 
 		this.stats = new HashMap<Integer, Integer>(); // hash map used to relate key inputs to selected stats
 		this.stats.put(1, this.categoryOne);
@@ -54,10 +52,6 @@ public class Card {
 
 	public int getCategoryFive() {
 		return this.categoryFive;
-	}
-
-	public String[] getHeaderNames() {
-		return this.headerNames;
 	}
 
 	public HashMap<Integer, Integer> getStats() {

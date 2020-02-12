@@ -116,7 +116,7 @@
 				// You can call other methods you want to run when the page first loads here
 				// --------------------------------------------------------------------------
 				
-				drawMain();
+				//drawMain();
 			}
 			
 			// -----------------------------------------

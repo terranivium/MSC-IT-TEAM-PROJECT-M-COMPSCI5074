@@ -60,7 +60,6 @@ public class TopTrumpsRESTAPI {
 		this.model = new TTModel(); // pass writeGameLogsToFile here
 		this.view = new TTOnlineView(model);
 		this.botCount = conf.getNumAIPlayers();
-		this.model.setNewGameStates();
 	}
 	
 	// ----------------------------------------------------
@@ -101,6 +100,18 @@ public class TopTrumpsRESTAPI {
 	}
 	
 	@GET
+	@Path("/initializeGame")
+	/**
+	 * @param None
+	 * @return - A String
+	 * @throws IOException
+	 */
+	public void initializeGame() throws IOException{
+		this.model.startGame(this.botCount);
+		this.model.selectPlayer();
+	}
+	
+	@GET
 	@Path("/startGame")
 	/**
 	 * Here is an example of how to read parameters provided in an HTML Get request.
@@ -109,7 +120,7 @@ public class TopTrumpsRESTAPI {
 	 * @throws IOException
 	 */
 	public void startGame(){
-		this.model.startGame(botCount);
+		this.model.startGame(this.botCount);
 	}
 	
 	@GET

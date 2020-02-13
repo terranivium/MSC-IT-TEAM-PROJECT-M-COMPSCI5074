@@ -106,7 +106,7 @@ public class TopTrumpsRESTAPI {
 	 */
 	public void startGame() throws IOException{
 		this.model.startGame(this.botCount);
-		
+
 	}
 	
 	@GET
@@ -171,7 +171,7 @@ public class TopTrumpsRESTAPI {
 		String hasWonAsJSONString = oWriter.writeValueAsString(this.model.hasWon());
 	return hasWonAsJSONString;
 	}
-	
+
 	@GET
 	@Path("/getBotChoice")
 	/**
@@ -184,7 +184,7 @@ public class TopTrumpsRESTAPI {
 	String botChoiceAsJSONString = oWriter.writeValueAsString(choice);
 	return botChoiceAsJSONString;
 	}
-	
+
 	@GET
 	@Path("/setNewGameState")
 	/**

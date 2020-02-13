@@ -149,7 +149,7 @@ public class TTModel {
 			this.communalPile.clear();
 			this.logWriter.setCommunalPile(communalPile);
 			this.winnersCards.clear();
-		} else { // if there are more than two or more winners (draw)
+		} else { // if there are two or more winners (draw)
 			this.numOfDraws++;
 			this.isDraw = true;
 			this.roundWinner = null;

@@ -68,12 +68,12 @@
 			<h2 id="roundCounter">round counter</h2>
 			<h2 id="activePlayer">active player</h2>
 			<h2 id="roundWinner">winner goes here</h2>
-			<input onclick="showCard();updateActivePlayer();updateRoundCounter()" type="button" value="Show Player Card" id="myButton1"></input>
-			<input onclick="playCards('1');selectWinners()" type="button" value="Select Option 1" id="selectButton1"></input>
-			<input onclick="playCards('2');selectWinners()" type="button" value="Select Option 2" id="selectButton1"></input>
-			<input onclick="playCards('3');selectWinners()" type="button" value="Select Option 3" id="selectButton1"></input>
-			<input onclick="playCards('4');selectWinners()" type="button" value="Select Option 4" id="selectButton1"></input>
-			<input onclick="playCards('5');selectWinners()" type="button" value="Select Option 5" id="selectButton1"></input>
+			<input onclick="showCard();" type="button" value="Show Player Card" id="myButton1"></input>
+			<input onclick="playCards('1');alert(1)" type="button" value="Select Option 1" id="selectButton1"></input>
+			<input onclick="playCards('2');alert(2)" type="button" value="Select Option 2" id="selectButton1"></input>
+			<input onclick="playCards('3');alert(3)" type="button" value="Select Option 3" id="selectButton1"></input>
+			<input onclick="playCards('4');alert(4)" type="button" value="Select Option 4" id="selectButton1"></input>
+			<input onclick="playCards('5');alert(5)" type="button" value="Select Option 5" id="selectButton1"></input>
 			<input onclick="setNewGameStates();startGame();selectPlayer()" type="button" value="Reset" id="resetButton"></input>
 
 		</div>
@@ -90,9 +90,7 @@
 				// --------------------------------------------------------------------------
 				// You can call other methods you want to run when the page first loads here
 				// --------------------------------------------------------------------------
-				initializeGame()
-				updateRoundCounter();
-				updateActivePlayer();
+				startGame();
 				
 			}
 			
@@ -130,27 +128,6 @@
 		<!-- Here are examples of how to call REST API Methods -->
 		<script type="text/javascript">
 			
-			function initializeGame() {
-				// First create a CORS request, this is the message we are going to send (a get request in this case)
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/initializeGame"); // Request type and URL+parameters
-				
-				// Message is not sent yet, but we can check that the browser supports CORS
-				if (!xhr) {
-  					alert("CORS not supported");
-				}
-
-				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
-				// to do when the response arrives 
-				xhr.onload = function(e) {
- 					var responseText = xhr.response; // the text of the response
-					alert("New Game Started"); // lets produce an alert
-					
-				};
-				
-				// We have done everything we need to prepare the CORS request, so send it
-				xhr.send();		
-			}
-			
 			function startGame() {
 				// First create a CORS request, this is the message we are going to send (a get request in this case)
 				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/startGame"); // Request type and URL+parameters
@@ -164,8 +141,7 @@
 				// to do when the response arrives 
 				xhr.onload = function(e) {
  					var responseText = xhr.response; // the text of the response
-					alert("New Game Started"); // lets produce an alert
-					
+					selectPlayer().call();
 				};
 				
 				// We have done everything we need to prepare the CORS request, so send it
@@ -184,8 +160,18 @@
 				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
 				// to do when the response arrives 
 				xhr.onload = function(e) {
- 					var responseText = xhr.response; // the text of the response
-					//alert("Active Player Selected"); // lets produce an alert
+					updateRoundCounter();
+					updateActivePlayer();
+ 					var isBot = JSON.parse(xhr.response); // the text of the response
+					alert("is it a bot's turn?  " + isBot); // lets produce an alert
+					if(isBot == "true")
+						{
+						getBotChoice().call();
+						}
+					else if(isBot == "false")
+						{
+						;
+						}
 				};
 				
 				// We have done everything we need to prepare the CORS request, so send it
@@ -225,8 +211,7 @@
 				// to do when the response arrives
 				xhr.onload = function(e) {
  					 // the text of the response
-					document.getElementById("roundCounter").innerHTML = xhr.response;
-					alert("cards played");
+					selectWinners().call();
 				};
 
 				// We have done everything we need to prepare the CORS request, so send it
@@ -247,6 +232,39 @@
 				xhr.onload = function(e) {
  					 // the text of the response
 					document.getElementById("roundWinner").innerHTML = xhr.response;
+					alert(xhr.response);
+					hasWon().call();
+				};
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();		
+			}
+			
+			function hasWon() {
+				// First create a CORS request, this is the message we are going to send (a get request in this case)
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/hasWon"); // Request type and URL+parameters
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
+
+				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
+				// to do when the response arrives 
+				xhr.onload = function(e) {
+ 					 // the text of the response
+					var gameState = JSON.parse(xhr.response);
+					alert("Has the whole game been won yet? " + gameState);
+					if(gameState == false)
+						{
+						selectPlayer().call();
+						}
+					else if(gameState == true){
+						alert("game over");
+						}
+					if(gameState == false){
+					selectPlayers().call()
+					}
 				};
 				
 				// We have done everything we need to prepare the CORS request, so send it
@@ -287,6 +305,28 @@
 				xhr.onload = function(e) {
  					 // the text of the response
 					document.getElementById("roundCounter").innerHTML = xhr.response;
+				};
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();		
+			}
+			
+			function getBotChoice() {
+				// First create a CORS request, this is the message we are going to send (a get request in this case)
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getBotChoice"); // Request type and URL+parameters
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
+
+				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
+				// to do when the response arrives 
+				xhr.onload = function(e) {
+ 					 // the text of the response
+					var choice = JSON.parse(xhr.response);
+					alert("The bot has chose the "+ choice + "th category")
+					playCards(choice).call();
 				};
 				
 				// We have done everything we need to prepare the CORS request, so send it

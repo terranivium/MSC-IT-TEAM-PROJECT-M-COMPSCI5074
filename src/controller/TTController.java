@@ -17,8 +17,8 @@ public class TTController {
 	private int readInput; // Holds user input for condition checks
 	private TestLogger testLogger;
 
-	private DatabaseInteractor dbI = new DatabaseInteractor(); //instance of
-	// connector to database storing game statistics
+	private DatabaseInteractor dbI = new DatabaseInteractor(); 
+	//instance of connector to database storing game statistics
 
 	public TTController(TTModel model, TTCLIView view, boolean writeGameLogsToFile) {
 		this.model = model;
@@ -26,7 +26,7 @@ public class TTController {
 
 		if (writeGameLogsToFile) {
 			this.writeGameLogsToFile = writeGameLogsToFile;
-			testLogger = new TestLogger();
+			this.testLogger = new TestLogger();
 		}
 	}
 
@@ -53,7 +53,7 @@ public class TTController {
 					this.model.startGame(this.readInput);
 					if (this.writeGameLogsToFile)
 						{
-							logPreRoundsActivity();
+							this.logPreRoundsActivity();
 						}
 				}
 				this.runtimeGame();
@@ -71,7 +71,7 @@ public class TTController {
 					this.model.startBotGame(this.readInput);
 					if (this.writeGameLogsToFile)
 					{
-						logPreRoundsActivity();
+						this.logPreRoundsActivity();
 					}
 				} else {
 					this.model.startBotGame(this.readInput);
@@ -96,7 +96,7 @@ public class TTController {
 				this.view.endRuntime();
 				this.systemInput.close();
 				
-				if (writeGameLogsToFile)// only if writeGameLogsToFile is true will testLogger have been opened. 
+				if (writeGameLogsToFile) // only if writeGameLogsToFile is true will testLogger have been opened. 
 				{
 					this.testLogger.closeLog();	
 				}
@@ -136,7 +136,7 @@ public class TTController {
 			this.model.selectWinners();
             if (this.writeGameLogsToFile)
             {
-                logRoundReport();
+                this.logRoundReport();
             }
 
             //below system.out can be removed
@@ -146,8 +146,6 @@ public class TTController {
                 System.out.println(this.model.getLogWriter().getDeckOnLoad());
                 System.out.println(this.model.getLogWriter().getDeckShuffle());
             }
-			//System.out.println(this.model.getLogWriter().getDeckOnLoad());
-			//System.out.println(this.model.getLogWriter().getDeckShuffle());
 			System.out.println(this.model.getLogWriter().getEveryoneHands());
 			System.out.println(this.model.getLogWriter().getPlayingTable());
 			System.out.println(this.model.getLogWriter().getChosenCategory());
@@ -168,21 +166,14 @@ public class TTController {
 		this.runtimeMenu();
 	}
 
-	public void runtimeStats() {
-		// for drawing stats in commandline, similar to write test log feature
-	}
-
-
 	// methods for generating log.
-	private void logPreRoundsActivity()
-	{
+	private void logPreRoundsActivity(){
 		this.testLogger.writeLoadedDeck(this.model.getLogWriter().getDeckOnLoad());
 		this.testLogger.writeShuffledDeck(this.model.getLogWriter().getDeckShuffle());
 		this.testLogger.writeDealtHands(this.model.getLogWriter().getEveryoneHands());
 	}
 
-	private void logRoundReport()
-	{
+	private void logRoundReport(){
 		this.testLogger.writeRoundNumber(this.model.getNumOfRounds());
 		this.testLogger.writePlayingTable(this.model.getLogWriter().getPlayingTable());
 		this.testLogger.writeCategoryChosen(this.model.getLogWriter().getChosenCategory());

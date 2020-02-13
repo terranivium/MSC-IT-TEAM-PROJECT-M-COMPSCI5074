@@ -92,17 +92,12 @@ public class TTModel {
 		this.numOfRounds++;
 		if (this.numOfRounds == 1) { // As numOfRounds is initialised to 0 will only be reached if it is the first round of a game
 			Random r = new Random();
-			System.err.println("player count select player= " + this.playerCount); //ONLINE TEST
 			this.activePlayerNum = r.nextInt(this.playerCount); // select a random player to start first
-			System.err.println("ACTIVE PLAYER NUM   " + this.activePlayerNum); //ONLINE TEST
-			System.err.println("PLAYER SIZE  SELECT PLAYER" + this.players.size()); //ONLINE TEST
 			this.activePlayer = this.players.get(this.activePlayerNum);
-			System.err.println("active player is " + this.activePlayer); //ONLINE TEST
-		} else if (this.isDraw == true || this.activePlayer.equals(this.roundWinner)) { // if it is a draw from the
-																						// previous round or the
-																						// previous rounds winner has
-																						// won again
-			; // do nothing
+		} else if (this.isDraw == true || this.activePlayer.equals(this.roundWinner)) { 
+			// if it is a draw from the previous round or the previous rounds winner has
+			// won again do nothing
+			;
 		} else { // if a different player has won compared to the previous round
 			this.activePlayer = this.roundWinner; // set the starting player to be the winner of the last round
 		}
@@ -251,6 +246,4 @@ public class TTModel {
 	public int getCategoryChosen() {
 		return this.categoryChosen;
 	}
-	
-
 }

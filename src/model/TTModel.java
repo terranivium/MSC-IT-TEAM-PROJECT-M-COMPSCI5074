@@ -81,7 +81,9 @@ public class TTModel {
 			this.players.add(new Bot("Player" + (i + 1) + " (AI)"));
 		}
 		this.deck.loadDeck(); // calls method to read and create card objects
+		this.logWriter = new LogWriter(this.deck);
 		this.deck.shuffleDeck(); //calls method to shuffle deck
+		this.logWriter.setDeckShuffle(this.deck.getCards());
 		this.deck.dealCards(this.playerCount, this.players);
 		this.logWriter.setPlayersHands(this.players, this.numOfRounds); // added here as TestLogger needs to see hands on initial deal, before play, otherwise null.
 	}
@@ -114,7 +116,7 @@ public class TTModel {
 		this.logWriter.resetEveryoneValues();						// adding new stats as before
 		for (Player p : this.players) {
 			this.playerStats.put(p, p.getTopCard().getStats().get(stat));
-			this.logWriter.setEveryoneValues(p.getName() + "'s card has the value: " + p.getTopCard().getStats().get(stat));
+			this.logWriter.setEveryoneValues(p.getName() + "'s card has the value: " + p.getTopCard().getStats().get(stat) + " ");
 			this.playingTable.add(p.getHand().remove(p.getTopCardIndex())); // remove all the players top cards and add
 																			// the to an array list
 		}

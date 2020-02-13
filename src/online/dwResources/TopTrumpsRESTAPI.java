@@ -59,7 +59,8 @@ public class TopTrumpsRESTAPI {
 		boolean writeGameLogsToFile = false;
 		this.model = new TTModel(); // pass writeGameLogsToFile here
 		this.view = new TTOnlineView(model);
-		this.botCount = conf.getNumAIPlayers();
+		//this.botCount = conf.getNumAIPlayers();
+		this.botCount = 1;
 	}
 	
 	// ----------------------------------------------------
@@ -156,7 +157,6 @@ public class TopTrumpsRESTAPI {
 	 */
 	public String selectWinners() throws IOException{
 		this.model.selectWinners();
-		System.out.println("The winner of the round was" + model.getRoundWinnerName());
 		String roundWinnerAsJSONString = oWriter.writeValueAsString(this.model.getRoundWinnerName());
 		return roundWinnerAsJSONString;
 	}
@@ -168,8 +168,19 @@ public class TopTrumpsRESTAPI {
 	 * @return - A String
 	 * @throws IOException
 	 */
-	public void hasWon() throws IOException{
-		this.model.hasWon();
+	public boolean hasWon() throws IOException{
+	return this.model.hasWon();
+	}
+	
+	@GET
+	@Path("/getBotChoice")
+	/**
+	 * @param None
+	 * @return - A String
+	 * @throws IOException
+	 */
+	public int getBotChoice() throws IOException{
+	return this.model.getActivePlayer().chooseCard();
 	}
 	
 	@GET
@@ -222,7 +233,7 @@ public class TopTrumpsRESTAPI {
 	 * @throws IOException
 	 */
 	public String showCard() throws IOException {
-		String topCardAsJSONString = oWriter.writeValueAsString(this.model.getActivePlayer().getTopCard().getDescription());
+		String topCardAsJSONString = oWriter.writeValueAsString(this.model.getPlayers().get(0).getTopCard().getDescription());
 		return topCardAsJSONString;
 	}
 	

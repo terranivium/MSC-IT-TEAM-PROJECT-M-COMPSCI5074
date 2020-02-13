@@ -139,19 +139,19 @@ public class TTController {
                 this.logRoundReport();
             }
 
-            //below system.out can be removed
+            // LogWriter test prints
             System.out.println("The current round is " + this.model.getNumOfRounds());
             if (this.model.getNumOfRounds() == 1)
             {
                 System.out.println(this.model.getLogWriter().getDeckOnLoad());
                 System.out.println(this.model.getLogWriter().getDeckShuffle());
             }
-			System.out.println(this.model.getLogWriter().getEveryoneHands());
-			System.out.println(this.model.getLogWriter().getPlayingTable());
-			System.out.println(this.model.getLogWriter().getChosenCategory());
-			System.out.println(this.model.getLogWriter().getEveryoneValues());
+//			System.out.println(this.model.getLogWriter().getEveryoneHands());
+//			System.out.println(this.model.getLogWriter().getPlayingTable());
+//			System.out.println(this.model.getLogWriter().getChosenCategory());
+//			System.out.println(this.model.getLogWriter().getEveryoneValues());
 			System.out.println(this.model.getLogWriter().getRoundWinner());
-			System.out.println(this.model.getLogWriter().getCommunalPile());
+//			System.out.println(this.model.getLogWriter().getCommunalPile());
 		}
 		this.view.gameWinner();
 		if (this.writeGameLogsToFile)

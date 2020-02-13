@@ -13,13 +13,10 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import online.configuration.TopTrumpsJSONConfiguration;
-import view.TTOnlineView;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
-import controller.TTController;
 import model.TTModel;
 
 @Path("/toptrumps") // Resources specified here should be hosted at http://localhost:7777/toptrumps
@@ -48,7 +45,6 @@ public class TopTrumpsRESTAPI {
 	 * @param conf
 	 */
 	private TTModel model;
-	private TTOnlineView view;
 	private int botCount;
 	
 	public TopTrumpsRESTAPI(TopTrumpsJSONConfiguration conf) {
@@ -58,7 +54,6 @@ public class TopTrumpsRESTAPI {
 		
 		boolean writeGameLogsToFile = false;
 		this.model = new TTModel(); // pass writeGameLogsToFile here
-		this.view = new TTOnlineView(model);
 		this.botCount = conf.getNumAIPlayers();
 	}
 	
@@ -170,36 +165,6 @@ public class TopTrumpsRESTAPI {
 	 */
 	public void hasWon() throws IOException{
 		this.model.hasWon();
-	}
-	
-	@GET
-	@Path("/drawMain")
-	/**
-	 * @param None
-	 * @return - A String
-	 * @throws IOException
-	 */
-	public String drawMain() throws IOException {
-		this.view.drawMain();
-		List<String> drawMainOutput = this.view.getOutputBuffer();
-		String listAsJSONString = oWriter.writeValueAsString(drawMainOutput);
-		
-		return listAsJSONString;
-	}
-	
-	@GET
-	@Path("/drawAIMenu")
-	/**
-	 * @param None
-	 * @return - A String
-	 * @throws IOException
-	 */
-	public String drawAIMenu() throws IOException{
-		this.view.drawAIMenu();
-		List<String> drawMainOutput = this.view.getOutputBuffer();
-		String listAsJSONString = oWriter.writeValueAsString(drawMainOutput);
-
-		return listAsJSONString;
 	}
 	
 	@GET

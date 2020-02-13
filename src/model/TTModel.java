@@ -45,7 +45,7 @@ public class TTModel {
 		this.playerStats = new HashMap<Player, Integer>();
 		//this.logWriter = new LogWriter();
 		this.numOfDraws = 0;
-		this.numOfRounds = 1; //changed from 0
+		this.numOfRounds = 0; //reverted to 0. Testlogger uses this to distinguish between the pre-game data and the rounds that follow.
 		this.numOfGames = 0;
 		this.isDraw = false;
 		this.gameWinner = null;
@@ -65,12 +65,12 @@ public class TTModel {
 		}
 		this.deck.loadDeck(); // calls method in deck object to generate card objects
         this.logWriter = new LogWriter(this.deck);
-		//this.logWriter.setDeckOnLoad(this.deck.getCards());
+        //this.logWriter.setDeckOnLoad(this.deck.getCards(), this.deck.getHeaderNames());
 		this.deck.shuffleDeck(); //calls method to shuffle deck
 		this.logWriter.setDeckShuffle(this.deck.getCards());
         this.deck.dealCards(this.playerCount, this.players); // calls method to deal cards amongst
 		System.err.println("PLAYER SIZE  STARTGAME" + this.players.size()); //ONLINE TEST
-        this.logWriter.setPlayersHands(this.players, this.numOfRounds);
+        this.logWriter.setPlayersHands(this.players, this.numOfRounds); //// added here as TestLogger needs to see hands on initial deal, before play, otherwise null.
 	}
 
 	public void startBotGame(int botCount) { // method is called when a bot vs bot game is required, no player objects
@@ -87,10 +87,8 @@ public class TTModel {
 	}
 
 	public void selectPlayer() {
-        if (this.numOfRounds == 0) {
-            this.numOfRounds++;
-        }
-		if (this.numOfRounds == 1) { // If it is the first round //changed from 0
+		this.numOfRounds++;
+		if (this.numOfRounds == 1) { // As numOfRounds is initialised to 0 will only be reached if it is the first round of a game
 			Random r = new Random();
 			System.err.println("player count select player= " + this.playerCount); //ONLINE TEST
 			this.activePlayerNum = r.nextInt(this.playerCount); // select a random player to start first
@@ -116,11 +114,11 @@ public class TTModel {
 		this.logWriter.resetEveryoneValues();						// adding new stats as before
 		for (Player p : this.players) {
 			this.playerStats.put(p, p.getTopCard().getStats().get(stat));
-			this.logWriter.setEveryoneValues(p.getName() + " has the card value: " + p.getTopCard().getStats().get(stat));
+			this.logWriter.setEveryoneValues(p.getName() + "'s card has the value: " + p.getTopCard().getStats().get(stat));
 			this.playingTable.add(p.getHand().remove(p.getTopCardIndex())); // remove all the players top cards and add
 																			// the to an array list
 		}
-		this.logWriter.setPlayingTable(this.playingTable, this.getDeck().getHeaderNames());
+		this.logWriter.setPlayingTable(this.playingTable);
 		int maxValueInMap = Collections.max(playerStats.values()); // calculate the highest value from the cards
 																	// presented by the players
 		for (Entry<Player, Integer> entry : playerStats.entrySet()) { // Iterate through hashmap value to find what
@@ -151,7 +149,7 @@ public class TTModel {
 			this.communalPile.clear();
 			this.logWriter.setCommunalPile(communalPile);
 			this.winnersCards.clear();
-		} else { // if there are more than two winners (draw)
+		} else { // if there are two or more winners (draw)
 			this.numOfDraws++;
 			this.isDraw = true;
 			this.roundWinner = null;
@@ -161,7 +159,7 @@ public class TTModel {
 			this.playingTable.clear();
 			this.logWriter.setPlayersHands(this.players, this.numOfRounds);////moved here as testlogger needs to see this at the end of a game loop.
 		}
-		this.numOfRounds++;  //moved from selectPlayer
+		//this.numOfRounds++;  //moved from selectPlayer TEST REMOVE
 		this.roundWinners.clear();
 	}
 
@@ -229,7 +227,7 @@ public class TTModel {
 		return this.deck;
 	}
 
-    public LogWriter getlogWriter() {
+    public LogWriter getLogWriter() {
         return logWriter;
     }
 

@@ -95,7 +95,7 @@ public class TTController {
 				// closes scanner, runtime
 				this.view.endRuntime();
 				this.systemInput.close();
-				this.testLogger.closeLog();
+				this.testLogger.closeLog(); // will be used to close testLogger.
 				System.exit(0);
 			} else {
 				// to catch invalid input
@@ -108,7 +108,7 @@ public class TTController {
 	// Main game controller loop
 	public void runtimeGame() {
 
-		// checks to see if log file has been requested
+		// Prints to console whether logging has been requested
 		System.out.println(writeGameLogsToFile);
 		while (this.model.hasWon() == false) {
 			this.model.selectPlayer();
@@ -127,10 +127,6 @@ public class TTController {
 			} else {
 				this.view.viewCard(this.model.getActivePlayer().getTopCard());
 				this.readInput = this.model.getActivePlayer().chooseCard();
-//				if (this.writeGameLogsToFile)
-//				{
-//					logRoundReport();
-//				}
 			}
 			this.model.playCards(this.readInput);
 			this.model.selectWinners();
@@ -172,19 +168,6 @@ public class TTController {
 		// for drawing stats in commandline, similar to write test log feature
 	}
 
-	// methods for generating log.
-//	private void logPreRoundsActivity()
-//	{
-//		this.testLogger.writeLoadedDeck(this.model.getDeck().getUnshuffledCards(), this.model.getDeck().getHeaderNames());
-//		this.testLogger.writeShuffledDeck(this.model.getDeck().getShuffledCards());
-//		this.testLogger.writeDealtHands(this.model.getPlayers());
-//	}
-//
-//	private void logRoundReport()
-//	{
-//		this.testLogger.writePlayingTable(this.model.getPlayers(),this.model.getPlayingTable(), this.model.getDeck().getHeaderNames(), this.model.getNumOfRounds());
-//		this.testLogger.writeCategoryChosen(this.model.getPlayerStats(), this.model.getActivePlayer(), this.model.getCategoryChosen(), this.model.getDeck().getHeaderNames());
-//	}
 
 	// methods for generating log.
 	private void logPreRoundsActivity()

@@ -14,7 +14,7 @@ public class TopTrumpsCLIApplication {
 	 */
 	public static void main(String[] args) {
 
-		boolean writeGameLogsToFile = true; // Should we write game logs to file?
+		boolean writeGameLogsToFile = true; // should be set as false. only set as true until we can resolve the passing of the -t flag issue from TopTrumps.java
 		if (args[0].equalsIgnoreCase("true")){
 			writeGameLogsToFile = true; // Command line selection
 		}

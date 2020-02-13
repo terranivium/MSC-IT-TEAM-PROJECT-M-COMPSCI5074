@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 import database_testlog.DatabaseInteractor;
 import database_testlog.TestLogger;
-//import database_testlog.DatabaseInteractor;
 import model.Player;
 import model.TTModel;
 import view.TTCLIView;
@@ -21,6 +20,7 @@ public class TTController {
 	// connector to database storing game statistics
 	private DatabaseInteractor dbI = new DatabaseInteractor(); //instance of
 	//connector to database storing game statistics
+	// connector to database storing game statistics
 
 	public TTController(TTModel model, TTCLIView view, boolean writeGameLogsToFile) {
 		this.model = model;
@@ -81,6 +81,10 @@ public class TTController {
 				this.runtimeGame();
 			} else if (this.readInput == 3) {
 				this.view.dbiDraw(this.dbI.dbRequest());
+				this.readInput = this.systemInput.nextInt();
+				this.systemInput.nextLine();
+				if(this.readInput == 1) {
+					this.runtimeMenu();
 				} else {
 					do {
 						this.view.notValid();
@@ -94,6 +98,7 @@ public class TTController {
 				this.view.endRuntime();
 				this.systemInput.close();
 				this.testLogger.closeLog(); - will be used to close testLogger.
+				this.testLogger.closeLog();  // will be used to close testLogger.
 				System.exit(0);
 			} else {
 				// to catch invalid input
@@ -125,11 +130,8 @@ public class TTController {
 			} else {
 				this.view.viewCard(this.model.getActivePlayer().getTopCard());
 				this.readInput = this.model.getActivePlayer().chooseCard();
-//				if (this.writeGameLogsToFile) 
-//				{
-//					logRoundReport();
-//				}
 			}
+			
 			this.model.playCards(this.readInput);
 			this.model.selectWinners();
             if (this.writeGameLogsToFile)

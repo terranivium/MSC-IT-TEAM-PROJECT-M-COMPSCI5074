@@ -117,7 +117,7 @@ public class TTModel {
 																		// key of that entry
 			if (entry.getValue() == maxValueInMap) {
 				this.roundWinners.add(entry.getKey()); // adds all the players with the highest value to a new array
-														// list
+				System.err.println("round winner sizeeee       " + this.roundWinners.size());									// list
 			}
 		}
 	}
@@ -235,4 +235,9 @@ public class TTModel {
 	public int getCategoryChosen() {
 		return this.categoryChosen;
 	}
+
+	public boolean isDraw() {
+		return isDraw;
+	}
+
 }

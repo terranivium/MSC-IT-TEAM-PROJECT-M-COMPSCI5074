@@ -16,7 +16,9 @@ import online.configuration.TopTrumpsJSONConfiguration;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-
+import controller.TTController;
+import model.Bot;
+import model.Player;
 import model.TTModel;
 
 @Path("/toptrumps") // Resources specified here should be hosted at http://localhost:7777/toptrumps
@@ -54,9 +56,8 @@ public class TopTrumpsRESTAPI {
 		
 		boolean writeGameLogsToFile = false;
 		this.model = new TTModel(); // pass writeGameLogsToFile here
-		this.view = new TTOnlineView(model);
-		//this.botCount = conf.getNumAIPlayers();
-		this.botCount = 1;
+		this.botCount = conf.getNumAIPlayers();
+		//this.botCount = 1;
 	}
 	
 	// ----------------------------------------------------
@@ -97,27 +98,15 @@ public class TopTrumpsRESTAPI {
 	}
 	
 	@GET
-	@Path("/initializeGame")
+	@Path("/startGame")
 	/**
 	 * @param None
 	 * @return - A String
 	 * @throws IOException
 	 */
-	public void initializeGame() throws IOException{
+	public void startGame() throws IOException{
 		this.model.startGame(this.botCount);
-		this.model.selectPlayer();
-	}
-	
-	@GET
-	@Path("/startGame")
-	/**
-	 * Here is an example of how to read parameters provided in an HTML Get request.
-	 * @param Word - A word
-	 * @return - A String
-	 * @throws IOException
-	 */
-	public void startGame(){
-		this.model.startGame(this.botCount);
+
 	}
 	
 	@GET
@@ -127,8 +116,16 @@ public class TopTrumpsRESTAPI {
 	 * @return - A String
 	 * @throws IOException
 	 */
-	public void selectPlayer() throws IOException{
+	public String selectPlayer() throws IOException{
+		String isBotAsJSONString;
 		this.model.selectPlayer();
+		if(this.model.getActivePlayer().getClass() == Bot.class) {
+			isBotAsJSONString = oWriter.writeValueAsString("true");
+		}
+		else {
+			isBotAsJSONString = oWriter.writeValueAsString("false");
+		}
+		return isBotAsJSONString;
 	}
 	
 	@GET
@@ -152,8 +149,14 @@ public class TopTrumpsRESTAPI {
 	 * @throws IOException
 	 */
 	public String selectWinners() throws IOException{
+		String roundWinnerAsJSONString;
 		this.model.selectWinners();
-		String roundWinnerAsJSONString = oWriter.writeValueAsString(this.model.getRoundWinnerName());
+		if(this.model.isDraw()) {
+			roundWinnerAsJSONString = oWriter.writeValueAsString("DRAW");
+		}
+		else {
+		roundWinnerAsJSONString = oWriter.writeValueAsString(this.model.getRoundWinnerName() + " has won the round");
+		}
 		return roundWinnerAsJSONString;
 	}
 	
@@ -164,8 +167,9 @@ public class TopTrumpsRESTAPI {
 	 * @return - A String
 	 * @throws IOException
 	 */
-	public boolean hasWon() throws IOException{
-	return this.model.hasWon();
+	public String hasWon() throws IOException{
+		String hasWonAsJSONString = oWriter.writeValueAsString(this.model.hasWon());
+	return hasWonAsJSONString;
 	}
 
 	@GET
@@ -175,8 +179,10 @@ public class TopTrumpsRESTAPI {
 	 * @return - A String
 	 * @throws IOException
 	 */
-	public int getBotChoice() throws IOException{
-	return this.model.getActivePlayer().chooseCard();
+	public String getBotChoice() throws IOException{
+		int choice = this.model.getActivePlayer().chooseCard();
+	String botChoiceAsJSONString = oWriter.writeValueAsString(choice);
+	return botChoiceAsJSONString;
 	}
 
 	@GET

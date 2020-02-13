@@ -47,12 +47,12 @@ public class TTCLIView {
 	public void viewCard(Card selectCard) {
 		// View for the current card/this turn card
 		System.out.println("///////////////////////");
-		System.out.println(model.getDeck().getHeaderNames()[0] + " : " + selectCard.getDescription());
-		System.out.println("1. " + model.getDeck().getHeaderNames()[1] + " : " + selectCard.getCategoryOne());
-		System.out.println("2. " + model.getDeck().getHeaderNames()[2] + " : " + selectCard.getCategoryTwo());
-		System.out.println("3. " + model.getDeck().getHeaderNames()[3] + " : " + selectCard.getCategoryThree());
-		System.out.println("4. " + model.getDeck().getHeaderNames()[4] + " : " + selectCard.getCategoryFour());
-		System.out.println("5. " + model.getDeck().getHeaderNames()[5] + " : " + selectCard.getCategoryFive());
+		System.out.println(this.model.getDeck().getHeaderNames()[0] + " : " + selectCard.getDescription());
+		System.out.println("1. " + this.model.getDeck().getHeaderNames()[1] + " : " + selectCard.getCategoryOne());
+		System.out.println("2. " + this.model.getDeck().getHeaderNames()[2] + " : " + selectCard.getCategoryTwo());
+		System.out.println("3. " + this.model.getDeck().getHeaderNames()[3] + " : " + selectCard.getCategoryThree());
+		System.out.println("4. " + this.model.getDeck().getHeaderNames()[4] + " : " + selectCard.getCategoryFour());
+		System.out.println("5. " + this.model.getDeck().getHeaderNames()[5] + " : " + selectCard.getCategoryFive());
 		System.out.println("///////////////////////\n");
 	}
 
@@ -71,9 +71,13 @@ public class TTCLIView {
 	}
 
 	public void dbiDraw(int[] results) {
-		System.out.println("Total Games|Human Wins|AI Wins|Avg. Draws|Highest No. Rounds"); //testline - to delete
-		System.out.println(Arrays.toString(results)); //testline - to delete
-		System.out.println();
-		System.out.println("Press 1 key to return to main menu");
+		System.out.println("///////////////////////");
+		System.out.println("Total Games " + results[0]);
+		System.out.println("Human Wins " + results[1]);
+		System.out.println("AI Wins " + results[2]);
+		System.out.println("Avg. Draws " + results[3]);
+		System.out.println("Highest No. of Round " + results[4]);
+		System.out.println("///////////////////////\n");
+		System.out.println("Enter 1 to return to main menu");
 	}
 }

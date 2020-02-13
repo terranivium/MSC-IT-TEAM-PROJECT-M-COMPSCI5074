@@ -15,7 +15,6 @@ public class TTModel {
 	private int numOfDraws;
 	private int numOfRounds;
 	private int numOfGames;
-	//private boolean writeGameLogsToFile; // passed by TopTrumpsCLIApplication to constructor - controller currently handling this
 	private boolean isDraw;
 	private Deck deck;
 	private ArrayList<Integer> allWonRounds;
@@ -43,7 +42,6 @@ public class TTModel {
 		this.winnersCards = new ArrayList<Card>();
 		this.allWonRounds = new ArrayList<Integer>();
 		this.playerStats = new HashMap<Player, Integer>();
-		//this.logWriter = new LogWriter();
 		this.numOfDraws = 0;
 		this.numOfRounds = 0; //reverted to 0. Testlogger uses this to distinguish between the pre-game data and the rounds that follow.
 		this.numOfGames = 0;
@@ -53,11 +51,10 @@ public class TTModel {
 		this.roundWinner = null;
 	}
 
-	public void startGame(int botCount) { // method is called to generate a Player and Bot objects based on the botCount
-											// parameter passed from the controller
-		System.err.println("botCount= " + botCount); //ONLINE TEST
+	public void startGame(int botCount) { 
+		// method is called to generate a Player and Bot objects based on the botCount
+		// parameter passed from the controller
 		this.playerCount = botCount + 1;
-		System.err.println("playerCount= " + playerCount); //ONLINE TEST
 		this.players.add(new Player("Player1"));
 
 		for (int i = 0; i < botCount; i++) {
@@ -65,11 +62,9 @@ public class TTModel {
 		}
 		this.deck.loadDeck(); // calls method in deck object to generate card objects
         this.logWriter = new LogWriter(this.deck);
-        //this.logWriter.setDeckOnLoad(this.deck.getCards(), this.deck.getHeaderNames());
 		this.deck.shuffleDeck(); //calls method to shuffle deck
 		this.logWriter.setDeckShuffle(this.deck.getCards());
         this.deck.dealCards(this.playerCount, this.players); // calls method to deal cards amongst
-		System.err.println("PLAYER SIZE  STARTGAME" + this.players.size()); //ONLINE TEST
         this.logWriter.setPlayersHands(this.players, this.numOfRounds); //// added here as TestLogger needs to see hands on initial deal, before play, otherwise null.
 	}
 
@@ -81,7 +76,9 @@ public class TTModel {
 			this.players.add(new Bot("Player" + (i + 1) + " (AI)"));
 		}
 		this.deck.loadDeck(); // calls method to read and create card objects
+		this.logWriter = new LogWriter(this.deck);
 		this.deck.shuffleDeck(); //calls method to shuffle deck
+		this.logWriter.setDeckShuffle(this.deck.getCards());
 		this.deck.dealCards(this.playerCount, this.players);
 		this.logWriter.setPlayersHands(this.players, this.numOfRounds); // added here as TestLogger needs to see hands on initial deal, before play, otherwise null.
 	}
@@ -90,17 +87,12 @@ public class TTModel {
 		this.numOfRounds++;
 		if (this.numOfRounds == 1) { // As numOfRounds is initialised to 0 will only be reached if it is the first round of a game
 			Random r = new Random();
-			System.err.println("player count select player= " + this.playerCount); //ONLINE TEST
 			this.activePlayerNum = r.nextInt(this.playerCount); // select a random player to start first
-			System.err.println("ACTIVE PLAYER NUM   " + this.activePlayerNum); //ONLINE TEST
-			System.err.println("PLAYER SIZE  SELECT PLAYER" + this.players.size()); //ONLINE TEST
 			this.activePlayer = this.players.get(this.activePlayerNum);
-			System.err.println("active player is " + this.activePlayer); //ONLINE TEST
-		} else if (this.isDraw == true || this.activePlayer.equals(this.roundWinner)) { // if it is a draw from the
-																						// previous round or the
-																						// previous rounds winner has
-																						// won again
-			; // do nothing
+		} else if (this.isDraw == true || this.activePlayer.equals(this.roundWinner)) { 
+			// if it is a draw from the previous round or the previous rounds winner has
+			// won again do nothing
+			;
 		} else { // if a different player has won compared to the previous round
 			this.activePlayer = this.roundWinner; // set the starting player to be the winner of the last round
 		}
@@ -108,13 +100,12 @@ public class TTModel {
 	}
 
 	public void playCards(int stat) {
-		//this.logWriter.setPlayersHands(this.players, this.numOfRounds);
 		this.logWriter.setChosenCategory(stat);
 		this.playerStats.clear(); // clears the instance variable at the beginning of each comparison, prior to
 		this.logWriter.resetEveryoneValues();						// adding new stats as before
 		for (Player p : this.players) {
 			this.playerStats.put(p, p.getTopCard().getStats().get(stat));
-			this.logWriter.setEveryoneValues(p.getName() + "'s card has the value: " + p.getTopCard().getStats().get(stat));
+			this.logWriter.setEveryoneValues(p.getName() + "'s card has the value: " + p.getTopCard().getStats().get(stat) + " ");
 			this.playingTable.add(p.getHand().remove(p.getTopCardIndex())); // remove all the players top cards and add
 																			// the to an array list
 		}
@@ -159,7 +150,6 @@ public class TTModel {
 			this.playingTable.clear();
 			this.logWriter.setPlayersHands(this.players, this.numOfRounds);////moved here as testlogger needs to see this at the end of a game loop.
 		}
-		//this.numOfRounds++;  //moved from selectPlayer TEST REMOVE
 		this.roundWinners.clear();
 	}
 
@@ -175,13 +165,13 @@ public class TTModel {
 				this.playersToRemove.add(p);
 			}
 		}
-		players.removeAll(playersToRemove);
-		playersToRemove.clear();
+		this.players.removeAll(this.playersToRemove);
+		this.playersToRemove.clear();
 		return false;
 	}
 
-	public void updateWonRounds() { // method updates variable to count all the rounds that have been won by all
-									// players
+	public void updateWonRounds() { 
+		// method updates variable to count all the rounds that have been won by all players
 		for (Player p : this.players) {
 			int eachWonRounds = p.getRoundsWon();
 			this.allWonRounds.add(eachWonRounds);
@@ -194,7 +184,6 @@ public class TTModel {
 	}
 
 	public Player getActivePlayer() {
-		System.err.println("the active player is gettter" + this.activePlayer.getName()); //ONLINE TEST
 		return this.activePlayer;
 	}
 
@@ -231,18 +220,15 @@ public class TTModel {
         return logWriter;
     }
 
-	public ArrayList<Card> getCommunalPile()
-	{
+	public ArrayList<Card> getCommunalPile(){
 		return this.communalPile;
 	}
 
-	public ArrayList<Card> getPlayingTable()
-	{
+	public ArrayList<Card> getPlayingTable(){
 		return this.playingTable;
 	}
 	
-	public HashMap<Player, Integer> getPlayerStats()
-	{
+	public HashMap<Player, Integer> getPlayerStats(){
 		return this.playerStats;
 	}
 
@@ -253,8 +239,5 @@ public class TTModel {
 	public boolean isDraw() {
 		return isDraw;
 	}
-	
-	
-	
 
 }

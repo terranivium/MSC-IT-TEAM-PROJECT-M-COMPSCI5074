@@ -17,8 +17,8 @@ public class TTController {
 	private int readInput; // Holds user input for condition checks
 	private TestLogger testLogger;
 
-	private DatabaseInteractor dbI = new DatabaseInteractor(); //instance of
-	// connector to database storing game statistics
+	private DatabaseInteractor dbI = new DatabaseInteractor(); 
+	//instance of connector to database storing game statistics
 
 	public TTController(TTModel model, TTCLIView view, boolean writeGameLogsToFile) {
 		this.model = model;
@@ -26,7 +26,7 @@ public class TTController {
 
 		if (writeGameLogsToFile) {
 			this.writeGameLogsToFile = writeGameLogsToFile;
-			testLogger = new TestLogger();
+			this.testLogger = new TestLogger();
 		}
 	}
 
@@ -53,7 +53,7 @@ public class TTController {
 					this.model.startGame(this.readInput);
 					if (this.writeGameLogsToFile)
 						{
-							logPreRoundsActivity();
+							this.logPreRoundsActivity();
 						}
 				}
 				this.runtimeGame();
@@ -71,7 +71,7 @@ public class TTController {
 					this.model.startBotGame(this.readInput);
 					if (this.writeGameLogsToFile)
 					{
-						logPreRoundsActivity();
+						this.logPreRoundsActivity();
 					}
 				} else {
 					this.model.startBotGame(this.readInput);
@@ -95,7 +95,11 @@ public class TTController {
 				// closes scanner, runtime
 				this.view.endRuntime();
 				this.systemInput.close();
-				this.testLogger.closeLog(); // will be used to close testLogger.
+				
+				if (writeGameLogsToFile) // only if writeGameLogsToFile is true will testLogger have been opened. 
+				{
+					this.testLogger.closeLog();	
+				}
 				System.exit(0);
 			} else {
 				// to catch invalid input
@@ -132,24 +136,22 @@ public class TTController {
 			this.model.selectWinners();
             if (this.writeGameLogsToFile)
             {
-                logRoundReport();
+                this.logRoundReport();
             }
 
-            //below system.out can be removed
+            // LogWriter test prints
             System.out.println("The current round is " + this.model.getNumOfRounds());
             if (this.model.getNumOfRounds() == 1)
             {
                 System.out.println(this.model.getLogWriter().getDeckOnLoad());
                 System.out.println(this.model.getLogWriter().getDeckShuffle());
             }
-			System.out.println(this.model.getlogWriter().getDeckOnLoad());
-			System.out.println(this.model.getlogWriter().getDeckShuffle());
-			System.out.println(this.model.getlogWriter().getEveryoneHands());
-			System.out.println(this.model.getlogWriter().getCommunalPile());
-			System.out.println(this.model.getlogWriter().getPlayingTable());
-			System.out.println(this.model.getlogWriter().getChosenCategory());
-			System.out.println(this.model.getlogWriter().getEveryoneValues());
-			System.out.println(this.model.getlogWriter().getRoundWinner());
+//			System.out.println(this.model.getLogWriter().getEveryoneHands());
+//			System.out.println(this.model.getLogWriter().getPlayingTable());
+//			System.out.println(this.model.getLogWriter().getChosenCategory());
+//			System.out.println(this.model.getLogWriter().getEveryoneValues());
+			System.out.println(this.model.getLogWriter().getRoundWinner());
+//			System.out.println(this.model.getLogWriter().getCommunalPile());
 		}
 		this.view.gameWinner();
 		if (this.writeGameLogsToFile)
@@ -164,21 +166,14 @@ public class TTController {
 		this.runtimeMenu();
 	}
 
-	public void runtimeStats() {
-		// for drawing stats in commandline, similar to write test log feature
-	}
-
-
 	// methods for generating log.
-	private void logPreRoundsActivity()
-	{
+	private void logPreRoundsActivity(){
 		this.testLogger.writeLoadedDeck(this.model.getLogWriter().getDeckOnLoad());
 		this.testLogger.writeShuffledDeck(this.model.getLogWriter().getDeckShuffle());
 		this.testLogger.writeDealtHands(this.model.getLogWriter().getEveryoneHands());
 	}
 
-	private void logRoundReport()
-	{
+	private void logRoundReport(){
 		this.testLogger.writeRoundNumber(this.model.getNumOfRounds());
 		this.testLogger.writePlayingTable(this.model.getLogWriter().getPlayingTable());
 		this.testLogger.writeCategoryChosen(this.model.getLogWriter().getChosenCategory());

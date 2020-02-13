@@ -104,6 +104,7 @@ public String getDeckShuffle() {
 }
 
 
+@SuppressWarnings("unchecked")
 public void  setDeckShuffle(ArrayList<Card> deck) {
 	this.deckShuffle = (ArrayList<Card>) deck.clone();
 }
@@ -121,6 +122,7 @@ public String getPlayingTable() {
 }
 
 
+@SuppressWarnings("unchecked")
 public void setPlayingTable(ArrayList<Card> playingTable) {
 	this.playingTable = (ArrayList<Card>) playingTable.clone();
 }
@@ -162,11 +164,9 @@ public void setChosenCategory(int stat) {
 
 public String getRoundWinner() {
 	if(this.roundWinner != null) {
-	return "The winner of the round was: " + this.roundWinner;
+		return "The winner of the round was: " + this.roundWinner;
 	}
-	else
-	return "Draw - No one won the round";
-	
+	else return "Draw - No one won the round";
 }
 
 public void setRoundWinner(String roundWinner) {

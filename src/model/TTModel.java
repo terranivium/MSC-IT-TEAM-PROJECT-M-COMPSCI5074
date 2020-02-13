@@ -235,7 +235,7 @@ public class TTModel {
 	{
 		return this.communalPile;
 	}
-	
+
 	public ArrayList<Card> getPlayingTable()
 	{
 		return this.playingTable;
@@ -245,7 +245,7 @@ public class TTModel {
 	{
 		return this.playerStats;
 	}
-	
+
 	public int getCategoryChosen() {
 		return this.categoryChosen;
 	}

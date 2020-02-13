@@ -17,9 +17,7 @@ public class TTController {
 	private int readInput; // Holds user input for condition checks
 	private TestLogger testLogger;
 
-	// connector to database storing game statistics
 	private DatabaseInteractor dbI = new DatabaseInteractor(); //instance of
-	//connector to database storing game statistics
 	// connector to database storing game statistics
 
 	public TTController(TTModel model, TTCLIView view, boolean writeGameLogsToFile) {
@@ -97,8 +95,7 @@ public class TTController {
 				// closes scanner, runtime
 				this.view.endRuntime();
 				this.systemInput.close();
-				this.testLogger.closeLog(); - will be used to close testLogger.
-				this.testLogger.closeLog();  // will be used to close testLogger.
+				this.testLogger.closeLog(); // will be used to close testLogger.
 				System.exit(0);
 			} else {
 				// to catch invalid input
@@ -131,7 +128,6 @@ public class TTController {
 				this.view.viewCard(this.model.getActivePlayer().getTopCard());
 				this.readInput = this.model.getActivePlayer().chooseCard();
 			}
-			
 			this.model.playCards(this.readInput);
 			this.model.selectWinners();
             if (this.writeGameLogsToFile)
@@ -146,12 +142,14 @@ public class TTController {
                 System.out.println(this.model.getLogWriter().getDeckOnLoad());
                 System.out.println(this.model.getLogWriter().getDeckShuffle());
             }
-			System.out.println(this.model.getLogWriter().getEveryoneHands());
-			System.out.println(this.model.getLogWriter().getPlayingTable());
-			System.out.println(this.model.getLogWriter().getChosenCategory());
-			System.out.println(this.model.getLogWriter().getEveryoneValues());
-			System.out.println(this.model.getLogWriter().getRoundWinner());
-			System.out.println(this.model.getLogWriter().getCommunalPile());
+			System.out.println(this.model.getlogWriter().getDeckOnLoad());
+			System.out.println(this.model.getlogWriter().getDeckShuffle());
+			System.out.println(this.model.getlogWriter().getEveryoneHands());
+			System.out.println(this.model.getlogWriter().getCommunalPile());
+			System.out.println(this.model.getlogWriter().getPlayingTable());
+			System.out.println(this.model.getlogWriter().getChosenCategory());
+			System.out.println(this.model.getlogWriter().getEveryoneValues());
+			System.out.println(this.model.getlogWriter().getRoundWinner());
 		}
 		this.view.gameWinner();
 		if (this.writeGameLogsToFile)
@@ -170,7 +168,7 @@ public class TTController {
 		// for drawing stats in commandline, similar to write test log feature
 	}
 
-	
+
 	// methods for generating log.
 	private void logPreRoundsActivity()
 	{

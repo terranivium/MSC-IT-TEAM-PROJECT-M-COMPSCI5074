@@ -95,7 +95,7 @@ public class TTController {
 				// closes scanner, runtime
 				this.view.endRuntime();
 				this.systemInput.close();
-				this.testLogger.closeLog(); - will be used to close testLogger.
+				this.testLogger.closeLog();
 				System.exit(0);
 			} else {
 				// to catch invalid input

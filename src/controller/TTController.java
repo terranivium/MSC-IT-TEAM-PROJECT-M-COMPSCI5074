@@ -18,9 +18,7 @@ public class TTController {
 	private int readInput; // Holds user input for condition checks
 	private TestLogger testLogger;
 
-	// private DatabaseInteractor dbI = new DatabaseInteractor(); //instance of
 	// connector to database storing game statistics
-
 	private DatabaseInteractor dbI = new DatabaseInteractor(); //instance of
 	//connector to database storing game statistics
 
@@ -81,6 +79,16 @@ public class TTController {
 					this.model.startBotGame(this.readInput);
 				}
 				this.runtimeGame();
+			} else if (this.readInput == 3) {
+				this.view.dbiDraw(this.dbI.dbRequest());
+				} else {
+					do {
+						this.view.notValid();
+						this.view.dbiDraw(this.dbI.dbRequest());
+						this.readInput = this.systemInput.nextInt();
+						this.systemInput.nextLine();
+					}while(this.readInput!=1);
+				}
 			} else if (this.readInput == 4) {
 				// closes scanner, runtime
 				this.view.endRuntime();
@@ -97,8 +105,8 @@ public class TTController {
 
 	// Main game controller loop
 	public void runtimeGame() {
-		
-		//checks to see if log file has been requested
+
+		// Prints to console whether logging has been requested
 		System.out.println(writeGameLogsToFile);
 		while (this.model.hasWon() == false) {
 			this.model.selectPlayer();
@@ -136,14 +144,12 @@ public class TTController {
                 System.out.println(this.model.getLogWriter().getDeckOnLoad());
                 System.out.println(this.model.getLogWriter().getDeckShuffle());
             }
-			System.out.println(this.model.getlogWriter().getDeckOnLoad());
-			System.out.println(this.model.getlogWriter().getDeckShuffle());
-			System.out.println(this.model.getlogWriter().getEveryoneHands());
-			System.out.println(this.model.getlogWriter().getCommunalPile());
-			System.out.println(this.model.getlogWriter().getPlayingTable());
-			System.out.println(this.model.getlogWriter().getChosenCategory());
-			System.out.println(this.model.getlogWriter().getEveryoneValues());
-			System.out.println(this.model.getlogWriter().getRoundWinner());
+			System.out.println(this.model.getLogWriter().getEveryoneHands());
+			System.out.println(this.model.getLogWriter().getPlayingTable());
+			System.out.println(this.model.getLogWriter().getChosenCategory());
+			System.out.println(this.model.getLogWriter().getEveryoneValues());
+			System.out.println(this.model.getLogWriter().getRoundWinner());
+			System.out.println(this.model.getLogWriter().getCommunalPile());
 		}
 		this.view.gameWinner();
 		if (this.writeGameLogsToFile)
@@ -162,20 +168,7 @@ public class TTController {
 		// for drawing stats in commandline, similar to write test log feature
 	}
 
-	// methods for generating log.
-//	private void logPreRoundsActivity()
-//	{
-//		this.testLogger.writeLoadedDeck(this.model.getDeck().getUnshuffledCards(), this.model.getDeck().getHeaderNames());
-//		this.testLogger.writeShuffledDeck(this.model.getDeck().getShuffledCards());
-//		this.testLogger.writeDealtHands(this.model.getPlayers());
-//	}
-//
-//	private void logRoundReport()
-//	{
-//		this.testLogger.writePlayingTable(this.model.getPlayers(),this.model.getPlayingTable(), this.model.getDeck().getHeaderNames(), this.model.getNumOfRounds());
-//		this.testLogger.writeCategoryChosen(this.model.getPlayerStats(), this.model.getActivePlayer(), this.model.getCategoryChosen(), this.model.getDeck().getHeaderNames());
-//	}
-
+	
 	// methods for generating log.
 	private void logPreRoundsActivity()
 	{

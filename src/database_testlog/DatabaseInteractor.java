@@ -118,7 +118,7 @@ public class DatabaseInteractor {
 			Statement reqStmt = dbConnection.createStatement();
 			ResultSet rs;
 			String reqInstruction = "SELECT count(*), sum (case when winner = 'Player1' then 1 else 0 end) human, "
-					+ "sum (case when winner != 'human' then 1 else 0 end) ai,"
+					+ "sum (case when winner != 'Player1' then 1 else 0 end) ai,"
 					+ " round(AVG(draws),0) avgdraws, max(rounds) from ttresults;";
 			
 			rs = reqStmt.executeQuery(reqInstruction);

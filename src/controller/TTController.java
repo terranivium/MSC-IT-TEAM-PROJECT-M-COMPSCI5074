@@ -95,7 +95,11 @@ public class TTController {
 				// closes scanner, runtime
 				this.view.endRuntime();
 				this.systemInput.close();
-				this.testLogger.closeLog(); // will be used to close testLogger.
+				
+				if (writeGameLogsToFile)// only if writeGameLogsToFile is true will testLogger have been opened. 
+				{
+					this.testLogger.closeLog();	
+				}
 				System.exit(0);
 			} else {
 				// to catch invalid input
@@ -142,14 +146,14 @@ public class TTController {
                 System.out.println(this.model.getLogWriter().getDeckOnLoad());
                 System.out.println(this.model.getLogWriter().getDeckShuffle());
             }
-			System.out.println(this.model.getlogWriter().getDeckOnLoad());
-			System.out.println(this.model.getlogWriter().getDeckShuffle());
-			System.out.println(this.model.getlogWriter().getEveryoneHands());
-			System.out.println(this.model.getlogWriter().getCommunalPile());
-			System.out.println(this.model.getlogWriter().getPlayingTable());
-			System.out.println(this.model.getlogWriter().getChosenCategory());
-			System.out.println(this.model.getlogWriter().getEveryoneValues());
-			System.out.println(this.model.getlogWriter().getRoundWinner());
+			//System.out.println(this.model.getLogWriter().getDeckOnLoad());
+			//System.out.println(this.model.getLogWriter().getDeckShuffle());
+			System.out.println(this.model.getLogWriter().getEveryoneHands());
+			System.out.println(this.model.getLogWriter().getPlayingTable());
+			System.out.println(this.model.getLogWriter().getChosenCategory());
+			System.out.println(this.model.getLogWriter().getEveryoneValues());
+			System.out.println(this.model.getLogWriter().getRoundWinner());
+			System.out.println(this.model.getLogWriter().getCommunalPile());
 		}
 		this.view.gameWinner();
 		if (this.writeGameLogsToFile)

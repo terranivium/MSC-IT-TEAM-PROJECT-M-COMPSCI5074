@@ -31,8 +31,8 @@
 		}
 		
   		.navbar {
-  			padding: 2rem;
   			background-color: #4d4d4d;
+  			padding: 2rem;
   		}
   		
   		.container {
@@ -51,14 +51,14 @@
   		}
   		
   		.footer {
-  			position: absolute;
   			right: 0;
   			bottom: 0;
   			left: 0;
   			width: 100%;
+  			position: absolute;
   			padding: 2rem;
   			background-color: #4d4d4d;
-  			color: #ffffff;
+  			color: #ffffff;	
 			font-family: Arial;
 			font-size: 14px;
   		}

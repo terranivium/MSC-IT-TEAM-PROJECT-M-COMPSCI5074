@@ -34,39 +34,86 @@
   			padding: 2rem;
   			background-color: #4d4d4d;
   		}
-
-  		.container {
+  		
+  		.header {
+  			background-color: #66a3ff;
+  			border-style: solid;
+  			border-width: 0.1px;
+			font-size:15px;
+  			width: 100%;
+  			margin: 0;
+  			padding-top: 8px;
+  			padding-left: 8px;
+  		}
+  		
+  		.grid-container {
+  			display: grid;
+  			grid-template-columns: repeat(4, 1fr);
+  			grid-gap: 10px;
+  			grid-auto-rows: minmax(100px, auto);
+  			width: 100%;
   			text-align: center;
-
+  			padding-left: 1rem;
+  			padding-right: 1rem;
+  			padding-top: 2rem;
+  		}
+  		
+  		.player-controls {
+  			background-color: #66a3ff;
+  			border-style: solid;
+  			border-width: 0.1px;
+			font-size:15px;
+  			width: 100%;
+  			margin: 0;
+  			padding-top: 8px;
+  			padding-left: 8px;
   		}
 
   		.footer {
-  			position: absolute;
   			right: 0;
   			bottom: 0;
   			left: 0;
   			width: 100%;
   			padding: 2rem;
   			background-color: #4d4d4d;
-  			color: #ffffff;
+  			color: #ffffff;	
 			font-family: Arial;
 			font-size: 14px;
   		}
 
   		</style>
 
-  		<!-- game screen HTML -->
+ <!-- game screen HTML -->
 
     	<nav class="navbar navbar-expand-lg navbar-inverse bg-inverse">
         	<a class="navbar-brand" href="http://localhost:7777/toptrumps">
             <img src="https://i.pinimg.com/originals/ec/7e/79/ec7e79072d498c26433d9658d83d4a8b.png" width="250" height="100" alt="Doggo Trumps">
         </a>
    		</nav>
-
-    	<div class="container">
-   			<h1 id="cardList">players top card</h1>
-			<h2 id="roundCounter">round counter</h2>
-			<h2 id="activePlayer">active player</h2>
+    	
+    	<div class="header">
+			<h5 id="roundCounter">round counter</h5>
+		</div>
+		
+		<div class="grid-container">
+		
+		<div class="grid-item">
+		
+		<div class="player-controls">
+			<h6 id="activePlayer">active player</h6>
+		</div>
+			
+		</div>
+		
+		<div class="grid-item">2</div>
+		<div class="grid-item">3</div>
+		<div class="grid-item">4</div>
+		<div class="grid-item">5</div>
+		<div class="grid-item">6</div>
+		<div class="grid-item">7</div>
+		<div class="grid-item">8</div>
+		</div>
+				
 			<h2 id="roundWinner">winner goes here</h2>
 			<input onclick="showCard();" type="button" value="Show Player Card" id="myButton1"></input>
 			<input onclick="playCards('1');alert(1)" type="button" value="Select Option 1" id="selectButton1"></input>
@@ -75,8 +122,6 @@
 			<input onclick="playCards('4');alert(4)" type="button" value="Select Option 4" id="selectButton1"></input>
 			<input onclick="playCards('5');alert(5)" type="button" value="Select Option 5" id="selectButton1"></input>
 			<input onclick="setNewGameStates();startGame();selectPlayer()" type="button" value="Reset" id="resetButton"></input>
-
-		</div>
 
 		<div class="footer">
 			Made by Git What You Give</br>Jessica Lavin - Daniel Mitchell - Simon Manton Milne - Wesley Scott

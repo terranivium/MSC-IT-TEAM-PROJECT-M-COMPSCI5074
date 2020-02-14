@@ -29,16 +29,16 @@
 		
 		body {
 			background-color: #e6e6e6;
+			font-family: Arial;
 		}
 		
   		.navbar {
-			padding: 2rem;
 			background-color: #4d4d4d;
+  			padding: 2rem;
   		}
   		
   		.menucontainer {
   			text-align: center;	
-			font-family: Arial;
 			font-size: 20px;
   		}
   		
@@ -51,7 +51,6 @@
   			padding: 2rem;
   			background-color: #4d4d4d;
   			color: #ffffff;	
-			font-family: Arial;
 			font-size: 14px;
   		}
 		
@@ -65,7 +64,6 @@
 			display:inline-block;
 			cursor:pointer;
 			color:#ffffff;
-			font-family:Arial;
 			font-size:20px;
 			font-weight:bold;
 			padding:6px 24px;

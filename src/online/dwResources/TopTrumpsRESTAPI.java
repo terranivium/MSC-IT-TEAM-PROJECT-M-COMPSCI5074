@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import controller.TTController;
 import model.Bot;
+import model.Card;
 import model.Player;
 import model.TTModel;
 
@@ -57,7 +58,6 @@ public class TopTrumpsRESTAPI {
 		boolean writeGameLogsToFile = false;
 		this.model = new TTModel(); // pass writeGameLogsToFile here
 		this.botCount = conf.getNumAIPlayers();
-		//this.botCount = 1;
 	}
 	
 	// ----------------------------------------------------
@@ -104,9 +104,28 @@ public class TopTrumpsRESTAPI {
 	 * @return - A String
 	 * @throws IOException
 	 */
-	public void startGame() throws IOException{
+	public String startGame() throws IOException{
 		this.model.startGame(this.botCount);
-
+		String headerNamesAsJSONString = oWriter.writeValueAsString(this.model.getDeck().getHeaderNames());
+		return headerNamesAsJSONString;
+	}
+	
+	@GET
+	@Path("/buildRoundCards")
+	/**
+	 * Here is an example of how to read parameters provided in an HTML Get request.
+	 * @param Word - A word
+	 * @return - A String
+	 * @throws IOException
+	 */
+	public String buildRoundCards() throws IOException{
+		String topCardsAsJSONString;
+		ArrayList<Card> cards = new ArrayList<Card>();
+		for(Player p: this.model.getPlayers()) {
+			cards.add(p.getTopCard());
+		}
+		topCardsAsJSONString = oWriter.writeValueAsString(cards);
+		return  topCardsAsJSONString;
 	}
 	
 	@GET
@@ -197,7 +216,7 @@ public class TopTrumpsRESTAPI {
 	}
 	
 	@GET
-	@Path("/showCard")
+	@Path("/showCardStats")
 	/**
 	 * Here is an example of a simple REST get request that returns a String.
 	 * We also illustrate here how we can convert Java objects to JSON strings.
@@ -218,7 +237,7 @@ public class TopTrumpsRESTAPI {
 	 * @throws IOException
 	 */
 	public String updateActivePlayer() throws IOException {
-		String activePlayerAsJSONString = oWriter.writeValueAsString(this.model.getActivePlayer().getName() + " is currently the active player");
+		String activePlayerAsJSONString = oWriter.writeValueAsString(this.model.getActivePlayer().getName());
 		return activePlayerAsJSONString;
 	}
 	
@@ -231,7 +250,7 @@ public class TopTrumpsRESTAPI {
 	 * @throws IOException
 	 */
 	public String updateRoundCounter() throws IOException {
-		String roundCounterAsJSONString = oWriter.writeValueAsString("It is currently Round: " + (this.model.getNumOfRounds()));
+		String roundCounterAsJSONString = oWriter.writeValueAsString("Round " + (this.model.getNumOfRounds()));
 		return roundCounterAsJSONString;
 	}
 }

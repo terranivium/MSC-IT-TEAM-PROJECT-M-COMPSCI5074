@@ -1,7 +1,5 @@
 package view;
 
-import java.util.Arrays;
-
 import model.*;
 
 public class TTCLIView {
@@ -21,7 +19,8 @@ public class TTCLIView {
 		System.out.println("	1. New Player Game");
 		System.out.println("	2. AI vs AI Autoplay");
 		System.out.println(" 	3. View runtime stats");
-		System.out.println("	4. Quit");
+		System.out.println(" 	4. Toggle Slow Scroll");
+		System.out.println("	5. Quit");
 		System.out.println("--------------------------------");
 	}
 
@@ -43,11 +42,19 @@ public class TTCLIView {
 	public void notValid() {
 		System.out.println("Please select a valid menu option...");
 	}
+	
+	public void slowModeEnabled() {
+		System.out.println("Slow mode - enabled");
+	}
 
+	public void slowModeDisabled() {
+		System.out.println("Slow mode - disabled");
+	}
+	
 	public void viewCard(Card selectCard) {
 		// View for the current card/this turn card
 		System.out.println("///////////////////////");
-		System.out.println(this.model.getDeck().getHeaderNames()[0] + " : " + selectCard.getDescription());
+		System.out.println(selectCard.getDescription());
 		System.out.println("1. " + this.model.getDeck().getHeaderNames()[1] + " : " + selectCard.getCategoryOne());
 		System.out.println("2. " + this.model.getDeck().getHeaderNames()[2] + " : " + selectCard.getCategoryTwo());
 		System.out.println("3. " + this.model.getDeck().getHeaderNames()[3] + " : " + selectCard.getCategoryThree());
@@ -58,8 +65,9 @@ public class TTCLIView {
 
 	public void playersTurnHeader() {
 		System.out.println("///////////////////////");
-		System.out.println("It is " + this.model.getActivePlayer().getName() + "'s turn to play.");
-		System.out.println("///////////////////////\n");
+		System.out.println("It's " + this.model.getActivePlayer().getName() + "'s turn to play.");
+		System.out.println("///////////////////////");
+		System.out.println("Card in play:");
 	}
 
 	public void endRuntime() {
@@ -72,12 +80,50 @@ public class TTCLIView {
 
 	public void dbiDraw(int[] results) {
 		System.out.println("///////////////////////");
-		System.out.println("Total Games " + results[0]);
-		System.out.println("Human Wins " + results[1]);
-		System.out.println("AI Wins " + results[2]);
-		System.out.println("Avg. Draws " + results[3]);
-		System.out.println("Highest No. of Round " + results[4]);
+		System.out.println("Total Games: " + results[0]);
+		System.out.println("Human Wins: " + results[1]);
+		System.out.println("AI Wins: " + results[2]);
+		System.out.println("Avg. Draws: " + results[3]);
+		System.out.println("Highest No. of Rounds: " + results[4]);
 		System.out.println("///////////////////////\n");
-		System.out.println("Enter 1 to return to main menu");
+		System.out.println("Enter 1 to return to main menu...");
+	}
+	
+	public void gameLogVerification() {
+		System.out.println("Writing to .log file in game folder...\n");
+	}
+	
+	public void testLoggerPrints() {
+		// LogWriter prints
+        System.out.println("The current round is " + this.model.getNumOfRounds());
+        if (this.model.getNumOfRounds() == 1)
+        {
+            System.out.println(this.model.getLogWriter().getDeckOnLoad());
+            System.out.println(this.model.getLogWriter().getDeckShuffle());
+        }
+		System.out.println(this.model.getLogWriter().getEveryoneHands());
+		System.out.println(this.model.getLogWriter().getPlayingTable());
+		System.out.println(this.model.getLogWriter().getChosenCategory());
+		System.out.println(this.model.getLogWriter().getEveryoneValues());
+		System.out.println(this.model.getLogWriter().getRoundWinner());
+		System.out.println(this.model.getLogWriter().getCommunalPile());
+	}
+	
+	public void currentRound() {
+		System.out.println("The current round is " + this.model.getNumOfRounds() + "\n");
+	}
+	
+	public void roundWinner() {
+		System.out.println("///////////////////////");
+		System.out.println(this.model.getRoundWinner().getName() + " won the round!");
+	}
+	
+	public void roundWinnerCard() {
+		System.out.println("Their winning card was: " + this.model.getRoundWinner().getTopCard().getDescription());
+		System.out.println("///////////////////////\n");
+	}
+	
+	public void removedPlayers() {
+		System.out.println(this.model.getRemovedPlayers());
 	}
 }

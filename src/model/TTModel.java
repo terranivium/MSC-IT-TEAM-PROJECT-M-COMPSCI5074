@@ -27,7 +27,8 @@ public class TTModel {
 	private int categoryChosen; //instance variable set by argument supplied to compareCards, needed for use in TestLogger
 	private HashMap<Player, Integer> playerStats = new HashMap<Player, Integer>(); 	//migrated from compareCards so as to give an instance
     private LogWriter logWriter;																				//variable, which can then be called as a getter
-
+    private String removed;
+    
     public TTModel() { // constructor												//for use in TestLogger
 		this.setNewGameStates();
 	}
@@ -49,6 +50,7 @@ public class TTModel {
 		this.gameWinner = null;
 		this.activePlayer = null;
 		this.roundWinner = null;
+		this.removed = "";
 	}
 
 	public void startGame(int botCount) { 
@@ -116,8 +118,7 @@ public class TTModel {
 																		// value matches the maxValueInMap, and get the
 																		// key of that entry
 			if (entry.getValue() == maxValueInMap) {
-				this.roundWinners.add(entry.getKey()); // adds all the players with the highest value to a new array
-				System.err.println("round winner sizeeee       " + this.roundWinners.size());									// list
+				this.roundWinners.add(entry.getKey()); // adds all the players with the highest value to a new array list
 			}
 		}
 	}
@@ -159,10 +160,11 @@ public class TTModel {
 																								// playershave all the cards?
 				this.gameWinner = p.getName(); // won the game
 				this.numOfGames++; // increment number of games
-				updateWonRounds();
+				this.updateWonRounds();
 				return true;
 			} else if (p.getHand().isEmpty()) {
 				this.playersToRemove.add(p);
+				this.removed = this.removed + p.getName() + " ";
 			}
 		}
 		this.players.removeAll(this.playersToRemove);
@@ -198,6 +200,10 @@ public class TTModel {
 	public String getRoundWinnerName() {
 		return this.roundWinner.getName();
 	}
+	
+	public Player getRoundWinner() {
+		return this.roundWinner;
+	}
 
 	public int getNumOfGames() {
 		return this.numOfGames;
@@ -217,7 +223,7 @@ public class TTModel {
 	}
 
     public LogWriter getLogWriter() {
-        return logWriter;
+        return this.logWriter;
     }
 
 	public ArrayList<Card> getCommunalPile(){
@@ -237,7 +243,11 @@ public class TTModel {
 	}
 
 	public boolean isDraw() {
-		return isDraw;
+		return this.isDraw;
+	}
+	
+	public String getRemovedPlayers(){
+		return this.removed;
 	}
 
 }

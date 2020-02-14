@@ -17,9 +17,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import controller.TTController;
-import model.Bot;
-import model.Player;
-import model.TTModel;
+import model.*;
 
 @Path("/toptrumps") // Resources specified here should be hosted at http://localhost:7777/toptrumps
 @Produces(MediaType.APPLICATION_JSON) // This resource returns JSON content
@@ -55,47 +53,13 @@ public class TopTrumpsRESTAPI {
 		// ----------------------------------------------------
 		
 		boolean writeGameLogsToFile = false;
-		this.model = new TTModel(); // pass writeGameLogsToFile here
+		this.model = new TTModel();
 		this.botCount = conf.getNumAIPlayers();
-		//this.botCount = 1;
 	}
 	
 	// ----------------------------------------------------
 	// Add relevant API methods here
 	// ----------------------------------------------------
-	
-	@GET
-	@Path("/helloJSONList")
-	/**
-	 * Here is an example of a simple REST get request that returns a String.
-	 * We also illustrate here how we can convert Java objects to JSON strings.
-	 * @return - List of words as JSON
-	 * @throws IOException
-	 */
-	public String helloJSONList() throws IOException {
-		
-		List<String> listOfWords = new ArrayList<String>();
-		listOfWords.add("Hello");
-		listOfWords.add("World!!");
-		
-		// We can turn arbatory Java objects directly into JSON strings using
-		// Jackson seralization, assuming that the Java objects are not too complex.
-		String listAsJSONString = oWriter.writeValueAsString(listOfWords);
-		
-		return listAsJSONString;
-	}
-	
-	@GET
-	@Path("/helloWord")
-	/**
-	 * Here is an example of how to read parameters provided in an HTML Get request.
-	 * @param Word - A word
-	 * @return - A String
-	 * @throws IOException
-	 */
-	public String helloWord(@QueryParam("Word") String Word) throws IOException {
-		return "Hello "+Word;
-	}
 	
 	@GET
 	@Path("/startGame")
@@ -155,7 +119,7 @@ public class TopTrumpsRESTAPI {
 			roundWinnerAsJSONString = oWriter.writeValueAsString("DRAW");
 		}
 		else {
-		roundWinnerAsJSONString = oWriter.writeValueAsString(this.model.getRoundWinnerName() + " has won the round");
+			roundWinnerAsJSONString = oWriter.writeValueAsString(this.model.getRoundWinnerName() + " has won the round");
 		}
 		return roundWinnerAsJSONString;
 	}
@@ -169,7 +133,7 @@ public class TopTrumpsRESTAPI {
 	 */
 	public String hasWon() throws IOException{
 		String hasWonAsJSONString = oWriter.writeValueAsString(this.model.hasWon());
-	return hasWonAsJSONString;
+		return hasWonAsJSONString;
 	}
 
 	@GET
@@ -181,8 +145,8 @@ public class TopTrumpsRESTAPI {
 	 */
 	public String getBotChoice() throws IOException{
 		int choice = this.model.getActivePlayer().chooseCard();
-	String botChoiceAsJSONString = oWriter.writeValueAsString(choice);
-	return botChoiceAsJSONString;
+		String botChoiceAsJSONString = oWriter.writeValueAsString(choice);
+		return botChoiceAsJSONString;
 	}
 
 	@GET

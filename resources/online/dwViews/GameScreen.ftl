@@ -62,20 +62,22 @@
             <img src="https://i.pinimg.com/originals/ec/7e/79/ec7e79072d498c26433d9658d83d4a8b.png" width="250" height="100" alt="Doggo Trumps">
         </a>
    		</nav>
-
-    	<div class="container">
+		<div class="container">
+    	<div class="playArea">
    			<h1 id="cardList">players top card</h1>
 			<h2 id="roundCounter">round counter</h2>
 			<h2 id="activePlayer">active player</h2>
 			<h2 id="roundWinner">winner goes here</h2>
+		</div>
+		<div class="playButtonArea">
 			<input onclick="showCard();" type="button" value="Show Player Card" id="myButton1"></input>
-			<input onclick="playCards('1');alert(1)" type="button" value="Select Option 1" id="selectButton1"></input>
-			<input onclick="playCards('2');alert(2)" type="button" value="Select Option 2" id="selectButton1"></input>
-			<input onclick="playCards('3');alert(3)" type="button" value="Select Option 3" id="selectButton1"></input>
-			<input onclick="playCards('4');alert(4)" type="button" value="Select Option 4" id="selectButton1"></input>
-			<input onclick="playCards('5');alert(5)" type="button" value="Select Option 5" id="selectButton1"></input>
+			<input onclick="playCards('1');alert(1)" type="button" value="Select Stat 1" id="selectButton1"></input>
+			<input onclick="playCards('2');alert(2)" type="button" value="Select Stat 2" id="selectButton1"></input>
+			<input onclick="playCards('3');alert(3)" type="button" value="Select Stat 3" id="selectButton1"></input>
+			<input onclick="playCards('4');alert(4)" type="button" value="Select Stat 4" id="selectButton1"></input>
+			<input onclick="playCards('5');alert(5)" type="button" value="Select Stat 5" id="selectButton1"></input>
+		</div>
 			<input onclick="setNewGameStates();startGame();selectPlayer()" type="button" value="Reset" id="resetButton"></input>
-
 		</div>
 
 		<div class="footer">
@@ -90,6 +92,7 @@
 				// --------------------------------------------------------------------------
 				// You can call other methods you want to run when the page first loads here
 				// --------------------------------------------------------------------------
+				
 				startGame();
 				
 			}
@@ -97,6 +100,16 @@
 			// -----------------------------------------
 			// Add your other Javascript methods Here
 			// -----------------------------------------
+			
+			function hideButtons(){
+				var x = document.getElementById("playButtonArea");
+    			x.style.visibility = "hidden";
+			}
+			
+			function showButtons(){
+				var x = document.getElementById("playButtonArea");
+    			x.style.visibility = "visible";
+			}
 		
 			// This is a reusable method for creating a CORS request. Do not edit this.
 			function createCORSRequest(method, url) {
@@ -166,11 +179,12 @@
 					alert("is it a bot's turn?  " + isBot); // lets produce an alert
 					if(isBot == "true")
 						{
-						getBotChoice().call();
+							hideButtons();
+							getBotChoice().call();
 						}
 					else if(isBot == "false")
 						{
-						;
+							showButtons();
 						}
 				};
 				
@@ -257,13 +271,13 @@
 					alert("Has the whole game been won yet? " + gameState);
 					if(gameState == false)
 						{
-						selectPlayer().call();
+							selectPlayer().call();
 						}
 					else if(gameState == true){
-						alert("game over");
+							alert("game over");
 						}
 					if(gameState == false){
-					selectPlayers().call()
+						selectPlayers().call()
 					}
 				};
 				

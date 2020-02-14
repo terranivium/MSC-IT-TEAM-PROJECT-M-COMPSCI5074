@@ -129,6 +129,24 @@ public class TopTrumpsRESTAPI {
 	}
 	
 	@GET
+	@Path("/playerHandSizes")
+	/**
+	 * Here is an example of how to read parameters provided in an HTML Get request.
+	 * @param Word - A word
+	 * @return - A String
+	 * @throws IOException
+	 */
+	public String playerHandSizes() throws IOException{
+		String handSizesAsJSONString;
+		ArrayList<Integer> handSizes = new ArrayList<Integer>();
+		for(Player p: this.model.getPlayers()) {
+			handSizes.add(p.getHand().size());
+		}
+		handSizesAsJSONString = oWriter.writeValueAsString(handSizes);
+		return  handSizesAsJSONString;
+	}
+	
+	@GET
 	@Path("/selectPlayer")
 	/**
 	 * @param None
@@ -171,7 +189,7 @@ public class TopTrumpsRESTAPI {
 		String roundWinnerAsJSONString;
 		this.model.selectWinners();
 		if(this.model.isDraw()) {
-			roundWinnerAsJSONString = oWriter.writeValueAsString("DRAW");
+			roundWinnerAsJSONString = oWriter.writeValueAsString("Round:" + this.model.getNumOfRounds() + " This round was a Draw, the communal pile now has " + this.model.getCommunalPile().size() + " cards");
 		}
 		else {
 		roundWinnerAsJSONString = oWriter.writeValueAsString(this.model.getRoundWinnerName() + " has won the round");

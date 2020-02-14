@@ -142,11 +142,11 @@
 		</div>
 		
 		<div class="selectButtonsWrapper">
-			<input onclick="playCards('1');alert(1)" type="button" value="Select Option 1" id="selectButton1" ></input>
-			<input onclick="playCards('2');alert(2)" type="button" value="Select Option 2" id="selectButton2"></input>
-			<input onclick="playCards('3');alert(3)" type="button" value="Select Option 3" id="selectButton3"></input>
-			<input onclick="playCards('4');alert(4)" type="button" value="Select Option 4" id="selectButton4"></input>
-			<input onclick="playCards('5');alert(5)" type="button" value="Select Option 5" id="selectButton5"></input>
+			<input onclick="updateSelectionHeader('1');" type="button" value="Select Option 1" id="selectButton1" ></input>
+			<input onclick="updateSelectionHeader('2');" type="button" value="Select Option 2" id="selectButton2"></input>
+			<input onclick="updateSelectionHeader('3');" type="button" value="Select Option 3" id="selectButton3"></input>
+			<input onclick="updateSelectionHeader('4');" type="button" value="Select Option 4" id="selectButton4"></input>
+			<input onclick="updateSelectionHeader('5');" type="button" value="Select Option 5" id="selectButton5"></input>
 		</div>
 		
 		<div class="cardWrapper">
@@ -268,9 +268,9 @@
 		<script type="text/javascript">
 			var headerNames;
 			var topCards;
-			var botChoice;
 			var activePlayer;
 			var roundNum;
+			var handSizes;
 			
 			function startGame() {
 				// First create a CORS request, this is the message we are going to send (a get request in this case)
@@ -290,7 +290,7 @@
  					document.getElementById("selectButton3").value="Select: " + headerNames[3];
  					document.getElementById("selectButton4").value="Select: " + headerNames[4];
  					document.getElementById("selectButton5").value="Select: " + headerNames[5];
-					buildRoundCards().call();
+					getHandSizes().call();
 				};
 				
 				// We have done everything we need to prepare the CORS request, so send it
@@ -310,45 +310,45 @@
 				// to do when the response arrives 
 				xhr.onload = function(e) {
 					topCards = JSON.parse(xhr.response);
-					
-					document.getElementById("playerOneDesc").innerHTML= topCards[0].description;
-					document.getElementById("playerOneCute").innerHTML= headerNames[1] + ": " + topCards[0].categoryOne;
-					document.getElementById("playerOneSize").innerHTML= headerNames[2] + ": " + topCards[0].categoryTwo;
-					document.getElementById("playerOneRare").innerHTML= headerNames[3] + ": " + topCards[0].categoryThree;
-					document.getElementById("playerOneTemp").innerHTML= headerNames[4] + ": " + topCards[0].categoryFour;
-					document.getElementById("playerOneIntel").innerHTML= headerNames[5] + ": " + topCards[0].categoryFive;
+					console.log(xhr.response);
+					document.getElementById("playerOneDesc").innerHTML= topCards[0].description + " (" + handSizes[0] + ")";
+					document.getElementById("playerOneSize").innerHTML= headerNames[1] + ": " + topCards[0].categoryOne;
+					document.getElementById("playerOneRare").innerHTML= headerNames[2] + ": " + topCards[0].categoryTwo;
+					document.getElementById("playerOneTemp").innerHTML= headerNames[3] + ": " + topCards[0].categoryThree;
+					document.getElementById("playerOneIntel").innerHTML= headerNames[4] + ": " + topCards[0].categoryFour;
+					document.getElementById("playerOneCute").innerHTML= headerNames[5] + ": " + topCards[0].categoryFive;
 					document.getElementById("playerOnePic").src = "../assets/" + topCards[0].description + ".jpg";
 					
-					document.getElementById("playerTwoDesc").innerHTML= topCards[1].description;
-					document.getElementById("playerTwoCute").innerHTML= headerNames[1] + ": " + topCards[1].categoryOne;
-					document.getElementById("playerTwoSize").innerHTML= headerNames[2] + ": " + topCards[1].categoryTwo;
-					document.getElementById("playerTwoRare").innerHTML= headerNames[3] + ": " + topCards[1].categoryThree;
-					document.getElementById("playerTwoTemp").innerHTML= headerNames[4] + ": " + topCards[1].categoryFour;
-					document.getElementById("playerTwoIntel").innerHTML= headerNames[5] + ": " + topCards[1].categoryFive;
+					document.getElementById("playerTwoDesc").innerHTML= topCards[1].description + " (" + handSizes[1] + ")";
+					document.getElementById("playerTwoSize").innerHTML= headerNames[1] + ": " + topCards[1].categoryOne;
+					document.getElementById("playerTwoRare").innerHTML= headerNames[2] + ": " + topCards[1].categoryTwo;
+					document.getElementById("playerTwoTemp").innerHTML= headerNames[3] + ": " + topCards[1].categoryThree;
+					document.getElementById("playerTwoIntel").innerHTML= headerNames[4] + ": " + topCards[1].categoryFour;
+					document.getElementById("playerTwoCute").innerHTML= headerNames[5] + ": " + topCards[1].categoryFive;
 					document.getElementById("playerTwoPic").src = "../assets/" + topCards[1].description + ".jpg";
 					
-					document.getElementById("playerThreeDesc").innerHTML= topCards[2].description;
-					document.getElementById("playerThreeCute").innerHTML= headerNames[1] + ": " + topCards[2].categoryOne;
-					document.getElementById("playerThreeSize").innerHTML= headerNames[2] + ": " + topCards[2].categoryTwo;
-					document.getElementById("playerThreeRare").innerHTML= headerNames[3] + ": " + topCards[2].categoryThree;
-					document.getElementById("playerThreeTemp").innerHTML= headerNames[4] + ": " + topCards[2].categoryFour;
-					document.getElementById("playerThreeIntel").innerHTML= headerNames[5] + ": " + topCards[2].categoryFive;
+					document.getElementById("playerThreeDesc").innerHTML= topCards[2].description + " (" + handSizes[2] + ")";
+					document.getElementById("playerThreeSize").innerHTML= headerNames[1] + ": " + topCards[2].categoryOne;
+					document.getElementById("playerThreeRare").innerHTML= headerNames[2] + ": " + topCards[2].categoryTwo;
+					document.getElementById("playerThreeTemp").innerHTML= headerNames[3] + ": " + topCards[2].categoryThree;
+					document.getElementById("playerThreeIntel").innerHTML= headerNames[4] + ": " + topCards[2].categoryFour;
+					document.getElementById("playerThreeCute").innerHTML= headerNames[5] + ": " + topCards[2].categoryFive;
 					document.getElementById("playerThreePic").src = "../assets/" + topCards[2].description + ".jpg";
 					
-					document.getElementById("playerFourDesc").innerHTML= topCards[3].description;
-					document.getElementById("playerFourCute").innerHTML= headerNames[1] + ": " + topCards[3].categoryOne;
-					document.getElementById("playerFourSize").innerHTML= headerNames[2] + ": " + topCards[3].categoryTwo;
-					document.getElementById("playerFourRare").innerHTML= headerNames[3] + ": " + topCards[3].categoryThree;
-					document.getElementById("playerFourTemp").innerHTML= headerNames[4] + ": " + topCards[3].categoryFour;
-					document.getElementById("playerFourIntel").innerHTML= headerNames[5] + ": " + topCards[3].categoryFive;
+					document.getElementById("playerFourDesc").innerHTML= topCards[3].description + " (" + handSizes[3] + ")";
+					document.getElementById("playerFourSize").innerHTML= headerNames[1] + ": " + topCards[3].categoryOne;
+					document.getElementById("playerFourRare").innerHTML= headerNames[2] + ": " + topCards[3].categoryTwo;
+					document.getElementById("playerFourTemp").innerHTML= headerNames[3] + ": " + topCards[3].categoryThree;
+					document.getElementById("playerFourIntel").innerHTML= headerNames[4] + ": " + topCards[3].categoryFour;
+					document.getElementById("playerFourCute").innerHTML= headerNames[5] + ": " + topCards[3].categoryFive;
 					document.getElementById("playerFourPic").src = "../assets/" + topCards[3].description + ".jpg";
 					
-					document.getElementById("playerFiveDesc").innerHTML= topCards[4].description;
-					document.getElementById("playerFiveCute").innerHTML= headerNames[1] + ": " + topCards[4].categoryOne;
-					document.getElementById("playerFiveSize").innerHTML= headerNames[2] + ": " + topCards[4].categoryTwo;
-					document.getElementById("playerFiveRare").innerHTML= headerNames[3] + ": " + topCards[4].categoryThree;
-					document.getElementById("playerFiveTemp").innerHTML= headerNames[4] + ": " + topCards[4].categoryFour;
-					document.getElementById("playerFiveIntel").innerHTML= headerNames[5] + ": " + topCards[4].categoryFive;
+					document.getElementById("playerFiveDesc").innerHTML= topCards[4].description + " (" + handSizes[4] + ")";
+					document.getElementById("playerFiveSize").innerHTML= headerNames[1] + ": " + topCards[4].categoryOne;
+					document.getElementById("playerFiveRare").innerHTML= headerNames[2] + ": " + topCards[4].categoryTwo;
+					document.getElementById("playerFiveTemp").innerHTML= headerNames[3] + ": " + topCards[4].categoryThree;
+					document.getElementById("playerFiveIntel").innerHTML= headerNames[4] + ": " + topCards[4].categoryFour;
+					document.getElementById("playerFiveCute").innerHTML= headerNames[5] + ": " + topCards[4].categoryFive;
 					document.getElementById("playerFivePic").src = "../assets/" + topCards[4].description + ".jpg";
 					
 					var x = document.getElementsByClassName("playerOneCard");
@@ -372,6 +372,8 @@
 				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
 				// to do when the response arrives 
 				xhr.onload = function(e) {
+					document.getElementById("mainButton").value = "Next: Category Selection";
+				
 					var x = document.getElementsByClassName("activePlayerWrapper");
 					x[0].style.display = "block";
 					
@@ -396,28 +398,14 @@
 			}
 			
 			function showCardButtons() {
-				// First create a CORS request, this is the message we are going to send (a get request in this case)
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/showCardStats"); // Request type and URL+parameters
-				
-				// Message is not sent yet, but we can check that the browser supports CORS
-				if (!xhr) {
-  					alert("CORS not supported");
-				}
-
-				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
-				// to do when the response arrives 
-				xhr.onload = function(e) {
- 					 // the text of the response
 					var x = document.getElementsByClassName("selectButtonsWrapper");
 					x[0].style.display = "block";
 					
-					var x = document.getElementsByClassName("mainButtonWrapper");
-					x[0].style.display = "none";
+					var y = document.getElementsByClassName("mainButtonWrapper");
+					y[0].style.display = "none";
 					
-				};
-				
-				// We have done everything we need to prepare the CORS request, so send it
-				xhr.send();
+					var z = document.getElementsById("gameHeader").innerHTML = roundNum + ": Waiting on " + activePlayer + "(You) to select a category ";
+					
 			}
 			
 			function updateSelectionHeader(stat) {
@@ -425,8 +413,28 @@
  				
  				var a = document.getElementById("gameHeader");
 				a.innerHTML = roundNum + ": " + activePlayer + " selected " + headerNames[choice];
+				
+				var b = document.getElementById("mainButton");
+				b.onclick = function() { playCards(choice).call(); };
+				b.value = "Show Winner";
+				
+				var c = document.getElementsByClassName("mainButtonWrapper");
+				c[0].style.display = "block";
 					
-				playCards(choice).call();
+				var d = document.getElementsByClassName("selectButtonsWrapper");
+				d[0].style.display = "none";
+				
+				var e = document.getElementsByClassName("playerTwoCard");
+				e[0].style.display = "block";
+					
+				var f= document.getElementsByClassName("playerThreeCard");
+				f[0].style.display = "block";
+					
+				var g = document.getElementsByClassName("playerFourCard");
+				g[0].style.display = "block";
+					
+				var h = document.getElementsByClassName("playerFiveCard");
+				h[0].style.display = "block";
 	
 			}
 			
@@ -509,14 +517,11 @@
 					var gameState = JSON.parse(xhr.response);
 					if(gameState == false)
 						{
-						selectPlayer().call();
+						getHandSizes().call();
 						}
 					else if(gameState == true){
 						alert("game over");
 						}
-					if(gameState == false){
-					selectPlayers().call()
-					}
 				};
 				
 				// We have done everything we need to prepare the CORS request, so send it
@@ -578,28 +583,33 @@
 				// to do when the response arrives 
 				xhr.onload = function(e) {
  					 // the text of the response
-					botChoice = JSON.parse(xhr.response);
-					
-					var b = document.getElementById("mainButton");
-					b.value = "Show Winner";  
-					b.onclick = function() { playCards(botChoice).call(); };
-					var c = document.getElementsByClassName("playerTwoCard");
-					c[0].style.display = "block";
-					
-					var d = document.getElementsByClassName("playerThreeCard");
-					d[0].style.display = "block";
-					
-					var e = document.getElementsByClassName("playerFourCard");
-					e[0].style.display = "block";
-					
-					var f = document.getElementsByClassName("playerFiveCard");
-					f[0].style.display = "block";
-					
+					var botChoice = JSON.parse(xhr.response);
 					updateSelectionHeader(botChoice);
 				};
 				
 				// We have done everything we need to prepare the CORS request, so send it
 				xhr.send();		
+			}
+			
+			function getHandSizes() {
+				// First create a CORS request, this is the message we are going to send (a get request in this case)
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/playerHandSizes"); // Request type and URL+parameters
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
+
+				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
+				// to do when the response arrives 
+				xhr.onload = function(e) {
+ 					handSizes = JSON.parse(xhr.response);
+ 					alert(handSizes);
+				};
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();		
+				buildRoundCards().call();
 			}
 
 		</script>

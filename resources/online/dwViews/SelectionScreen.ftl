@@ -1,5 +1,3 @@
-<!-- COMPLETED -->
-
 <html>
 
 	<head>
@@ -23,39 +21,39 @@
 	
 	<body onload="initalize()"> <!-- Call the initalize method when the page loads -->
 	
-	<!-- selection screen CSS -->
+<!-- selection screen CSS -->
 	
 	<style>
 		
 		body {
-			background-color: #e6e6e6;
+			background-color:#e6e6e6;
+			font-family:Verdana;
+  			text-align:center;	
 		}
 		
   		.navbar {
-			padding: 2rem;
-			background-color: #4d4d4d;
+  			background-color:#4d4d4d;
+			background:linear-gradient(to bottom, #4d4d4d 5%, #747474 100%);
+  			padding:2rem;
   		}
   		
-  		.menucontainer {
-  			text-align: center;	
-			font-family: Arial;
-			font-size: 20px;
+  		.menuWrapper {
+  			padding:3.5rem;
   		}
   		
   		.footer {
-  			right: 0;
-  			bottom: 0;
-  			left: 0;
-  			width: 100%;
-  			position: absolute;
-  			padding: 2rem;
-  			background-color: #4d4d4d;
-  			color: #ffffff;	
-			font-family: Arial;
-			font-size: 14px;
+  			right:0;
+  			bottom:0;
+  			left:0;
+  			width:100%;
+  			position:absolute;
+  			padding:2rem;
+  			background-color:#4d4d4d;
+			background:linear-gradient(to bottom, #4d4d4d 5%, #747474 100%);
+  			color:#ffffff;	
+			font-size:12px;
   		}
 		
-			
 		.myButton {
 			box-shadow:inset 0px 1px 0px 0px #fce2c1;
 			background:linear-gradient(to bottom, #ffc477 5%, #fb9e25 100%);
@@ -65,8 +63,7 @@
 			display:inline-block;
 			cursor:pointer;
 			color:#ffffff;
-			font-family:Arial;
-			font-size:20px;
+			font-size:15px;
 			font-weight:bold;
 			padding:6px 24px;
 			text-decoration:none;
@@ -85,27 +82,28 @@
 		           
 	</style>
 
-	<!-- selection screen HTML -->
+<!-- selection screen HTML -->
 		
-		<nav class="navbar navbar-expand-lg navbar-inverse bg-inverse">
-			<a class="navbar-doggotrumps" href="http://localhost:7777/toptrumps">
-            <img src="https://i.pinimg.com/originals/ec/7e/79/ec7e79072d498c26433d9658d83d4a8b.png" width="250" height="100" alt="Doggo Trumps">
-        	</a>
-   		</nav>
-            	
-    	<div class="menucontainer">
-    		<br></br>
-	    	<p><b>Welcome to Doggo Top Trumps!</b></p>
-	    	<p>Would you like to play a new game or see previous game statistics?</p>
-			<input class="mybutton" type="button" value="New Game" 
-			onclick="window.location.href='toptrumps/game'" />
-			<input class="mybutton" type="button" value="Game Statistics" 
-			onclick="window.location.href='toptrumps/stats'"/>
-		</div>
+	<nav class="navbar navbar-expand-lg navbar-inverse bg-inverse">
+		<a class="navbar-doggotrumps" href="http://localhost:7777/toptrumps">
+		<img src="https://i.pinimg.com/originals/f3/d8/97/f3d897a2e4842b17f52a41154ab8fe62.png" width="400" alt="Doggo Trumps">
+        </a>
+   	</nav>
+   	
+   	<div class = "menuWrapper">
+   		<h4><b>Welcome to Doggo Top Trumps!</b></h4>
+        </br>
+	    <h5>Would you like to play a new game or see previous game statistics?</h5>	
+        </br>
+		<p><input class="mybutton" type="button" value="New Game" 
+		onclick="window.location.href='toptrumps/game'" />
+		<input class="mybutton" type="button" value="Game Statistics" 
+		onclick="window.location.href='toptrumps/stats'"/></p>
+	</div>
 		
-		<div class="footer">
-			Made by Git What You Give</br>Jessica Lavin - Daniel Mitchell - Simon Manton Milne - Wesley Scott
-		</div>
+	<div class="footer">
+		Made by Git What You Give</br>Jessica Lavin - Daniel Mitchell - Simon Manton Milne - Wesley Scott
+	</div>
 		
 		<script type="text/javascript">
 		

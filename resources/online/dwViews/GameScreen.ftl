@@ -290,7 +290,7 @@
  					document.getElementById("selectButton3").value="Select: " + headerNames[3];
  					document.getElementById("selectButton4").value="Select: " + headerNames[4];
  					document.getElementById("selectButton5").value="Select: " + headerNames[5];
-					getHandSizes().call();
+					playersRem();
 				};
 				
 				// We have done everything we need to prepare the CORS request, so send it
@@ -310,7 +310,8 @@
 				// to do when the response arrives 
 				xhr.onload = function(e) {
 					topCards = JSON.parse(xhr.response);
-					console.log(xhr.response);
+					var topCardsSize = Object.keys(topCards).length;
+					
 					document.getElementById("playerOneDesc").innerHTML= topCards[0].description + " (" + handSizes[0] + ")";
 					document.getElementById("playerOneSize").innerHTML= headerNames[1] + ": " + topCards[0].categoryOne;
 					document.getElementById("playerOneRare").innerHTML= headerNames[2] + ": " + topCards[0].categoryTwo;
@@ -517,7 +518,7 @@
 					var gameState = JSON.parse(xhr.response);
 					if(gameState == false)
 						{
-						getHandSizes().call();
+						playersRem().call();
 						}
 					else if(gameState == true){
 						alert("game over");
@@ -605,11 +606,32 @@
 				xhr.onload = function(e) {
  					handSizes = JSON.parse(xhr.response);
  					alert(handSizes);
+ 					buildRoundCards();
 				};
 				
 				// We have done everything we need to prepare the CORS request, so send it
 				xhr.send();		
-				buildRoundCards().call();
+			}
+			
+			function playersRem() {
+				// First create a CORS request, this is the message we are going to send (a get request in this case)
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/playersRem"); // Request type and URL+parameters
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
+
+				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
+				// to do when the response arrives 
+				xhr.onload = function(e) {
+ 					var playersLeft = xhr.repsonse;
+ 					//alert(playersLeft);
+ 					getHandSizes().call();
+				};
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();	
 			}
 
 		</script>

@@ -147,6 +147,25 @@ public class TopTrumpsRESTAPI {
 	}
 	
 	@GET
+	@Path("/playersRem")
+	/**
+	 * Here is an example of how to read parameters provided in an HTML Get request.
+	 * @param Word - A word
+	 * @return - A String
+	 * @throws IOException
+	 */
+	public String playersRem() throws IOException{
+		String playersRemianingAsJSONString;
+		ArrayList<Card> playersLeft = new ArrayList<Card>();
+		for(Player p: this.model.getPlayers()) {
+			playersLeft.add(p.getTopCard());
+		
+		}
+		playersRemianingAsJSONString = oWriter.writeValueAsString(playersLeft);
+		return  playersRemianingAsJSONString;
+	}
+	
+	@GET
 	@Path("/selectPlayer")
 	/**
 	 * @param None

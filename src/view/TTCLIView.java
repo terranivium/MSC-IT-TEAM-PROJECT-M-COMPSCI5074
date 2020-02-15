@@ -1,6 +1,7 @@
 package view;
 
 import model.*;
+import sun.tools.tree.ThisExpression;
 
 public class TTCLIView {
 
@@ -26,7 +27,7 @@ public class TTCLIView {
 
 	// draw AI select menu
 	public void drawHumanMenu() {
-		System.out.println("Select AI players (Max 1-4)...");
+		System.out.println("Starting new game against 4 AI players.");
 	}
 
 	// draw AI select menu
@@ -76,6 +77,7 @@ public class TTCLIView {
 
 	public void gameWinner() {
 		System.out.println("The winner of the game was " + this.model.getGameWinner());
+		System.out.println("///////////////////////");
 	}
 
 	public void dbiDraw(int[] results) {
@@ -114,8 +116,13 @@ public class TTCLIView {
 	}
 	
 	public void roundWinner() {
+		if (this.model.getRoundWinnerString().equals("")) {
+			System.out.println("///////////////////////");
+			System.out.println("Draw - No one won the round");
+		} else {
 		System.out.println("///////////////////////");
 		System.out.println(this.model.getRoundWinnerString() + " won the round!");
+		}
 	}
 	
 	public void roundWinnerCard() {
@@ -133,7 +140,32 @@ public class TTCLIView {
 	}
 	
 	public void removedPlayers() {
-		System.out.println("Eliminated this turn: " + this.model.getRemovedPlayersString()); // not working
-		System.out.println("///////////////////////");
+		
+		if (this.model.getRemovedPlayersString().equals(""))
+		{
+			System.out.println("No players were eliminated this turn\n");
+			System.out.println("///////////////////////");
+		} else {
+			System.out.println("Eliminated this turn:\n " + this.model.getRemovedPlayersString());
+			System.out.println("///////////////////////");
+		}
 	}
+	
+	public void chosenCategory()
+	{
+		System.out.println(this.model.getChosenCategory());
+	}
+	
+	public void winningCard()
+	{
+		if (this.model.getWinningCard().equals(""))
+		{
+			System.out.println("No winning card this turn");
+			System.out.println("///////////////////////");
+		} else {
+			System.out.println("The winning card was " + this.model.getWinningCard());
+			System.out.println("///////////////////////");
+		}
+	}
+
 }

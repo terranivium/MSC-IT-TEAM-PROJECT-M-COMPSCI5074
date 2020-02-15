@@ -40,24 +40,31 @@ public class TTController {
 			this.systemInput.nextLine();
 			if (this.readInput == 1) {
 				this.view.drawHumanMenu();
-				this.readInput = this.systemInput.nextInt();
-				this.systemInput.nextLine();
-				if (this.readInput >= 5 || this.readInput <= 0) {
-					do {
-						this.view.notValid();
-						Thread.sleep(500);
-						this.view.drawHumanMenu();
-						this.readInput = this.systemInput.nextInt();
-						this.systemInput.nextLine();
-					} while (this.readInput >= 5 || this.readInput <= 0);
-					this.model.startGame(this.readInput);
-				} else {
-					this.model.startGame(this.readInput);
-					if (this.writeGameLogsToFile)
-						{
-							this.logPreRoundsActivity();
-						}
+				this.model.startGame(4);
+				if (this.writeGameLogsToFile)
+				{
+					this.logPreRoundsActivity();
 				}
+				
+				//remove - bots always set to 4 in CLM.
+//				this.readInput = this.systemInput.nextInt();
+//				this.systemInput.nextLine();
+//				if (this.readInput >= 5 || this.readInput <= 0) {
+//					do {
+//						this.view.notValid();
+//						Thread.sleep(500);
+//						this.view.drawHumanMenu();
+//						this.readInput = this.systemInput.nextInt();
+//						this.systemInput.nextLine();
+//					} while (this.readInput >= 5 || this.readInput <= 0);
+//					this.model.startGame(this.readInput);
+//				} else {
+//					this.model.startGame(this.readInput);
+//					if (this.writeGameLogsToFile)
+//						{
+//							this.logPreRoundsActivity();
+//						}
+//				}
 				this.runtimeGame();
 			} else if (this.readInput == 2) { // for bot vs bot game
 				this.view.drawAIMenu();
@@ -133,8 +140,9 @@ public class TTController {
 		}
 		if(this.setSlowScroll) Thread.sleep(1000);
 		while (!this.model.hasWon()) {
-			this.view.currentRound();
+			//this.view.currentRound();
 			this.model.selectPlayer();
+			this.view.currentRound();// moved after selectPlayer() to give correct starting round num as 1.
 			if(this.setSlowScroll) Thread.sleep(1000);
 			this.view.playersTurnHeader();
 			if (this.model.getActivePlayer().getClass() == Player.class) {
@@ -158,16 +166,19 @@ public class TTController {
 			}
 			this.model.playCards(this.readInput);
 			this.model.selectWinners();
+			this.view.chosenCategory();
 			this.view.roundWinner();
+			this.view.winningCard();
             if (this.writeGameLogsToFile)
             {
                 this.logRoundReport();
             }
             //this.view.testLoggerPrints(); // calls test logger prints
             //this.view.roundWinnerCard();
-            //this.view.roundWinnerCardStat();
+            
             // number of cards in hand?
-            this.view.removedPlayers(); // does not work, controller structure
+            
+            this.view.removedPlayers(); 
 		}
 		this.view.gameWinner();
 		if (this.writeGameLogsToFile)
@@ -191,7 +202,7 @@ public class TTController {
 
 	private void logRoundReport(){
 		this.testLogger.writeRoundNumber(this.model.getNumOfRounds());
-		this.testLogger.writePlayingTable(this.model.getLogWriter().getPlayingTable());
+		this.testLogger.writePlayingTable(this.model.getLogWriter().getPlayersCardsString());
 		this.testLogger.writeCategoryChosen(this.model.getLogWriter().getChosenCategory());
 		this.testLogger.writeValuesForCategory(this.model.getLogWriter().getEveryoneValues());
 		this.testLogger.writeRoundWinner(this.model.getLogWriter().getRoundWinner());

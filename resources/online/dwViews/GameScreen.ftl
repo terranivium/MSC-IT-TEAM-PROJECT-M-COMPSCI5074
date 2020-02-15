@@ -17,210 +17,301 @@
     	<link rel="stylesheet" href="http://dcs.gla.ac.uk/~richardm/assets/stylesheets/vex-theme-os.css"/>
     	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-
+	
 	</head>
+	
+	<body onload="initalize()"> 
 
-    <body onload="initalize()"> 
-
-    <!-- game screen CSS -->
+<!-- game screen CSS -->
 
 	<style>
 
 		body {
-			background-color: #e6e6e6;
+			background-color:#e6e6e6;
+			font-family:Verdana;
 		}
 
   		.navbar {
-  			padding: 2rem;
-  			background-color: #4d4d4d;
+  			background-color:#4d4d4d;
+			background:linear-gradient(to bottom, #4d4d4d 5%, #747474 100%);
+  			padding:2rem;
   		}
   		
   		.gameHeaderWrapper {
-  			text-align: center;
-			background-color:#00FFFF;
+			background-color:#ffffe6;
+			background:linear-gradient(to bottom, #ffffe6 5%, #fbfbd1 100%);
+  			border-bottom:1px solid black;
+  			padding-top:0.5rem;
+  			padding-left:1rem;
   		}
   		
-  		.mainButtonWrapper {
+  		.gridLayout {
+  		  	display:grid;
+  			grid-template-columns:repeat(4, 1fr);
+  			grid-gap:10px;
+  			grid-auto-rows:minmax(100px, auto);
+  			width:100%;
+  			padding:1rem;
   		}
+  		
+  		.controller {
+  			text-align:center;
+			background-color:#ffffe6;
+			background:linear-gradient(to bottom, #ffffe6 5%, #fbfbd1 100%);
+  			margin-bottom:auto;
+  			border:1px solid black;
+			border-radius:6px;
+  		}
+  		
+  		.myButton {
+  		  	width: 100%;
+			box-shadow:inset 0px 1px 0px 0px #fce2c1;
+			background:linear-gradient(to bottom, #ffc477 5%, #fb9e25 100%);
+			background-color:#ffc477;
+			border:1px solid #eeb44f;
+			border-radius:6px;
+			display:inline-block;
+			cursor:pointer;
+			color:#ffffff;
+			font-size:15px;
+			font-weight:bold;
+			padding:6px 24px;
+			text-decoration:none;
+			text-shadow:0px 1px 0px #cc9f52;
+		}
+		
+		.myButton:hover {
+			background:linear-gradient(to bottom, #fb9e25 5%, #ffc477 100%);
+			background-color:#fb9e25;
+		}
+		
+		.myButton:active {
+			position:relative;
+			top:1px;
+		}
   		
   		.activePlayerWrapper {
-			background-color:#00FFFF;
+  			padding-top:1rem;
+  			padding-left:1rem;
+  			padding-right:1rem;
+  			font-size:15px;
   		}
   
   		.selectButtonsWrapper {
-			display: none;
-			align-content: center;
-			text-align: left;
+			display:none;
   		}
   		
-  		.cardWrapper {
-  			overflow: hidden;
-  			margin-left: 300px;
-  			width: 1400px;
-  			height: 500px
-  			
+  		.cardHeader {
+  			box-shadow:inset 0px 1px 0px 0px #fff6af;
+			background:linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
+			background-color:#ffec64;
+  			text-align:center;
+  			padding-top:1rem;
+			border-radius:10px;
+			font-size:15px;
+  		}
+  		
+  		.cardContainer {
+  			padding-top:1rem;
+  			padding-left:1rem;
+			font-size:13px;
   		}
   		
   		.playerOneCard {
-  			text-align: center;
-  			background-color:gold;
-  			border: 2px solid black;
-  			float:left; 
-  			margin-right: 30px;
-  			display: none;
+  			border:1px solid black;
+  			display:none;
+			background:linear-gradient(to bottom, #ffffe6 5%, #fbfbd1 100%);
+  			background-color:#ffffe6;
+			border-radius:10px;
   		}
   		
   		.playerTwoCard {
-  			text-align: center;
-  			background-color:gold;
-  			border: 2px solid black;
-  			float:left; 
-  			margin-right: 30px;
-  			display: none;
+  			border:1px solid black;
+  			display:none;
+			background:linear-gradient(to bottom, #ffffe6 5%, #fbfbd1 100%);
+  			background-color:#ffffe6;
+			border-radius:10px;
   		}
   		
   		.playerThreeCard {
-  			text-align: center;
-  			background-color:gold;
-  			border: 2px solid black;
-  			float:left; 
-  			margin-right: 30px;
-  			display: none;
+  			border:1px solid black;
+  			display:none;
+			background:linear-gradient(to bottom, #ffffe6 5%, #fbfbd1 100%);
+  			background-color:#ffffe6;
+			border-radius:10px;
   		}
   		
   		.playerFourCard {
-  			text-align: center;
-  			background-color:gold;
-  			border: 2px solid black;
-  			float:left; 
-  			margin-right: 30px;
-  			display: none;
+  			border:1px solid black;
+  			display:none;
+			background:linear-gradient(to bottom, #ffffe6 5%, #fbfbd1 100%);
+  			background-color:#ffffe6;
+			border-radius:10px;
   		}
   		
   		.playerFiveCard {
-  			text-align: center;
-  			background-color:gold;
-  			border: 2px solid black;
-  			float:left; 
-  			margin-right: 30px;
-  			display: none;
+  			border:1px solid black;
+  			display:none;
+			background:linear-gradient(to bottom, #ffffe6 5%, #fbfbd1 100%);
+  			background-color:#ffffe6;
+			border-radius:10px;
   		}
 
   		.footer {
-  			position: absolute;
-  			right: 0;
-  			bottom: 0;
-  			left: 0;
-  			width: 100%;
-  			padding: 2rem;
-  			background-color: #4d4d4d;
-  			color: #ffffff;
-			font-family: Arial;
-			font-size: 14px;
+  			position:sticky;
+  			width:100%;
+  			padding:2rem;
+  			background-color:#4d4d4d;
+			background:linear-gradient(to bottom, #4d4d4d 5%, #747474 100%);
+  			color:#ffffff;
+			font-size:12px;
+  			text-align:center;
   		}
 
   		</style>
 
-  		<!-- game screen HTML -->
+<!-- game screen HTML -->
 
-    	<nav class="navbar navbar-expand-lg navbar-inverse bg-inverse">
-        	<a class="navbar-brand" href="http://localhost:7777/toptrumps">
-            <img src="https://i.pinimg.com/originals/ec/7e/79/ec7e79072d498c26433d9658d83d4a8b.png" width="250" height="100" alt="Doggo Trumps">
-        </a>
-   		</nav>
-
-    	<div class="gameHeaderWrapper">
-   			<h2 id="gameHeader">GAME HEADER</h2>
-   		</div>
+	<nav class="navbar navbar-expand-lg navbar-inverse bg-inverse">
+		<a class="navbar-brand" href="http://localhost:7777/toptrumps">
+        <img src="https://i.pinimg.com/originals/f3/d8/97/f3d897a2e4842b17f52a41154ab8fe62.png" width="400" alt="Doggo Trumps"></a>
+   	</nav>
+   	
+   	<div class="gameHeaderWrapper">
+   		<h5 id="gameHeader">GAME HEADER</h5>
+   	</div>
    		
-   		<div class="activePlayerWrapper">
-   			<h3 id="activePlayer">ACTIVE PLAYER</h3>
-   		</div>
+   	<div class="gridLayout"> 
    		
-   		<div class="mainButtonWrapper">
-			<input onclick="" type="button" value="Next: Category Selection" id="mainButton"></input>
+   		<div class = "controller">
+   		
+   			<div class="activePlayerWrapper">
+   				<p id="activePlayer">ACTIVE PLAYER</p>
+   			</div>
+   		
+   			<div class="mainButtonWrapper">
+				<input class="myButton" onclick="" type="button" value="Next: Category Selection" id="mainButton"></input>
+			</div>
+		
+			<div class="selectButtonsWrapper">
+				<input class="myButton" onclick="updateSelectionHeader('1');" type="button" value="Select Option 1" id="selectButton1" ></input>
+				<input class="myButton" onclick="updateSelectionHeader('2');" type="button" value="Select Option 2" id="selectButton2"></input>
+				<input class="myButton" onclick="updateSelectionHeader('3');" type="button" value="Select Option 3" id="selectButton3"></input>
+				<input class="myButton" onclick="updateSelectionHeader('4');" type="button" value="Select Option 4" id="selectButton4"></input>
+				<input class="myButton" onclick="updateSelectionHeader('5');" type="button" value="Select Option 5" id="selectButton5"></input>
+			</div>
+		
 		</div>
 		
-		<div class="selectButtonsWrapper">
-			<input onclick="updateSelectionHeader('1');" type="button" value="Select Option 1" id="selectButton1" ></input>
-			<input onclick="updateSelectionHeader('2');" type="button" value="Select Option 2" id="selectButton2"></input>
-			<input onclick="updateSelectionHeader('3');" type="button" value="Select Option 3" id="selectButton3"></input>
-			<input onclick="updateSelectionHeader('4');" type="button" value="Select Option 4" id="selectButton4"></input>
-			<input onclick="updateSelectionHeader('5');" type="button" value="Select Option 5" id="selectButton5"></input>
-		</div>
+		<div class="playerOneCard">
 		
-		<div class="cardWrapper">
-		
-			<div class="playerOneCard">
-				<h6>Player 1</h6> 
-				<h6 id="playerOneDesc">Card Description</h6> 
+			<div class="cardHeader">
+				Player 1
+				<p id="playerOneDesc">Card Description</p>
 				<picture>
-				<img src="" alt="Dogs Pic goes here" style="width:200px;height:140px;"" id="playerOnePic">
+				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerOnePic">
 				</picture>
+			</div>
+				
+			<div class ="cardContainer">
 				<p id="playerOneSize">Category 1</p>
 				<p id="playerOneRare">Category 2</p>
 				<p id="playerOneTemp">Category 3</p>
 				<p id="playerOneIntel">Category 4</p>
 				<p id="playerOneCute">Category 5</p>
 			</div>
+	
+		</div>
 			
-			<div class="playerTwoCard">
-				<h6>Player 2 (AI)</h6> 
-				<h6 id="playerTwoDesc">Card Description</h6> 
+		<div class="playerTwoCard">
+		
+			<div class="cardHeader">
+				Player 2 (AI)
+				<p id="playerTwoDesc">Card Description</p>
 				<picture>
-				<img src="" alt="Dogs Pic goes here" style="width:200px;height:140px;"" id="playerTwoPic">
+				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerTwoPic">
 				</picture>
+			</div>
+		
+			<div class ="cardContainer">
 				<p id="playerTwoSize">Category 1</p>
 				<p id="playerTwoRare">Category 2</p>
 				<p id="playerTwoTemp">Category 3</p>
 				<p id="playerTwoIntel">Category 4</p>
 				<p id="playerTwoCute">Category 5</p>
 			</div>
+	
+		</div>
 			
-			<div class="playerThreeCard">
-				<h6>Player 3 (AI)</h6> 
-				<h6 id="playerThreeDesc">Card Description</h6> 
+		<div class="playerThreeCard">
+	
+			<div class="cardHeader">
+				Player 3 (AI)
+				<p id="playerThreeDesc">Card Description</p>
 				<picture>
-				<img src="" alt="Dogs Pic goes here" style="width:200px;height:140px;"" id="playerThreePic">
+				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerThreePic">
 				</picture>
+			</div>
+		
+			<div class ="cardContainer">
 				<p id="playerThreeSize">Category 1</p>
 				<p id="playerThreeRare">Category 2</p>
 				<p id="playerThreeTemp">Category 3</p>
 				<p id="playerThreeIntel">Category 4</p>
 				<p id="playerThreeCute">Category 5</p>
 			</div>
+	
+		</div>
 			
-			<div class="playerFourCard">
-				<h6>Player 4 (AI)</h6> 
-				<h6 id="playerFourDesc">Card Description</h6> 
+		<div class="gap"></div>
+			
+		<div class="gap"></div>
+			
+		<div class="playerFourCard">
+	
+			<div class="cardHeader">
+				Player 4 (AI)
+				<p id="playerFourDesc">Card Description</p>
 				<picture>
-				<img src="" alt="Dogs Pic goes here" style="width:200px;height:140px;"" id="playerFourPic">
+				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerFourPic">
 				</picture>
+			</div>
+		
+			<div class ="cardContainer">
 				<p id="playerFourSize">Category 1</p>
 				<p id="playerFourRare">Category 2</p>
 				<p id="playerFourTemp">Category 3</p>
 				<p id="playerFourIntel">Category 4</p>
 				<p id="playerFourCute">Category 5</p>
 			</div>
+	
+		</div>
 			
-			<div class="playerFiveCard">
-				<h6>Player 5 (AI)</h6> 
-				<h6 id="playerFiveDesc">Card Description</h6> 
+		<div class="playerFiveCard">
+	
+			<div class="cardHeader">
+				Player 5 (AI)
+				<p id="playerFiveDesc">Card Description</p>
 				<picture>
-				<img src="" alt="Dogs Pic goes here" style="width:200px;height:140px;"" id="playerFivePic">
+				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerFivePic">
 				</picture>
+			</div>
+		
+			<div class ="cardContainer">
 				<p id="playerFiveSize">Category 1</p>
 				<p id="playerFiveRare">Category 2</p>
 				<p id="playerFiveTemp">Category 3</p>
 				<p id="playerFiveIntel">Category 4</p>
 				<p id="playerFiveCute">Category 5</p>
 			</div>
+	
+		</div>
 			
-		</div>
+	</div>
 		
-		<div class="footer">
-			Made by Git What You Give</br>Jessica Lavin - Daniel Mitchell - Simon Manton Milne - Wesley Scott
-		</div>
+	<div class="footer">
+		Made by Git What You Give</br>Jessica Lavin - Daniel Mitchell - Simon Manton Milne - Wesley Scott
+	</div>
 		
 		<script type="text/javascript">
 		

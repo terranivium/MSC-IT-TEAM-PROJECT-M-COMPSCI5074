@@ -110,11 +110,15 @@
     	</div>
     		
     	<div class="results">
-    		Add results here...
+    	<p id="results"></p>
+    	<p id="results1"></p>
+    	<p id="results2"></p>
+    	<p id="results3"></p>
+    	<p id="results4"></p>
     	</div>
     	
 	</div>
-		
+	
 	<div class="footer">
 		Made by Git What You Give</br>Jessica Lavin - Daniel Mitchell - Simon Manton Milne - Wesley Scott
 	</div>
@@ -129,9 +133,7 @@
 				// --------------------------------------------------------------------------
 				
 				// For example, lets call our sample methods
-				helloJSONList();
-				helloWord("Student");
-				
+				drawDb();
 			}
 			
 			// -----------------------------------------
@@ -169,10 +171,10 @@
 		<script type="text/javascript">
 		
 			// This calls the helloJSONList REST method from TopTrumpsRESTAPI
-			function helloJSONList() {
+			function drawDb() {
 			
 				// First create a CORS request, this is the message we are going to send (a get request in this case)
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/helloJSONList"); // Request type and URL
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/drawDb"); // Request type and URL
 				
 				// Message is not sent yet, but we can check that the browser supports CORS
 				if (!xhr) {
@@ -182,8 +184,13 @@
 				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
 				// to do when the response arrives 
 				xhr.onload = function(e) {
- 					var responseText = xhr.response; // the text of the response
-					alert(responseText); // lets produce an alert
+ 					var statsText = JSON.parse(xhr.response); // the text of the response
+ 					console.log(statsText);
+					document.getElementById("results").innerHTML="Total Games: " + statsText[0];
+					document.getElementById("results1").innerHTML="Human Wins: " + statsText[1];
+					document.getElementById("results2").innerHTML="AI Wins: " + statsText[2];
+					document.getElementById("results3").innerHTML="Avg. Draws: " + statsText[3];
+					document.getElementById("results4").innerHTML="Highest No. of Rounds: " + statsText[4];
 				};
 				
 				// We have done everything we need to prepare the CORS request, so send it

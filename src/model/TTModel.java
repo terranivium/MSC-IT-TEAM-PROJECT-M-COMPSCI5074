@@ -27,7 +27,8 @@ public class TTModel {
 	private int categoryChosen; //instance variable set by argument supplied to compareCards, needed for use in TestLogger
 	private HashMap<Player, Integer> playerStats = new HashMap<Player, Integer>(); 	//migrated from compareCards so as to give an instance
     private LogWriter logWriter;																				//variable, which can then be called as a getter
-    private String removed;
+    private String removedPlayersString;
+    private String roundWinnerString;
     
     public TTModel() { // constructor												//for use in TestLogger
 		this.setNewGameStates();
@@ -49,8 +50,9 @@ public class TTModel {
 		this.isDraw = false;
 		this.gameWinner = null;
 		this.activePlayer = null;
-		this.roundWinner = null;
-		this.removed = "";
+		this.roundWinner = null; // removed to fix view status
+		this.removedPlayersString = "";
+		//this.roundWinnerString = "";
 	}
 
 	public void startGame(int botCount) { 
@@ -112,9 +114,9 @@ public class TTModel {
 																			// the to an array list
 		}
 		this.logWriter.setPlayingTable(this.playingTable);
-		int maxValueInMap = Collections.max(playerStats.values()); // calculate the highest value from the cards
+		int maxValueInMap = Collections.max(this.playerStats.values()); // calculate the highest value from the cards
 																	// presented by the players
-		for (Entry<Player, Integer> entry : playerStats.entrySet()) { // Iterate through hashmap value to find what
+		for (Entry<Player, Integer> entry : this.playerStats.entrySet()) { // Iterate through hashmap value to find what
 																		// value matches the maxValueInMap, and get the
 																		// key of that entry
 			if (entry.getValue() == maxValueInMap) {
@@ -129,6 +131,7 @@ public class TTModel {
 			ArrayList<Card> winnersCards = new ArrayList<Card>();
 			this.roundWinner = this.roundWinners.get(0); // set the round winning variable to the winning players name
 			this.logWriter.setRoundWinner(this.roundWinner.getName());
+			this.roundWinnerString = this.roundWinner.getName();
 			this.isDraw = false; // not a draw
 			this.winnersCards.addAll(this.communalPile);
 			this.winnersCards.addAll(this.playingTable);
@@ -144,7 +147,8 @@ public class TTModel {
 		} else { // if there are two or more winners (draw)
 			this.numOfDraws++;
 			this.isDraw = true;
-			this.roundWinner = null;
+			this.roundWinner = null; // must remove to get roundWinner
+			
 			this.logWriter.setRoundWinner(null); //added due to bug where LogWriter never learnt of draws.
 			this.communalPile.addAll(this.playingTable); // add all cards to communal pile array list
 			this.logWriter.setCommunalPile(this.communalPile);
@@ -164,7 +168,10 @@ public class TTModel {
 				return true;
 			} else if (p.getHand().isEmpty()) {
 				this.playersToRemove.add(p);
-				this.removed = this.removed + p.getName() + " ";
+				this.removedPlayersString = "";
+				for(Player r : this.playersToRemove) {
+					this.removedPlayersString += r.getName() + " "; // get eliminated players
+				}
 			}
 		}
 		this.players.removeAll(this.playersToRemove);
@@ -246,8 +253,12 @@ public class TTModel {
 		return this.isDraw;
 	}
 	
-	public String getRemovedPlayers(){
-		return this.removed;
+	public String getRemovedPlayersString(){
+		return this.removedPlayersString;
+	}
+	
+	public String getRoundWinnerString(){
+		return this.roundWinnerString;
 	}
 
 }

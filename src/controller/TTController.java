@@ -132,7 +132,7 @@ public class TTController {
 			this.view.gameLogVerification();
 		}
 		if(this.setSlowScroll) Thread.sleep(1000);
-		while (this.model.hasWon() == false) {
+		while (!this.model.hasWon()) {
 			this.view.currentRound();
 			this.model.selectPlayer();
 			if(this.setSlowScroll) Thread.sleep(1000);
@@ -158,14 +158,16 @@ public class TTController {
 			}
 			this.model.playCards(this.readInput);
 			this.model.selectWinners();
+			this.view.roundWinner();
             if (this.writeGameLogsToFile)
             {
                 this.logRoundReport();
             }
             //this.view.testLoggerPrints(); // calls test logger prints
-            //this.view.roundWinner(); // issue with roundWinner getter call
             //this.view.roundWinnerCard();
-            this.view.removedPlayers();
+            //this.view.roundWinnerCardStat();
+            // number of cards in hand?
+            this.view.removedPlayers(); // does not work, controller structure
 		}
 		this.view.gameWinner();
 		if (this.writeGameLogsToFile)

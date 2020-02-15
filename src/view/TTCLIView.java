@@ -115,15 +115,25 @@ public class TTCLIView {
 	
 	public void roundWinner() {
 		System.out.println("///////////////////////");
-		System.out.println(this.model.getRoundWinner().getName() + " won the round!");
+		System.out.println(this.model.getRoundWinnerString() + " won the round!");
 	}
 	
 	public void roundWinnerCard() {
 		System.out.println("Their winning card was: " + this.model.getRoundWinner().getTopCard().getDescription());
+		System.out.println("1. " + this.model.getDeck().getHeaderNames()[1] + " : " + this.model.getRoundWinner().getTopCard().getCategoryOne());
+		System.out.println("2. " + this.model.getDeck().getHeaderNames()[2] + " : " + this.model.getRoundWinner().getTopCard().getCategoryTwo());
+		System.out.println("3. " + this.model.getDeck().getHeaderNames()[3] + " : " + this.model.getRoundWinner().getTopCard().getCategoryThree());
+		System.out.println("4. " + this.model.getDeck().getHeaderNames()[4] + " : " + this.model.getRoundWinner().getTopCard().getCategoryFour());
+		System.out.println("5. " + this.model.getDeck().getHeaderNames()[5] + " : " + this.model.getRoundWinner().getTopCard().getCategoryFive());
 		System.out.println("///////////////////////\n");
 	}
 	
+	public void roundWinnerCardStat() {
+		// System.out.println(this.model.getRoundWinner().getTopCard().getStats().get()); // need a way to get the chosen stat of winner
+	}
+	
 	public void removedPlayers() {
-		System.out.println(this.model.getRemovedPlayers());
+		System.out.println("Eliminated this turn: " + this.model.getRemovedPlayersString()); // not working
+		System.out.println("///////////////////////");
 	}
 }

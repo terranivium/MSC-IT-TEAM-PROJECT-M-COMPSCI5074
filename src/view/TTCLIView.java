@@ -1,7 +1,7 @@
 package view;
 
 import model.*;
-import sun.tools.tree.ThisExpression;
+//import sun.tools.tree.ThisExpression;
 
 public class TTCLIView {
 
@@ -18,10 +18,10 @@ public class TTCLIView {
 		System.out.println("--------------------------------");
 		System.out.println("Select mode...");
 		System.out.println("	1. New Player Game");
-		System.out.println("	2. AI vs AI Autoplay");
-		System.out.println(" 	3. View runtime stats");
-		System.out.println(" 	4. Toggle Slow Scroll");
-		System.out.println("	5. Quit");
+		//System.out.println("	2. AI vs AI Autoplay"); // discontinued
+		System.out.println(" 	2. View runtime stats");
+		System.out.println(" 	3. Toggle Slow Scroll");
+		System.out.println("	4. Quit");
 		System.out.println("--------------------------------");
 	}
 

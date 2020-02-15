@@ -39,13 +39,11 @@ public class TTController {
 			this.readInput = this.systemInput.nextInt();
 			this.systemInput.nextLine();
 			if (this.readInput == 1) {
-				this.view.drawHumanMenu();
 				this.model.startGame(4);
 				if (this.writeGameLogsToFile)
 				{
 					this.logPreRoundsActivity();
 				}
-				
 				//remove - bots always set to 4 in CLM.
 //				this.readInput = this.systemInput.nextInt();
 //				this.systemInput.nextLine();
@@ -66,28 +64,28 @@ public class TTController {
 //						}
 //				}
 				this.runtimeGame();
-			} else if (this.readInput == 2) { // for bot vs bot game
-				this.view.drawAIMenu();
-				this.readInput = this.systemInput.nextInt();
-				this.systemInput.nextLine();
-				if (this.readInput >= 6 || this.readInput <= 1) {
-					do {
-						this.view.notValid();
-						Thread.sleep(500);
-						this.view.drawAIMenu();
-						this.readInput = this.systemInput.nextInt();
-						this.systemInput.nextLine();
-					} while (this.readInput >= 6 || this.readInput <= 1);
-					this.model.startBotGame(this.readInput);
-					if (this.writeGameLogsToFile)
-					{
-						this.logPreRoundsActivity();
-					}
-				} else {
-					this.model.startBotGame(this.readInput);
-				}
-				this.runtimeGame();
-			} else if (this.readInput == 3) {
+//			} else if (this.readInput == 2) { // for bot vs bot game removed
+//				this.view.drawAIMenu();
+//				this.readInput = this.systemInput.nextInt();
+//				this.systemInput.nextLine();
+//				if (this.readInput >= 6 || this.readInput <= 1) {
+//					do {
+//						this.view.notValid();
+//						Thread.sleep(500);
+//						this.view.drawAIMenu();
+//						this.readInput = this.systemInput.nextInt();
+//						this.systemInput.nextLine();
+//					} while (this.readInput >= 6 || this.readInput <= 1);
+//					this.model.startBotGame(this.readInput);
+//					if (this.writeGameLogsToFile)
+//					{
+//						this.logPreRoundsActivity();
+//					}
+//				} else {
+//					this.model.startBotGame(this.readInput);
+//				}
+//				this.runtimeGame();
+			} else if (this.readInput == 2) {
 				this.view.dbiDraw(this.dbI.dbRequest());
 				this.readInput = this.systemInput.nextInt();
 				this.systemInput.nextLine();
@@ -101,7 +99,7 @@ public class TTController {
 					}while(this.readInput!=1);
 					this.runtimeMenu();
 				}
-			} else if (this.readInput == 4) {
+			} else if (this.readInput == 3) {
 				if(!this.setSlowScroll) {
 					this.setSlowScroll = true;
 					this.view.slowModeEnabled();
@@ -113,7 +111,7 @@ public class TTController {
 					Thread.sleep(500);
 					this.runtimeMenu();
 				}
-			} else if (this.readInput == 5) {
+			} else if (this.readInput == 4) {
 				// closes scanner, runtime
 				this.view.endRuntime();
 				if(this.setSlowScroll) Thread.sleep(2000);
@@ -140,7 +138,6 @@ public class TTController {
 		}
 		if(this.setSlowScroll) Thread.sleep(1000);
 		while (!this.model.hasWon()) {
-			//this.view.currentRound();
 			this.model.selectPlayer();
 			this.view.currentRound();// moved after selectPlayer() to give correct starting round num as 1.
 			if(this.setSlowScroll) Thread.sleep(1000);
@@ -173,11 +170,6 @@ public class TTController {
             {
                 this.logRoundReport();
             }
-            //this.view.testLoggerPrints(); // calls test logger prints
-            //this.view.roundWinnerCard();
-            
-            // number of cards in hand?
-            
             this.view.removedPlayers(); 
 		}
 		this.view.gameWinner();

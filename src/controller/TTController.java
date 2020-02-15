@@ -16,6 +16,7 @@ public class TTController {
 	private Scanner systemInput = new Scanner(System.in); // User input instance
 	private int readInput; // Holds user input for condition checks
 	private TestLogger testLogger;
+	private boolean setSlowScroll;
 
 	private DatabaseInteractor dbI = new DatabaseInteractor(); 
 	//instance of connector to database storing game statistics
@@ -23,6 +24,7 @@ public class TTController {
 	public TTController(TTModel model, TTCLIView view, boolean writeGameLogsToFile) {
 		this.model = model;
 		this.view = view;
+		this.setSlowScroll = false; // boolean toggles slowed console print mode
 
 		if (writeGameLogsToFile) {
 			this.writeGameLogsToFile = writeGameLogsToFile;
@@ -31,31 +33,38 @@ public class TTController {
 	}
 
 	// Menu loop
-	public void runtimeMenu() {
+	public void runtimeMenu() throws InterruptedException {
 		this.view.drawMain(); // draw main menu
 		do {
 			this.readInput = this.systemInput.nextInt();
 			this.systemInput.nextLine();
 			if (this.readInput == 1) {
 				this.view.drawHumanMenu();
-				this.readInput = this.systemInput.nextInt();
-				this.systemInput.nextLine();
-				if (this.readInput >= 5 || this.readInput <= 0) {
-					do {
-						this.view.notValid();
-						this.view.drawHumanMenu();
-						this.readInput = this.systemInput.nextInt();
-						this.systemInput.nextLine();
-					} while (this.readInput >= 5 || this.readInput <= 0);
-					this.model.startGame(this.readInput);
-
-				} else {
-					this.model.startGame(this.readInput);
-					if (this.writeGameLogsToFile)
-						{
-							this.logPreRoundsActivity();
-						}
+				this.model.startGame(4);
+				if (this.writeGameLogsToFile)
+				{
+					this.logPreRoundsActivity();
 				}
+				
+				//remove - bots always set to 4 in CLM.
+//				this.readInput = this.systemInput.nextInt();
+//				this.systemInput.nextLine();
+//				if (this.readInput >= 5 || this.readInput <= 0) {
+//					do {
+//						this.view.notValid();
+//						Thread.sleep(500);
+//						this.view.drawHumanMenu();
+//						this.readInput = this.systemInput.nextInt();
+//						this.systemInput.nextLine();
+//					} while (this.readInput >= 5 || this.readInput <= 0);
+//					this.model.startGame(this.readInput);
+//				} else {
+//					this.model.startGame(this.readInput);
+//					if (this.writeGameLogsToFile)
+//						{
+//							this.logPreRoundsActivity();
+//						}
+//				}
 				this.runtimeGame();
 			} else if (this.readInput == 2) { // for bot vs bot game
 				this.view.drawAIMenu();
@@ -64,6 +73,7 @@ public class TTController {
 				if (this.readInput >= 6 || this.readInput <= 1) {
 					do {
 						this.view.notValid();
+						Thread.sleep(500);
 						this.view.drawAIMenu();
 						this.readInput = this.systemInput.nextInt();
 						this.systemInput.nextLine();
@@ -86,14 +96,27 @@ public class TTController {
 				} else {
 					do {
 						this.view.notValid();
-						this.view.dbiDraw(this.dbI.dbRequest());
 						this.readInput = this.systemInput.nextInt();
 						this.systemInput.nextLine();
 					}while(this.readInput!=1);
+					this.runtimeMenu();
 				}
 			} else if (this.readInput == 4) {
+				if(!this.setSlowScroll) {
+					this.setSlowScroll = true;
+					this.view.slowModeEnabled();
+					Thread.sleep(500);
+					this.runtimeMenu();
+				} else { 
+					this.setSlowScroll = false;
+					this.view.slowModeDisabled();
+					Thread.sleep(500);
+					this.runtimeMenu();
+				}
+			} else if (this.readInput == 5) {
 				// closes scanner, runtime
 				this.view.endRuntime();
+				if(this.setSlowScroll) Thread.sleep(2000);
 				this.systemInput.close();
 				
 				if (writeGameLogsToFile) // only if writeGameLogsToFile is true will testLogger have been opened. 
@@ -102,66 +125,70 @@ public class TTController {
 				}
 				System.exit(0);
 			} else {
-				// to catch invalid input
 				this.view.notValid();
+				if(this.setSlowScroll)Thread.sleep(1000);
 				this.view.drawMain();
 			}
-		} while (this.readInput != 1 || this.readInput != 4);
+		} while (this.readInput != 5);
 	}
 
 	// Main game controller loop
-	public void runtimeGame() {
-
+	public void runtimeGame() throws InterruptedException {
 		// Prints to console whether logging has been requested
-		System.out.println(writeGameLogsToFile);
-		while (this.model.hasWon() == false) {
+		if(writeGameLogsToFile) {
+			this.view.gameLogVerification();
+		}
+		if(this.setSlowScroll) Thread.sleep(1000);
+		while (!this.model.hasWon()) {
+			//this.view.currentRound();
 			this.model.selectPlayer();
+			this.view.currentRound();// moved after selectPlayer() to give correct starting round num as 1.
+			if(this.setSlowScroll) Thread.sleep(1000);
 			this.view.playersTurnHeader();
 			if (this.model.getActivePlayer().getClass() == Player.class) {
+				if(this.setSlowScroll) Thread.sleep(1000);
 				this.view.viewCard(this.model.getActivePlayer().getTopCard());
+				if(this.setSlowScroll) Thread.sleep(1000);
 				this.view.selectStat();
 				this.readInput = this.systemInput.nextInt();
 				if (this.readInput > 5 || this.readInput < 1) {
 					do {
 						this.view.notValid();
+						if(this.setSlowScroll) Thread.sleep(1000);
 						this.view.selectStat();
 						this.readInput = this.systemInput.nextInt();
 					} while (this.readInput > 5 || this.readInput < 1);
 				}
 			} else {
+				if(this.setSlowScroll) Thread.sleep(1000);
 				this.view.viewCard(this.model.getActivePlayer().getTopCard());
 				this.readInput = this.model.getActivePlayer().chooseCard();
 			}
 			this.model.playCards(this.readInput);
 			this.model.selectWinners();
+			this.view.chosenCategory();
+			this.view.roundWinner();
+			this.view.winningCard();
             if (this.writeGameLogsToFile)
             {
                 this.logRoundReport();
             }
-
-            // LogWriter test prints
-            System.out.println("The current round is " + this.model.getNumOfRounds());
-            if (this.model.getNumOfRounds() == 1)
-            {
-                System.out.println(this.model.getLogWriter().getDeckOnLoad());
-                System.out.println(this.model.getLogWriter().getDeckShuffle());
-            }
-//			System.out.println(this.model.getLogWriter().getEveryoneHands());
-//			System.out.println(this.model.getLogWriter().getPlayingTable());
-//			System.out.println(this.model.getLogWriter().getChosenCategory());
-//			System.out.println(this.model.getLogWriter().getEveryoneValues());
-			System.out.println(this.model.getLogWriter().getRoundWinner());
-//			System.out.println(this.model.getLogWriter().getCommunalPile());
+            //this.view.testLoggerPrints(); // calls test logger prints
+            //this.view.roundWinnerCard();
+            
+            // number of cards in hand?
+            
+            this.view.removedPlayers(); 
 		}
 		this.view.gameWinner();
 		if (this.writeGameLogsToFile)
 		{
 			this.testLogger.writeGameWinner(this.model.getGameWinner());
 		}
-
-		this.dbI.updateDb(this.model.getGameWinner(), this.model.getNumOfDraws(), this.model.getNumOfRounds(), this.model.getAllWonRounds());//calls on model
-																											// methods to supply arguments to dbI for updating db.
-
+		// call on model methods to supply arguments to dbI for updating db.
+		this.dbI.updateDb(this.model.getGameWinner(), this.model.getNumOfDraws(), this.model.getNumOfRounds(), this.model.getAllWonRounds());
+		this.view.endRuntime();
+		if(this.setSlowScroll) Thread.sleep(1000);
 		this.model.setNewGameStates();
 		this.runtimeMenu();
 	}
@@ -175,7 +202,7 @@ public class TTController {
 
 	private void logRoundReport(){
 		this.testLogger.writeRoundNumber(this.model.getNumOfRounds());
-		this.testLogger.writePlayingTable(this.model.getLogWriter().getPlayingTable());
+		this.testLogger.writePlayingTable(this.model.getLogWriter().getPlayersCardsString());
 		this.testLogger.writeCategoryChosen(this.model.getLogWriter().getChosenCategory());
 		this.testLogger.writeValuesForCategory(this.model.getLogWriter().getEveryoneValues());
 		this.testLogger.writeRoundWinner(this.model.getLogWriter().getRoundWinner());

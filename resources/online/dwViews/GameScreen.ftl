@@ -52,6 +52,7 @@
   			grid-auto-rows:minmax(100px, auto);
   			width:100%;
   			padding:1rem;
+			min-height:250px;
   		}
   		
   		.controller {
@@ -310,7 +311,7 @@
 	</div>
 		
 	<div class="footer">
-		Made by Git What You Give</br>Jessica Lavin - Daniel Mitchell - Simon Manton Milne - Wesley Scott
+		Made by You Git What You Give</br>Jessica Lavin - Simon Manton Milne - Cyriac Mathew - Daniel Mitchell - Wesley Scott
 	</div>
 		
 		<script type="text/javascript">
@@ -403,7 +404,7 @@
 					topCards = JSON.parse(xhr.response);
 					var topCardsSize = Object.keys(topCards).length;
 					
-					document.getElementById("playerOneDesc").innerHTML= topCards[0].description + " (" + handSizes[0] + ")";
+					document.getElementById("playerOneDesc").innerHTML= topCards[0].description + "</br>" + handSizes[0] + " cards in hand";
 					document.getElementById("playerOneSize").innerHTML= headerNames[1] + ": " + topCards[0].categoryOne;
 					document.getElementById("playerOneRare").innerHTML= headerNames[2] + ": " + topCards[0].categoryTwo;
 					document.getElementById("playerOneTemp").innerHTML= headerNames[3] + ": " + topCards[0].categoryThree;
@@ -411,7 +412,7 @@
 					document.getElementById("playerOneCute").innerHTML= headerNames[5] + ": " + topCards[0].categoryFive;
 					document.getElementById("playerOnePic").src = "../assets/" + topCards[0].description + ".jpg";
 					
-					document.getElementById("playerTwoDesc").innerHTML= topCards[1].description + " (" + handSizes[1] + ")";
+					document.getElementById("playerTwoDesc").innerHTML= topCards[1].description + "</br>" + handSizes[1] + " cards in hand";
 					document.getElementById("playerTwoSize").innerHTML= headerNames[1] + ": " + topCards[1].categoryOne;
 					document.getElementById("playerTwoRare").innerHTML= headerNames[2] + ": " + topCards[1].categoryTwo;
 					document.getElementById("playerTwoTemp").innerHTML= headerNames[3] + ": " + topCards[1].categoryThree;
@@ -419,7 +420,7 @@
 					document.getElementById("playerTwoCute").innerHTML= headerNames[5] + ": " + topCards[1].categoryFive;
 					document.getElementById("playerTwoPic").src = "../assets/" + topCards[1].description + ".jpg";
 					
-					document.getElementById("playerThreeDesc").innerHTML= topCards[2].description + " (" + handSizes[2] + ")";
+					document.getElementById("playerThreeDesc").innerHTML= topCards[2].description + "</br>" + handSizes[2] + " cards in hand";
 					document.getElementById("playerThreeSize").innerHTML= headerNames[1] + ": " + topCards[2].categoryOne;
 					document.getElementById("playerThreeRare").innerHTML= headerNames[2] + ": " + topCards[2].categoryTwo;
 					document.getElementById("playerThreeTemp").innerHTML= headerNames[3] + ": " + topCards[2].categoryThree;
@@ -427,7 +428,7 @@
 					document.getElementById("playerThreeCute").innerHTML= headerNames[5] + ": " + topCards[2].categoryFive;
 					document.getElementById("playerThreePic").src = "../assets/" + topCards[2].description + ".jpg";
 					
-					document.getElementById("playerFourDesc").innerHTML= topCards[3].description + " (" + handSizes[3] + ")";
+					document.getElementById("playerFourDesc").innerHTML= topCards[3].description + "</br>" + handSizes[3] + " cards in hand";
 					document.getElementById("playerFourSize").innerHTML= headerNames[1] + ": " + topCards[3].categoryOne;
 					document.getElementById("playerFourRare").innerHTML= headerNames[2] + ": " + topCards[3].categoryTwo;
 					document.getElementById("playerFourTemp").innerHTML= headerNames[3] + ": " + topCards[3].categoryThree;
@@ -435,7 +436,7 @@
 					document.getElementById("playerFourCute").innerHTML= headerNames[5] + ": " + topCards[3].categoryFive;
 					document.getElementById("playerFourPic").src = "../assets/" + topCards[3].description + ".jpg";
 					
-					document.getElementById("playerFiveDesc").innerHTML= topCards[4].description + " (" + handSizes[4] + ")";
+					document.getElementById("playerFiveDesc").innerHTML= topCards[4].description + "</br>" + handSizes[4] + " cards in hand";
 					document.getElementById("playerFiveSize").innerHTML= headerNames[1] + ": " + topCards[4].categoryOne;
 					document.getElementById("playerFiveRare").innerHTML= headerNames[2] + ": " + topCards[4].categoryTwo;
 					document.getElementById("playerFiveTemp").innerHTML= headerNames[3] + ": " + topCards[4].categoryThree;
@@ -697,7 +698,6 @@
 				// to do when the response arrives 
 				xhr.onload = function(e) {
  					handSizes = JSON.parse(xhr.response);
- 					alert(handSizes);
  					buildRoundCards();
 				};
 				

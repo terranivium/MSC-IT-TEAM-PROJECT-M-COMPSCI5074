@@ -680,7 +680,6 @@
 				xhr.onload = function(e) {
  					playersRem = JSON.parse(xhr.response);
  					playerCount = Object.keys(playersRem).length;
- 					alert(playerCount);
  					getHandSizes().call();
 				};
 				

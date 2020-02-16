@@ -20,7 +20,7 @@ public class Card {
 		this.categoryFour= Integer.parseInt(categoryFour);
 		this.categoryFive = Integer.parseInt(categoryFive);
 
-		this.stats = new HashMap<Integer, Integer>(); // hash map used to relate key inputs to selected stats
+		this.stats = new HashMap<Integer, Integer>(); // hash map used to relate key inputs to selected stats, ie 1 = size, 5 = cuteness
 		this.stats.put(1, this.categoryOne);
 		this.stats.put(2, this.categoryTwo);
 		this.stats.put(3, this.categoryThree);

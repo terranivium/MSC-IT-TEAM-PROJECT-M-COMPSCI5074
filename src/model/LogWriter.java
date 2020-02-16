@@ -38,7 +38,7 @@ public LogWriter(Deck loadedDeck) {
 }
 
 
-	public void setPlayersHands(ArrayList<Player>players, int roundNum) {
+	public void setPlayersHands(ArrayList<Player>players, int roundNum) {  //creates a string of every card in each players hand 
 		
 		if (roundNum == 0)
 		{
@@ -62,7 +62,7 @@ public LogWriter(Deck loadedDeck) {
 	}
 	
 	
-	public String getDeckOnLoad() {
+	public String getDeckOnLoad() {  //creates a string of the unshuffled cards for display in the logwriter
 		
 		String deckOnLoadString = new String();
 		deckOnLoadString = "__Unshuffled Cards__\n";
@@ -91,13 +91,7 @@ public LogWriter(Deck loadedDeck) {
 		return deckBuilder.toString();
 	}						
 
-
-	//public void setDeckOnLoad(ArrayList<Card> deck, String[] headerNames) {
-	//	this.deckOnLoad = (ArrayList<Card>) deck.clone();
-	//}
-	
-	
-	public String getDeckShuffle() {
+	public String getDeckShuffle() { //creates a string of the shuffled cards for display in the logwriter
 		String deckShuffleString = new String();
 		deckShuffleString = "__Shuffled Cards__\n";
 		for(Card c:this.deckShuffle) {
@@ -138,7 +132,7 @@ public LogWriter(Deck loadedDeck) {
 	}
 	
 	
-	public String getPlayingTable() {
+	public String getPlayingTable() { // //creates a string of the current cards being played in a specific round
 		String playingTableString = new String();
 		playingTableString = "__Everyones Top Card Played__\n";
 						
@@ -174,7 +168,7 @@ public LogWriter(Deck loadedDeck) {
 		this.playersCards.clear();
 	}
 	
-	public String getCommunalPile() {
+	public String getCommunalPile() { // //creates a string of the cards currently in the communal pile.
 		String communalPileString = new String();
 		communalPileString = "__Communal Pile Contents__\n";
 		for(Card c:this.communalPile) {

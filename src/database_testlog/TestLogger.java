@@ -1,42 +1,4 @@
-//FAO RICHARD
-//
-// This is the desired solution, and I think should work in jdk 1.8, but see below.
-//The other test classes of BufferedWriterTest, FileRead and LogTestFile all result 
-//in the same outcomes - fine in jdk12.0.2, failing in jdk1.8 - see those classes for error details.
 
-// In current this class uses a main method to implement a logger, filehandler and SimpleFormatter for quick testing of the problem.
-//
-//The class methods and constructor as they have currently been developed appear in lines 78 to 210
-//
-// both the quick main method version and the proper class version generate these same results:
-// in jdk12.0.2 successfully creates log file
-// in jdk1.8 results in console:
-//
-//"Problem opening file.
-//java.nio.file.AccessDeniedException: toptrumps.log.lck
-//	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:83)
-//	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:97)
-//	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:102)
-//	at sun.nio.fs.WindowsFileSystemProvider.newFileChannel(WindowsFileSystemProvider.java:115)
-//	at java.nio.channels.FileChannel.open(FileChannel.java:287)
-//	at java.nio.channels.FileChannel.open(FileChannel.java:335)
-//	at java.util.logging.FileHandler.openFiles(FileHandler.java:478)
-//	at java.util.logging.FileHandler.<init>(FileHandler.java:310)
-//	at TestLogger.main(TestLogger.java:23)
-//Feb 05, 2020 3:49:21 PM TestLogger main
-//INFO: Test input
-//Feb 05, 2020 3:49:21 PM TestLogger main
-//INFO: More test input
-//Exception in thread "main" java.lang.NullPointerException
-//	at TestLogger.main(TestLogger.java:42)"
-//
-
-// ==========================end of comment to richard============================
-//
-//
-
-//========================simple main method for testing purposes==========================
-//
 package database_testlog;
 
 import java.io.IOException;

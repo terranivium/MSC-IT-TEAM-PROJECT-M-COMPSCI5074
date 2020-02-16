@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeMap;
+import java.util.Map.Entry;
 
 public class LogWriter {
 private ArrayList<Card> deckOnLoad; 
@@ -116,13 +118,22 @@ public LogWriter(Deck loadedDeck) {
 		}
 	
 	// method to create string from the HashMap playersCards, containing the names of the players and the names ('description') of the cards they played that round.
+	// Utilises a TreeMap to sort the cards in playersCards.
 	public String getPlayersCardsString() 
-	{
+	{	
 		String cardsOnTable = "__Everyones Top Card Played__\n";
-			for (Player key: this.playersCards.keySet())
-			{
-				cardsOnTable = cardsOnTable + key.getName() + " : " + this.playersCards.get(key).getDescription() + "\n";
-			}
+		TreeMap<String, String> sortedByPlayer = new TreeMap<>();
+		
+		for (Player key : this.playersCards.keySet())
+		{
+			sortedByPlayer.put(key.getName(), this.playersCards.get(key).getDescription());
+		}
+		
+		for (Entry<String, String> entry : sortedByPlayer.entrySet())
+		{
+			cardsOnTable = cardsOnTable + entry.getKey() + " : " + entry.getValue() + "\n";
+		}
+		
 		return cardsOnTable;
 	}
 	

@@ -121,7 +121,7 @@ public class TTModel {
 
 		for (Player p : this.playersRemaining) { //FAO WES FAO DAN changed from this.players to this.playersRemaining, to stop indexOutOfBoundException when it would try and get the top card of a player who had no cards left.
 			this.playerStats.put(p, p.getTopCard().getStats().get(stat));
-			this.logWriter.setEveryoneValues(p.getName() + "'s card has the value: " + p.getTopCard().getStats().get(stat) + " ");
+			this.logWriter.setEveryoneValues(p.getName() + "'s card " + p.getTopCard().getDescription() + " has the value: " + p.getTopCard().getStats().get(stat) + "\n");
 
 			this.playersCards.put(p, p.getTopCard()); //places a player and their card in a HashMap, for use with logWriter and retrieval of the winning card
 			this.logWriter.setPlayersCards(playersCards);
@@ -157,7 +157,7 @@ public class TTModel {
 			this.isDraw = false; // not a draw
 			this.winnersCards.addAll(this.communalPile);
 			this.winnersCards.addAll(this.playingTable);
-			Collections.shuffle(winnersCards); // randomise return cards
+			Collections.shuffle(this.winnersCards); // shuffle won cards before adding to winner's hand.
 			this.roundWinners.get(0).getHand().addAll(0, this.winnersCards); // add all the cards from the communal pile and
 																		// playing table to back of winning player's
 																		// hand in a random order

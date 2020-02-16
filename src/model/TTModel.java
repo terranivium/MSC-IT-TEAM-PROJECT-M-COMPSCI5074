@@ -328,7 +328,7 @@ public class TTModel {
 			if (p.getHand().isEmpty())
 			{
 				this.playersToRemove.add(p);
-				removedPlayersString = p.getName() + " has been eliminated.\n";
+				removedPlayersString += p.getName() + " has been eliminated.\n";
 			}
 		}
 		this.playersRemaining.removeAll(this.playersToRemove);

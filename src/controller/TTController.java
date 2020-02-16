@@ -115,7 +115,7 @@ public class TTController {
 				if(this.setSlowScroll)Thread.sleep(1000);
 				this.view.drawMain();
 			}
-		} while (this.readInput != 5);
+		} while (this.readInput != 4);
 	}
 
 	// Main game controller loop

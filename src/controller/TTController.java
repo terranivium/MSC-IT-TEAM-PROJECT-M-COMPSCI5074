@@ -20,13 +20,14 @@ public class TTController {
 
 	private DatabaseInteractor dbI = new DatabaseInteractor(); 
 	//instance of connector to database storing game statistics
-
+	
+	//Constructor
 	public TTController(TTModel model, TTCLIView view, boolean writeGameLogsToFile) {
 		this.model = model;
 		this.view = view;
 		this.setSlowScroll = false; // boolean toggles slowed console print mode
-
-		if (writeGameLogsToFile) {
+		
+		if (writeGameLogsToFile) { //passed in to the constructor, true if a flag -t was used on the command line.
 			this.writeGameLogsToFile = writeGameLogsToFile;
 			this.testLogger = new TestLogger();
 		}
@@ -44,27 +45,14 @@ public class TTController {
 				{
 					this.logPreRoundsActivity();
 				}
-				//remove - bots always set to 4 in CLM.
-//				this.readInput = this.systemInput.nextInt();
-//				this.systemInput.nextLine();
-//				if (this.readInput >= 5 || this.readInput <= 0) {
-//					do {
-//						this.view.notValid();
-//						Thread.sleep(500);
-//						this.view.drawHumanMenu();
-//						this.readInput = this.systemInput.nextInt();
-//						this.systemInput.nextLine();
-//					} while (this.readInput >= 5 || this.readInput <= 0);
-//					this.model.startGame(this.readInput);
-//				} else {
-//					this.model.startGame(this.readInput);
-//					if (this.writeGameLogsToFile)
-//						{
-//							this.logPreRoundsActivity();
-//						}
-//				}
+
 				this.runtimeGame();
-//			} else if (this.readInput == 2) { // for bot vs bot game removed
+				
+				//below logic was used in beginning a bot vs bot game, that was used in testing.
+				//commented out as not needed for assignment. Reintroduction would require renumbering
+				//of menu. Also would require updating of the model method startBotGame to reflect
+				//final dev refactoring of model post bot vs bot removal.
+//			} else if (this.readInput == 2) { // for bot vs bot game, removed
 //				this.view.drawAIMenu();
 //				this.readInput = this.systemInput.nextInt();
 //				this.systemInput.nextLine();
@@ -185,13 +173,20 @@ public class TTController {
 		this.runtimeMenu();
 	}
 
-	// methods for generating log.
+	// Method for generating log of the pre-round game behaviour. Calls on TestLogger with arguments of LogWriter to 
+	// have TestLogger write to file the deck loaded by the program, the deck after shuffling and the hands dealt 
+	// to the participating players.
+	// Only called if boolean writeGameLogsToFile was set to true by argument from TopTrumpsCliApplication
 	private void logPreRoundsActivity(){
 		this.testLogger.writeLoadedDeck(this.model.getLogWriter().getDeckOnLoad());
 		this.testLogger.writeShuffledDeck(this.model.getLogWriter().getDeckShuffle());
 		this.testLogger.writeDealtHands(this.model.getLogWriter().getEveryoneHands());
 	}
-
+	
+	// Method for generating log of activity in a round. Calls on TestLogger with arguments of LogWriter to 
+	// have TestLogger write to file a number of outputs, allowing for the analysis of the developments of a game
+	// in each round, and from round-to-round.
+	// Only called if boolean writeGameLogsToFile was set to true by argument from TopTrumpsCliApplication
 	private void logRoundReport(){
 		this.testLogger.writeRoundNumber(this.model.getNumOfRounds());
 		this.testLogger.writePlayingTable(this.model.getLogWriter().getPlayersCardsString());

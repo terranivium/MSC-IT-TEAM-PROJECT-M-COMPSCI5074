@@ -50,7 +50,7 @@ public class TTModel {
 		this.allWonRounds = new ArrayList<Integer>();
 		this.playerStats = new HashMap<Player, Integer>();
 		this.numOfDraws = 0;
-		this.numOfRounds = 0; //reverted to 0. Testlogger uses this to distinguish between the pre-game data and the rounds that follow.
+		this.numOfRounds = 0; //Set as 0. Testlogger uses this to distinguish between the pre-game data and the rounds that follow.
 		this.numOfGames = 0;
 		this.isDraw = false;
 		this.gameWinner = null;
@@ -60,10 +60,12 @@ public class TTModel {
 		this.winningCard = "";
 		this.roundWinnerString = "";
 	}
-
+	
+	
+	// method is called to generate a Player and Bot objects based on the botCount
+	// parameter passed from the controller
 	public void startGame(int botCount) { 
-		// method is called to generate a Player and Bot objects based on the botCount
-		// parameter passed from the controller
+		
 		this.playerCount = botCount + 1;
 		this.players.add(new Player("Player1"));
 
@@ -79,20 +81,23 @@ public class TTModel {
         this.logWriter.setPlayersHands(this.players, this.numOfRounds); //// added here as TestLogger needs to see hands on initial deal, before play, otherwise null.
 	}
 
-	public void startBotGame(int botCount) { // method is called when a bot vs bot game is required, no player objects
-												// are instantiated
-		this.playerCount = botCount;
-
-		for (int i = 0; i < botCount; i++) {
-			this.players.add(new Bot("Player" + (i + 1) + " (AI)"));
-		}
-		this.deck.loadDeck(); // calls method to read and create card objects
-		this.logWriter = new LogWriter(this.deck);
-		this.deck.shuffleDeck(); //calls method to shuffle deck
-		this.logWriter.setDeckShuffle(this.deck.getCards());
-		this.deck.dealCards(this.playerCount, this.players);
-		this.logWriter.setPlayersHands(this.players, this.numOfRounds); // added here as TestLogger needs to see hands on initial deal, before play, otherwise null.
-	}
+	//method startBotGame used for testing purposes during development, allowing developers to see whether game and program
+	//were behaving as required. Removed in final stages of refinement and not updated to reflect final refactoring of model.
+	
+//	public void startBotGame(int botCount) { // method is called when a bot vs bot game is required, no player objects
+//												// are instantiated
+//		this.playerCount = botCount;
+//
+//		for (int i = 0; i < botCount; i++) {
+//			this.players.add(new Bot("Player" + (i + 1) + " (AI)"));
+//		}
+//		this.deck.loadDeck(); // calls method to read and create card objects
+//		this.logWriter = new LogWriter(this.deck);
+//		this.deck.shuffleDeck(); //calls method to shuffle deck
+//		this.logWriter.setDeckShuffle(this.deck.getCards());
+//		this.deck.dealCards(this.playerCount, this.players);
+//		this.logWriter.setPlayersHands(this.players, this.numOfRounds); 
+//	}
 
 	public void selectPlayer() {
 		this.numOfRounds++;
@@ -109,17 +114,18 @@ public class TTModel {
 		}
 
 	}
-
+	//method to identify possible winners in a round, based on the values on their cards in the compared category.
 	public void playCards(int stat) {
 		this.logWriter.setChosenCategory(stat);
-		this.playerStats.clear(); // clears the instance variable at the beginning of each comparison, prior to
+		// Then clears the instance variables at the beginning of each comparison
+		this.playerStats.clear(); 
 		this.playersCards.clear();
 		this.logWriter.resetEveryoneValues();
 		this.logWriter.resetPlayersCards();
 		this.roundWinnerString = "";
 		this.winningCard = "";
 
-		for (Player p : this.playersRemaining) { //FAO WES FAO DAN changed from this.players to this.playersRemaining, to stop indexOutOfBoundException when it would try and get the top card of a player who had no cards left.
+		for (Player p : this.playersRemaining) { 
 			this.playerStats.put(p, p.getTopCard().getStats().get(stat));
 			this.logWriter.setEveryoneValues(p.getName() + "'s card " + p.getTopCard().getDescription() + " has the value: " + p.getTopCard().getStats().get(stat) + "\n");
 
@@ -146,7 +152,8 @@ public class TTModel {
 			}
 		}
 	}
-
+	//method to determine whether or not the round was won or drawn depending on the number of possible winners (stored in roundWinners).
+	//Depending on the result, cards are either added to a winner's hand, or put in to a communal pile in the event of a draw.
 	public void selectWinners() {
 		if (this.roundWinners.size() < 2) { // if there is only one winner
 			this.roundWinners.get(0).incrementRoundsWon();
@@ -167,7 +174,7 @@ public class TTModel {
 			this.logWriter.setCommunalPile(communalPile);
 			this.winnersCards.clear();
 
-			//new instructions to provide view with a winning card and reset values. Only reached if one winner.
+			//provide a means for view to access the winning card. Only reached when there is one winner.
 			winningCard = possibleWinningCards.get(0).getDescription();
 			possibleWinningCards.clear();
 
@@ -184,9 +191,9 @@ public class TTModel {
 			possibleWinningCards.clear();  // will need empty as possibly has >2= elements.
 		}
 
-			//FAO Wes - new routine to establish eliminated players (see below)
-		removedPlayersString = ""; //resets value, before checking for players to remove at the end of a a round. Allows for a checking value in view.
-		checkForRemovablePlayers();
+		
+		removedPlayersString = ""; //resets value, before checking for players to remove at the end of a a round. Enables a checking value in view.
+		checkForRemovablePlayers(); //this method will update removedPlayersString if there are eliminated this round.
 		this.roundWinners.clear();
 	}
 
@@ -199,17 +206,10 @@ public class TTModel {
 				this.numOfGames++; // increment number of games
 				this.updateWonRounds();
 				return true;
-				//FAO Wes - can remove this? see below method checkForRemovablePlayers();
-			} //else if (p.getHand().isEmpty()) {
-				//this.playersToRemove.add(p);
-				//this.removedPlayersString = "";
-				//for(Player r : this.playersToRemove) {
-					//this.removedPlayersString += r.getName() + " "; // get eliminated players
-				//}
-			//}
+
+			} 
 		}
-//		this.players.removeAll(this.playersToRemove);
-//		this.playersToRemove.clear();
+
 		return false;
 	}
 
@@ -266,7 +266,7 @@ public class TTModel {
 		return this.allWonRounds;
 	}
 
-	// new methods needed for use when logging.
+	
 	public Deck getDeck() {
 		return this.deck;
 	}
@@ -286,12 +286,12 @@ public class TTModel {
 	public HashMap<Player, Integer> getPlayerStats(){
 		return this.playerStats;
 	}
-	//FAO Dan - unless this is used in online, I'm not sure we still need this.
+	
 	public int getCategoryChosen() {
 		return this.categoryChosen;
 	}
 
-	//FAO Wes - gives way of getting chosen category in a string in the format "The chosen category was: " + this.chosenCategory + ".";"
+	
 	public String getChosenCategory()
 	{
 		return this.logWriter.getChosenCategory();
@@ -317,7 +317,10 @@ public class TTModel {
 	public String getWinningCard() {
 		return this.winningCard;
 	}
-
+	
+	//method works out whether or not to remove players from the ArrayList playersRemaining based on
+	//whether or not they have any cards remaining. Also updates a String for use in the CLM view 
+	//providing information that a player has been removed.
 	private void checkForRemovablePlayers()
 	{
 		for (Player p : this.playersRemaining)

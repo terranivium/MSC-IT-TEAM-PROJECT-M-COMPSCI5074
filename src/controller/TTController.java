@@ -45,7 +45,6 @@ public class TTController {
 				{
 					this.logPreRoundsActivity();
 				}
-
 				this.runtimeGame();
 				
 				//below logic was used in beginning a bot vs bot game, that was used in testing.
@@ -152,7 +151,9 @@ public class TTController {
 			this.model.playCards(this.readInput);
 			this.model.selectWinners();
 			this.view.chosenCategory();
+			if(this.setSlowScroll) Thread.sleep(1000);
 			this.view.roundWinner();
+			if(this.setSlowScroll) Thread.sleep(1000);
 			this.view.winningCard();
             if (this.writeGameLogsToFile)
             {

@@ -162,7 +162,6 @@ public class TopTrumpsRESTAPI {
 		for(Player p: this.model.getPlayersRemaining()) {
 			playersLeft.add(p.getName());
 		}
-		System.err.println(playersLeft);
 		playersLeftAsJSONString = oWriter.writeValueAsString(playersLeft);
 		return  playersLeftAsJSONString;
 	}

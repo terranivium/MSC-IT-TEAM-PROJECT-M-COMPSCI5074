@@ -29,6 +29,8 @@
 		body {
 			background-color:#e6e6e6;
 			font-family:Verdana;
+			display:flex;
+			flex-direction:column;
 		}
 
   		.navbar {
@@ -52,7 +54,7 @@
   			grid-auto-rows:minmax(100px, auto);
   			width:100%;
   			padding:1rem;
-			min-height:250px;
+  			flex: 1 0 auto;
   		}
   		
   		.controller {
@@ -107,9 +109,9 @@
 			background:linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
 			background-color:#ffec64;
   			text-align:center;
-  			padding-top:1rem;
 			border-radius:10px;
 			font-size:15px;
+			padding-top:0.5rem;
   		}
   		
   		.cardContainer {
@@ -159,7 +161,7 @@
   		}
 
   		.footer {
-  			position:sticky;
+  			flex-shrink:0;
   			width:100%;
   			padding:2rem;
   			background-color:#4d4d4d;
@@ -206,9 +208,9 @@
 		
 		<div class="playerCard0">
 		
-			<div class="cardHeader0">
-				<p id="playerName0">Player Name</p>
-				<p id="playerDesc0">Card Description</p>
+			<div class="cardHeader">
+				<h6 id="playerName0">Player Name</h6>
+				<h5 id="playerDesc0">Card Description</h5>
 				<picture>
 				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerPic0">
 				</picture>
@@ -226,9 +228,9 @@
 			
 		<div class="playerCard1">
 		
-			<div class="cardHeader1">
-				<p id="playerName1">Player Name</p>
-				<p id="playerDesc1">Card Description</p>
+			<div class="cardHeader">
+				<h6 id="playerName1">Player Name</h6>
+				<h5 id="playerDesc1">Card Description</h5>
 				<picture>
 				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerPic1">
 				</picture>
@@ -247,8 +249,8 @@
 		<div class="playerCard2">
 	
 			<div class="cardHeader">
-				<p id="playerName2">Player Name</p>
-				<p id="playerDesc2">Card Description</p>
+				<h6 id="playerName2">Player Name</h6>
+				<h5 id="playerDesc2">Card Description</h5>
 				<picture>
 				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerPic2">
 				</picture>
@@ -271,8 +273,8 @@
 		<div class="playerCard3">
 	
 			<div class="cardHeader">
-				<p id="playerName3">Player Name</p>
-				<p id="playerDesc3">Card Description</p>
+				<h6 id="playerName3">Player Name</h6>
+				<h5 id="playerDesc3">Card Description</h5>
 				<picture>
 				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerPic3">
 				</picture>
@@ -291,8 +293,8 @@
 		<div class="playerCard4">
 	
 			<div class="cardHeader">
-				<p id="playerName4">Player Name</p>
-				<p id="playerDesc4">Card Description</p>
+				<h6 id="playerName4">Player Name</h6>
+				<h5 id="playerDesc4">Card Description</h5>
 				<picture>
 				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerPic4">
 				</picture>
@@ -406,8 +408,8 @@
 
 					
 					for(i=0;i<playerCount;i++){
-						document.getElementById("playerName"+i).innerHTML= playersRem[i];
-						document.getElementById("playerDesc"+i).innerHTML= topCards[i].description + " (" + handSizes[i] + ")";
+						document.getElementById("playerName"+i).innerHTML= playersRem[i] + "</br>" + handSizes[i] + " cards in hand";
+						document.getElementById("playerDesc"+i).innerHTML= topCards[i].description;
 						document.getElementById("playerSize"+i).innerHTML= headerNames[1] + ": " + topCards[i].categoryOne;
 						document.getElementById("playerRare"+i).innerHTML= headerNames[2] + ": " + topCards[i].categoryTwo;
 						document.getElementById("playerTemp"+i).innerHTML= headerNames[3] + ": " + topCards[i].categoryThree;

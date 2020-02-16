@@ -31,6 +31,8 @@
 			font-family:Verdana;
   			text-align:center;
 			font-size:15px;
+			display:flex;
+			flex-direction:column;
 		}
 		
   		.navbar {
@@ -41,7 +43,7 @@
   		
   		.maincontainer {
   			padding:2rem;
-			min-height:300px;
+  			flex: 1 0 auto;
   		}
   		
   		.results {
@@ -56,6 +58,7 @@
   		}
   		
   		.footer {
+  			flex-shrink:0;
   			right:0;
   			bottom:0;
   			left:0;

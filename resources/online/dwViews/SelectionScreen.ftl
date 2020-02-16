@@ -29,6 +29,8 @@
 			background-color:#e6e6e6;
 			font-family:Verdana;
   			text-align:center;	
+			display:flex;
+			flex-direction:column;
 		}
 		
   		.navbar {
@@ -40,10 +42,11 @@
   		.menuWrapper {
   			padding-top:5rem;
   			padding-bottom:5rem;
-			min-height:300px;
+  			flex: 1 0 auto;
   		}
   		
   		.footer {
+  			flex-shrink:0;
   			right:0;
   			bottom:0;
   			left:0;

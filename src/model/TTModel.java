@@ -19,14 +19,20 @@ public class TTModel {
 	private Deck deck;
 	private ArrayList<Integer> allWonRounds;
 	private ArrayList<Player> players;
+	private ArrayList<Player> playersRemaining; // variable used to store which players remain in the game, seperate from all the players who began the game.
 	private ArrayList<Player> playersToRemove;
 	private ArrayList<Player> roundWinners;
 	private ArrayList<Card> communalPile;
 	private ArrayList<Card> playingTable;
 	private ArrayList<Card> winnersCards;
+	private ArrayList<Card> possibleWinningCards;
 	private int categoryChosen; //instance variable set by argument supplied to compareCards, needed for use in TestLogger
-	private HashMap<Player, Integer> playerStats = new HashMap<Player, Integer>(); 	//migrated from compareCards so as to give an instance
-    private LogWriter logWriter;																				//variable, which can then be called as a getter
+	private HashMap<Player, Integer> playerStats = new HashMap<Player, Integer>(); 	//migrated from compareCards so as to give an instance variable, which can then be called as a getter
+    private HashMap<Player,Card> playersCards = new HashMap<Player, Card>();
+	private LogWriter logWriter;
+    private String removedPlayersString;
+    private String roundWinnerString;
+    private String winningCard;
 
     public TTModel() { // constructor												//for use in TestLogger
 		this.setNewGameStates();
@@ -40,6 +46,7 @@ public class TTModel {
 		this.communalPile = new ArrayList<Card>();
 		this.playingTable = new ArrayList<Card>();
 		this.winnersCards = new ArrayList<Card>();
+		this.possibleWinningCards = new ArrayList<Card>();
 		this.allWonRounds = new ArrayList<Integer>();
 		this.playerStats = new HashMap<Player, Integer>();
 		this.numOfDraws = 0;
@@ -48,7 +55,10 @@ public class TTModel {
 		this.isDraw = false;
 		this.gameWinner = null;
 		this.activePlayer = null;
-		this.roundWinner = null;
+		this.roundWinner = null; // removed to fix view status
+		this.removedPlayersString = "";
+		this.winningCard = "";
+		this.roundWinnerString = "";
 	}
 
 	public void startGame(int botCount) { 
@@ -60,6 +70,7 @@ public class TTModel {
 		for (int i = 0; i < botCount; i++) {
 			this.players.add(new Bot("Player" + (i + 2) + " (AI)"));
 		}
+		this.clonePlayers(); //new method to create a clone of this list for players remaining.
 		this.deck.loadDeck(); // calls method in deck object to generate card objects
         this.logWriter = new LogWriter(this.deck);
 		this.deck.shuffleDeck(); //calls method to shuffle deck
@@ -102,22 +113,36 @@ public class TTModel {
 	public void playCards(int stat) {
 		this.logWriter.setChosenCategory(stat);
 		this.playerStats.clear(); // clears the instance variable at the beginning of each comparison, prior to
-		this.logWriter.resetEveryoneValues();						// adding new stats as before
-		for (Player p : this.players) {
+		this.playersCards.clear();
+		this.logWriter.resetEveryoneValues();
+		this.logWriter.resetPlayersCards();
+		this.roundWinnerString = "";
+		this.winningCard = "";
+
+		for (Player p : this.playersRemaining) { //FAO WES FAO DAN changed from this.players to this.playersRemaining, to stop indexOutOfBoundException when it would try and get the top card of a player who had no cards left.
 			this.playerStats.put(p, p.getTopCard().getStats().get(stat));
-			this.logWriter.setEveryoneValues(p.getName() + "'s card has the value: " + p.getTopCard().getStats().get(stat) + " ");
+			this.logWriter.setEveryoneValues(p.getName() + "'s card " + p.getTopCard().getDescription() + " has the value: " + p.getTopCard().getStats().get(stat) + "\n");
+
+			this.playersCards.put(p, p.getTopCard()); //places a player and their card in a HashMap, for use with logWriter and retrieval of the winning card
+			this.logWriter.setPlayersCards(playersCards);
+
 			this.playingTable.add(p.getHand().remove(p.getTopCardIndex())); // remove all the players top cards and add
 																			// the to an array list
 		}
 		this.logWriter.setPlayingTable(this.playingTable);
-		int maxValueInMap = Collections.max(playerStats.values()); // calculate the highest value from the cards
+		int maxValueInMap = Collections.max(this.playerStats.values()); // calculate the highest value from the cards
 																	// presented by the players
-		for (Entry<Player, Integer> entry : playerStats.entrySet()) { // Iterate through hashmap value to find what
+		for (Entry<Player, Integer> entry : this.playerStats.entrySet()) { // Iterate through hashmap value to find what
 																		// value matches the maxValueInMap, and get the
 																		// key of that entry
 			if (entry.getValue() == maxValueInMap) {
-				this.roundWinners.add(entry.getKey()); // adds all the players with the highest value to a new array
-														// list
+				Player possibleWinner;
+
+				possibleWinner = entry.getKey(); //Possible winner set as the key in instances where the value is the highest in playerStats
+
+				this.roundWinners.add(possibleWinner); // adds all the players with the highest value to a new array list
+
+				this.possibleWinningCards.add(playersCards.get(possibleWinner)); //uses a possibleWinner person as a key to get an associated value from playersCards. The possible winning cards are thus identifiable (needed for view)
 			}
 		}
 	}
@@ -128,10 +153,11 @@ public class TTModel {
 			ArrayList<Card> winnersCards = new ArrayList<Card>();
 			this.roundWinner = this.roundWinners.get(0); // set the round winning variable to the winning players name
 			this.logWriter.setRoundWinner(this.roundWinner.getName());
+			this.roundWinnerString = this.roundWinner.getName();
 			this.isDraw = false; // not a draw
 			this.winnersCards.addAll(this.communalPile);
 			this.winnersCards.addAll(this.playingTable);
-			Collections.shuffle(winnersCards); // randomise return cards
+			Collections.shuffle(this.winnersCards); // shuffle won cards before adding to winner's hand.
 			this.roundWinners.get(0).getHand().addAll(0, this.winnersCards); // add all the cards from the communal pile and
 																		// playing table to back of winning player's
 																		// hand in a random order
@@ -140,33 +166,50 @@ public class TTModel {
 			this.communalPile.clear();
 			this.logWriter.setCommunalPile(communalPile);
 			this.winnersCards.clear();
+
+			//new instructions to provide view with a winning card and reset values. Only reached if one winner.
+			winningCard = possibleWinningCards.get(0).getDescription();
+			possibleWinningCards.clear();
+
 		} else { // if there are two or more winners (draw)
 			this.numOfDraws++;
 			this.isDraw = true;
-			this.roundWinner = null;
+			this.roundWinner = null; // must remove to get roundWinner
+
 			this.logWriter.setRoundWinner(null); //added due to bug where LogWriter never learnt of draws.
 			this.communalPile.addAll(this.playingTable); // add all cards to communal pile array list
 			this.logWriter.setCommunalPile(this.communalPile);
 			this.playingTable.clear();
 			this.logWriter.setPlayersHands(this.players, this.numOfRounds);////moved here as testlogger needs to see this at the end of a game loop.
+			possibleWinningCards.clear();  // will need empty as possibly has >2= elements.
 		}
+
+			//FAO Wes - new routine to establish eliminated players (see below)
+		removedPlayersString = ""; //resets value, before checking for players to remove at the end of a a round. Allows for a checking value in view.
+		checkForRemovablePlayers();
 		this.roundWinners.clear();
 	}
 
 	public boolean hasWon() { // checker method called at the end of every round
-		for (Player p : this.players) {
-			if ((p.getHand().size() + this.communalPile.size()) >= this.deck.getNumOfCards()) { // does any of the
-																								// playershave all the cards?
+		for (Player p : this.players)
+		{
+			if ((p.getHand().size() + this.communalPile.size()) >= this.deck.getNumOfCards()) { // If a player's hand + any cards in the communal pile is at least 40, that player must have won the game.
+
 				this.gameWinner = p.getName(); // won the game
 				this.numOfGames++; // increment number of games
-				updateWonRounds();
+				this.updateWonRounds();
 				return true;
-			} else if (p.getHand().isEmpty()) {
-				this.playersToRemove.add(p);
-			}
+				//FAO Wes - can remove this? see below method checkForRemovablePlayers();
+			} //else if (p.getHand().isEmpty()) {
+				//this.playersToRemove.add(p);
+				//this.removedPlayersString = "";
+				//for(Player r : this.playersToRemove) {
+					//this.removedPlayersString += r.getName() + " "; // get eliminated players
+				//}
+			//}
 		}
-		this.players.removeAll(this.playersToRemove);
-		this.playersToRemove.clear();
+//		this.players.removeAll(this.playersToRemove);
+//		this.playersToRemove.clear();
 		return false;
 	}
 
@@ -176,6 +219,14 @@ public class TTModel {
 			int eachWonRounds = p.getRoundsWon();
 			this.allWonRounds.add(eachWonRounds);
 		}
+	}
+
+	//method used to crate a cloned ArrayList of the players in the game. Players will be removed from this as they are removed from the game.
+	@SuppressWarnings("unchecked")	//Eclipse suggests potential for unchecked Object cast to type Player. As players is also of type Player this
+									//has been suppressed.
+	private void clonePlayers()
+	{
+		this.playersRemaining = (ArrayList<Player>) this.players.clone();
 	}
 
 	// Getter and Setter Methods
@@ -199,6 +250,10 @@ public class TTModel {
 		return this.roundWinner.getName();
 	}
 
+	public Player getRoundWinner() {
+		return this.roundWinner;
+	}
+
 	public int getNumOfGames() {
 		return this.numOfGames;
 	}
@@ -217,7 +272,7 @@ public class TTModel {
 	}
 
     public LogWriter getLogWriter() {
-        return logWriter;
+        return this.logWriter;
     }
 
 	public ArrayList<Card> getCommunalPile(){
@@ -231,13 +286,44 @@ public class TTModel {
 	public HashMap<Player, Integer> getPlayerStats(){
 		return this.playerStats;
 	}
-
+	//FAO Dan - unless this is used in online, I'm not sure we still need this.
 	public int getCategoryChosen() {
 		return this.categoryChosen;
 	}
 
+	//FAO Wes - gives way of getting chosen category in a string in the format "The chosen category was: " + this.chosenCategory + ".";"
+	public String getChosenCategory()
+	{
+		return this.logWriter.getChosenCategory();
+	}
+
 	public boolean isDraw() {
-		return isDraw;
+		return this.isDraw;
+	}
+
+	public String getRemovedPlayersString(){
+		return this.removedPlayersString;
+	}
+
+	public String getRoundWinnerString(){
+		return this.roundWinnerString;
+	}
+
+	public String getWinningCard() {
+		return this.winningCard;
+	}
+
+	private void checkForRemovablePlayers()
+	{
+		for (Player p : this.playersRemaining)
+		{
+			if (p.getHand().isEmpty())
+			{
+				this.playersToRemove.add(p);
+				removedPlayersString = p.getName() + " has been eliminated.\n";
+			}
+		}
+		this.playersRemaining.removeAll(this.playersToRemove);
 	}
 
 }

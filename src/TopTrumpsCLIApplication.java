@@ -35,7 +35,12 @@ public class TopTrumpsCLIApplication {
 			// Add your game logic here based on the requirements
 			// ----------------------------------------------------
 			
-			controller.runtimeMenu();
+			try {
+				controller.runtimeMenu();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			userWantsToQuit=true; // use this when the user wants to exit the game
 		}

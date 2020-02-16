@@ -17,6 +17,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import controller.TTController;
+import database_testlog.DatabaseInteractor;
 import model.Bot;
 import model.Card;
 import model.Player;
@@ -49,15 +50,16 @@ public class TopTrumpsRESTAPI {
 	 */
 	private TTModel model;
 	private int botCount;
+	private DatabaseInteractor dbI;
 	
 	public TopTrumpsRESTAPI(TopTrumpsJSONConfiguration conf) {
 		// ----------------------------------------------------
 		// Add relevant initalization here
 		// ----------------------------------------------------
 		
-		boolean writeGameLogsToFile = false;
 		this.model = new TTModel(); // pass writeGameLogsToFile here
 		this.botCount = conf.getNumAIPlayers();
+		this.dbI = new DatabaseInteractor();
 	}
 	
 	// ----------------------------------------------------
@@ -289,5 +291,30 @@ public class TopTrumpsRESTAPI {
 	public String updateRoundCounter() throws IOException {
 		String roundCounterAsJSONString = oWriter.writeValueAsString("Round " + (this.model.getNumOfRounds()));
 		return roundCounterAsJSONString;
+	}
+	
+	@GET
+	@Path("/updateDb")
+	/**
+	 * Here is an example of a simple REST get request that returns a String.
+	 * We also illustrate here how we can convert Java objects to JSON strings.
+	 * @return - List of words as JSON
+	 * @throws IOException
+	 */
+	public void updateDb() throws IOException {
+		this.dbI.updateDb(this.model.getGameWinner(), this.model.getNumOfDraws(), this.model.getNumOfRounds(), this.model.getAllWonRounds());
+	}
+	
+	@GET
+	@Path("/drawDb")
+	/**
+	 * Here is an example of a simple REST get request that returns a String.
+	 * We also illustrate here how we can convert Java objects to JSON strings.
+	 * @return - List of words as JSON
+	 * @throws IOException
+	 */
+	public String drawDb() throws IOException {
+		String databaseAsJSONString = oWriter.writeValueAsString(this.dbI.dbRequest());
+		return databaseAsJSONString;
 	}
 }

@@ -38,7 +38,9 @@
   		}
   		
   		.menuWrapper {
-  			padding:3.5rem;
+  			padding-top:5rem;
+  			padding-bottom:5rem;
+			min-height:300px;
   		}
   		
   		.footer {
@@ -46,7 +48,6 @@
   			bottom:0;
   			left:0;
   			width:100%;
-  			position:absolute;
   			padding:2rem;
   			background-color:#4d4d4d;
 			background:linear-gradient(to bottom, #4d4d4d 5%, #747474 100%);
@@ -92,9 +93,9 @@
    	
    	<div class = "menuWrapper">
    		<h4><b>Welcome to Doggo Top Trumps!</b></h4>
-        </br>
-	    <h5>Would you like to play a new game or see previous game statistics?</h5>	
-        </br>
+   		</br>
+	    <h5>Would you like to play a new game or see previous game statistics?</h5>
+	    </br>
 		<p><input class="mybutton" type="button" value="New Game" 
 		onclick="window.location.href='toptrumps/game'" />
 		<input class="mybutton" type="button" value="Game Statistics" 
@@ -102,7 +103,7 @@
 	</div>
 		
 	<div class="footer">
-		Made by Git What You Give</br>Jessica Lavin - Daniel Mitchell - Simon Manton Milne - Wesley Scott
+		Made by You Git What You Give</br>Jessica Lavin - Simon Manton Milne - Cyriac Mathew - Daniel Mitchell - Wesley Scott
 	</div>
 		
 		<script type="text/javascript">

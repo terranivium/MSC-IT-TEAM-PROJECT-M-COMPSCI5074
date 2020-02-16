@@ -171,12 +171,12 @@ public class TTModel {
 			this.logWriter.setPlayersHands(this.players, this.numOfRounds); //moved here as testlogger needs to see this at the end of a game loop.
 			this.playingTable.clear(); // clear all array lists for new round
 			this.communalPile.clear();
-			this.logWriter.setCommunalPile(communalPile);
+			this.logWriter.setCommunalPile(this.communalPile);
 			this.winnersCards.clear();
 
 			//provide a means for view to access the winning card. Only reached when there is one winner.
-			winningCard = possibleWinningCards.get(0).getDescription();
-			possibleWinningCards.clear();
+			this.winningCard = possibleWinningCards.get(0).getDescription();
+			this.possibleWinningCards.clear();
 
 		} else { // if there are two or more winners (draw)
 			this.numOfDraws++;
@@ -188,12 +188,12 @@ public class TTModel {
 			this.logWriter.setCommunalPile(this.communalPile);
 			this.playingTable.clear();
 			this.logWriter.setPlayersHands(this.players, this.numOfRounds);////moved here as testlogger needs to see this at the end of a game loop.
-			possibleWinningCards.clear();  // will need empty as possibly has >2= elements.
+			this.possibleWinningCards.clear();  // will need empty as possibly has >2= elements.
 		}
 
 		
-		removedPlayersString = ""; //resets value, before checking for players to remove at the end of a a round. Enables a checking value in view.
-		checkForRemovablePlayers(); //this method will update removedPlayersString if there are eliminated this round.
+		this.removedPlayersString = ""; //resets value, before checking for players to remove at the end of a a round. Enables a checking value in view.
+		this.checkForRemovablePlayers(); //this method will update removedPlayersString if there are eliminated this round.
 		this.roundWinners.clear();
 	}
 
@@ -311,7 +311,7 @@ public class TTModel {
 	
 	
 	public ArrayList<Player> getPlayersRemaining() {
-		return playersRemaining;
+		return this.playersRemaining;
 	}
 
 	public String getWinningCard() {
@@ -328,7 +328,7 @@ public class TTModel {
 			if (p.getHand().isEmpty())
 			{
 				this.playersToRemove.add(p);
-				removedPlayersString += p.getName() + " has been eliminated.\n";
+				this.removedPlayersString += p.getName() + " has been eliminated.\n";
 			}
 		}
 		this.playersRemaining.removeAll(this.playersToRemove);

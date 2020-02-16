@@ -22,45 +22,45 @@
 
     <body onload="initalize()"> <!-- Call the initalize method when the page loads -->
     
-    <!-- statistics CSS -->
+<!-- statistics CSS -->
     
     <style>
 		
 		body {
-			background-color: #e6e6e6;
+			background-color:#e6e6e6;
+			font-family:Verdana;
+  			text-align:center;
+			font-size:15px;
 		}
 		
   		.navbar {
-  			padding: 2rem;
-  			background-color: #4d4d4d;
-  		}
-  		
-  		.container {
-  			text-align: center;
-			font-family: Arial;
+  			background-color:#4d4d4d;
+			background:linear-gradient(to bottom, #4d4d4d 5%, #747474 100%);
+  			padding:2rem;
   		}
   		
   		.results {
-  			background-color: #ffffe6;
-  			border-style: solid;
-  			border-width: 1px;
-			border-radius:6px;
-  			width: 600px;
-  			display: inline-block;
-			font-size:20px;
+  			background-color:#ffffe6;
+			background:linear-gradient(to bottom, #ffffe6 5%, #fbfbd1 100%);
+  			border-left:1px solid black;
+  			border-right:1px solid black;
+  			border-bottom:1px solid black;
+  			width:600px;
+  			display:inline-block;
+  			padding:1rem;
   		}
   		
   		.footer {
-  			position: absolute;
-  			right: 0;
-  			bottom: 0;
-  			left: 0;
-  			width: 100%;
-  			padding: 2rem;
-  			background-color: #4d4d4d;
-  			color: #ffffff;
-			font-family: Arial;
-			font-size: 14px;
+  			position:absolute;
+  			right:0;
+  			bottom:0;
+  			left:0;
+  			width:100%;
+  			padding:2rem;
+  			background-color:#4d4d4d;
+			background:linear-gradient(to bottom, #4d4d4d 5%, #747474 100%);
+  			color:#ffffff;
+			font-size:12px;
   		}
   		
   		.myButton {
@@ -68,14 +68,14 @@
 			box-shadow:inset 0px 1px 0px 0px #fce2c1;
 			background:linear-gradient(to bottom, #ffc477 5%, #fb9e25 100%);
 			background-color:#ffc477;
-			border-radius:6px;
-			border:1px solid #eeb44f;
+  			border-left:1px solid black;
+  			border-right:1px solid black;
+  			border-top:1px solid black;
 			display:inline-block;
 			cursor:pointer;
 			color:#ffffff;
-			font-size:20px;
 			font-weight:bold;
-			padding:6px 24px;
+			padding:1rem;
 			text-decoration:none;
 			text-shadow:0px 1px 0px #cc9f52;
 		}
@@ -89,37 +89,37 @@
 			position:relative;
 			top:1px;
 		}
-		
-	<!-- statistics HTML -->
   		
-  	</style>	
+  	</style>
+  	
+<!-- statistics HTML -->
     	
-		<nav class="navbar navbar-expand-lg navbar-inverse bg-inverse">
-			<a class="navbar-doggotrumps" href="http://localhost:7777/toptrumps">
-            <img src="https://i.pinimg.com/originals/ec/7e/79/ec7e79072d498c26433d9658d83d4a8b.png" width="250" height="100" alt="Doggo Trumps">
-        	</a>
-   		</nav>
+	<nav class="navbar navbar-expand-lg navbar-inverse bg-inverse">
+		<a class="navbar-doggotrumps" href="http://localhost:7777/toptrumps">
+		<img src="https://i.pinimg.com/originals/f3/d8/97/f3d897a2e4842b17f52a41154ab8fe62.png" width="400" alt="Doggo Trumps">
+        </a>
+   	</nav>
     	
-    	<div class="container">
+    <div class="mainContainer">
     		
-    		<br></br>
+    <br></br>
     		
-    		<div class="buttons">
-    			<input class="mybutton" type="button" value="&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp New Game &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp" 
-				onclick="window.location.href='/toptrumps/game'" />
-    		</div>
+    	<div class="buttons">
+    		<input class="mybutton" type="button" value="&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp New Game &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp" 
+			onclick="window.location.href='/toptrumps/game'" />
+    	</div>
     		
-    		<div class="results">
-    			Add results here...
-    		</div>
+    	<div class="results">
+    		Add results here...
+    	</div>
     	
-		</div>
+	</div>
 		
-		<div class="footer">
-			Made by Git What You Give</br>Jessica Lavin - Daniel Mitchell - Simon Manton Milne - Wesley Scott
-		</div>
+	<div class="footer">
+		Made by Git What You Give</br>Jessica Lavin - Daniel Mitchell - Simon Manton Milne - Wesley Scott
+	</div>
 		
-		<script type="text/javascript">
+	<script type="text/javascript">
 		
 			// Method that is called on page load
 			function initalize() {

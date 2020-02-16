@@ -123,7 +123,7 @@ public class TopTrumpsRESTAPI {
 	public String buildRoundCards() throws IOException{
 		String topCardsAsJSONString;
 		ArrayList<Card> cards = new ArrayList<Card>();
-		for(Player p: this.model.getPlayers()) {
+		for(Player p: this.model.getPlayersRemaining()) {
 			cards.add(p.getTopCard());
 		}
 		topCardsAsJSONString = oWriter.writeValueAsString(cards);
@@ -141,7 +141,7 @@ public class TopTrumpsRESTAPI {
 	public String playerHandSizes() throws IOException{
 		String handSizesAsJSONString;
 		ArrayList<Integer> handSizes = new ArrayList<Integer>();
-		for(Player p: this.model.getPlayers()) {
+		for(Player p: this.model.getPlayersRemaining()) {
 			handSizes.add(p.getHand().size());
 		}
 		handSizesAsJSONString = oWriter.writeValueAsString(handSizes);
@@ -159,7 +159,7 @@ public class TopTrumpsRESTAPI {
 	public String playersLeft() throws IOException{
 		String playersLeftAsJSONString;
 		ArrayList<String> playersLeft = new ArrayList<String>();
-		for(Player p: this.model.getPlayers()) {
+		for(Player p: this.model.getPlayersRemaining()) {
 			playersLeft.add(p.getName());
 		}
 		System.err.println(playersLeft);
@@ -263,7 +263,7 @@ public class TopTrumpsRESTAPI {
 	 * @throws IOException
 	 */
 	public String showCard() throws IOException {
-		String topCardAsJSONString = oWriter.writeValueAsString(this.model.getPlayers().get(0).getTopCard().getDescription());
+		String topCardAsJSONString = oWriter.writeValueAsString(this.model.getPlayersRemaining().get(0).getTopCard().getDescription());
 		return topCardAsJSONString;
 	}
 	

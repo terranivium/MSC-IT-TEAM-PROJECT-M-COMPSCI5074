@@ -204,62 +204,62 @@
 		
 		</div>
 		
-		<div class="playerOneCard">
+		<div class="playerCard0">
 		
-			<div class="cardHeader">
-				Player 1
-				<p id="playerOneDesc">Card Description</p>
+			<div class="cardHeader0">
+				<p id="playerName0">Player Name</p>
+				<p id="playerDesc0">Card Description</p>
 				<picture>
-				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerOnePic">
+				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerPic0">
 				</picture>
 			</div>
 				
 			<div class ="cardContainer">
-				<p id="playerOneSize">Category 1</p>
-				<p id="playerOneRare">Category 2</p>
-				<p id="playerOneTemp">Category 3</p>
-				<p id="playerOneIntel">Category 4</p>
-				<p id="playerOneCute">Category 5</p>
+				<p id="playerSize0">Category 1</p>
+				<p id="playerRare0">Category 2</p>
+				<p id="playerTemp0">Category 3</p>
+				<p id="playerIntel0">Category 4</p>
+				<p id="playerCute0">Category 5</p>
 			</div>
 	
 		</div>
 			
-		<div class="playerTwoCard">
+		<div class="playerCard1">
 		
-			<div class="cardHeader">
-				Player 2 (AI)
-				<p id="playerTwoDesc">Card Description</p>
+			<div class="cardHeader1">
+				<p id="playerName1">Player Name</p>
+				<p id="playerDesc1">Card Description</p>
 				<picture>
-				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerTwoPic">
+				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerPic1">
 				</picture>
 			</div>
 		
 			<div class ="cardContainer">
-				<p id="playerTwoSize">Category 1</p>
-				<p id="playerTwoRare">Category 2</p>
-				<p id="playerTwoTemp">Category 3</p>
-				<p id="playerTwoIntel">Category 4</p>
-				<p id="playerTwoCute">Category 5</p>
+				<p id="playerSize1">Category 1</p>
+				<p id="playerRare1">Category 2</p>
+				<p id="playerTemp1">Category 3</p>
+				<p id="playerIntel1">Category 4</p>
+				<p id="playerCute1">Category 5</p>
 			</div>
 	
 		</div>
 			
-		<div class="playerThreeCard">
+		<div class="playerCard2">
 	
 			<div class="cardHeader">
-				Player 3 (AI)
-				<p id="playerThreeDesc">Card Description</p>
+				<p id="playerName2">Player Name</p>
+				<p id="playerDesc2">Card Description</p>
 				<picture>
-				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerThreePic">
+				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerPic2">
 				</picture>
 			</div>
 		
 			<div class ="cardContainer">
-				<p id="playerThreeSize">Category 1</p>
-				<p id="playerThreeRare">Category 2</p>
-				<p id="playerThreeTemp">Category 3</p>
-				<p id="playerThreeIntel">Category 4</p>
-				<p id="playerThreeCute">Category 5</p>
+				<p id="playerSize2">Category 1</p>
+				<p id="playerRare2">Category 2</p>
+				<p id="playerTemp2">Category 3</p>
+				<p id="playerIntel2">Category 4</p>
+				<p id="playerCute2">Category 5</p>
 			</div>
 	
 		</div>
@@ -268,42 +268,42 @@
 			
 		<div class="gap"></div>
 			
-		<div class="playerFourCard">
+		<div class="playerCard3">
 	
 			<div class="cardHeader">
-				Player 4 (AI)
-				<p id="playerFourDesc">Card Description</p>
+				<p id="playerName3">Player Name</p>
+				<p id="playerDesc3">Card Description</p>
 				<picture>
-				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerFourPic">
+				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerPic3">
 				</picture>
 			</div>
 		
 			<div class ="cardContainer">
-				<p id="playerFourSize">Category 1</p>
-				<p id="playerFourRare">Category 2</p>
-				<p id="playerFourTemp">Category 3</p>
-				<p id="playerFourIntel">Category 4</p>
-				<p id="playerFourCute">Category 5</p>
+				<p id="playerSize3">Category 1</p>
+				<p id="playerRare3">Category 2</p>
+				<p id="playerTemp3">Category 3</p>
+				<p id="playerIntel3">Category 4</p>
+				<p id="playerCute3">Category 5</p>
 			</div>
 	
 		</div>
 			
-		<div class="playerFiveCard">
+		<div class="playerCard4">
 	
 			<div class="cardHeader">
-				Player 5 (AI)
-				<p id="playerFiveDesc">Card Description</p>
+				<p id="playerName4">Player Name</p>
+				<p id="playerDesc4">Card Description</p>
 				<picture>
-				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerFivePic">
+				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerPic4">
 				</picture>
 			</div>
 		
 			<div class ="cardContainer">
-				<p id="playerFiveSize">Category 1</p>
-				<p id="playerFiveRare">Category 2</p>
-				<p id="playerFiveTemp">Category 3</p>
-				<p id="playerFiveIntel">Category 4</p>
-				<p id="playerFiveCute">Category 5</p>
+				<p id="playerSize4">Category 1</p>
+				<p id="playerRare4">Category 2</p>
+				<p id="playerTemp4">Category 3</p>
+				<p id="playerIntel4">Category 4</p>
+				<p id="playerCute4">Category 5</p>
 			</div>
 	
 		</div>
@@ -405,7 +405,7 @@
 					topCards = JSON.parse(xhr.response);
 
 					
-					for(var i=0;i<playerCount;i++){
+					for(i=0;i<playerCount;i++){
 						document.getElementById("playerName"+i).innerHTML= playersRem[i];
 						document.getElementById("playerDesc"+i).innerHTML= topCards[i].description + " (" + handSizes[i] + ")";
 						document.getElementById("playerSize"+i).innerHTML= headerNames[1] + ": " + topCards[i].categoryOne;
@@ -680,7 +680,7 @@
 				xhr.onload = function(e) {
  					playersRem = JSON.parse(xhr.response);
  					playerCount = Object.keys(playersRem).length;
- 					
+ 					alert(playerCount);
  					getHandSizes().call();
 				};
 				

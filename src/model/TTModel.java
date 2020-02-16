@@ -308,6 +308,11 @@ public class TTModel {
 	public String getRoundWinnerString(){
 		return this.roundWinnerString;
 	}
+	
+	
+	public ArrayList<Player> getPlayersRemaining() {
+		return playersRemaining;
+	}
 
 	public String getWinningCard() {
 		return this.winningCard;

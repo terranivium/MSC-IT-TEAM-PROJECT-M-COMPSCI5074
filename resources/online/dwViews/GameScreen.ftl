@@ -693,7 +693,7 @@
 				var x = document.getElementsByClassName("activePlayerWrapper");
 				x[0].style.display = "block";	
 				
-				playersLeft();
+				playersLeft().call();
 			}
 			
 			function resetGame() {

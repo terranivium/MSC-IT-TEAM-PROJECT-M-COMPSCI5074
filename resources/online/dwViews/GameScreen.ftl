@@ -29,6 +29,8 @@
 		body {
 			background-color:#e6e6e6;
 			font-family:Verdana;
+			display:flex;
+			flex-direction:column;
 		}
 
   		.navbar {
@@ -52,6 +54,7 @@
   			grid-auto-rows:minmax(100px, auto);
   			width:100%;
   			padding:1rem;
+  			flex: 1 0 auto;
   		}
   		
   		.controller {
@@ -106,9 +109,9 @@
 			background:linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
 			background-color:#ffec64;
   			text-align:center;
-  			padding-top:1rem;
 			border-radius:10px;
 			font-size:15px;
+			padding-top:0.5rem;
   		}
   		
   		.cardContainer {
@@ -117,7 +120,7 @@
 			font-size:13px;
   		}
   		
-  		.playerOneCard {
+  		.playerCard0 {
   			border:1px solid black;
   			display:none;
 			background:linear-gradient(to bottom, #ffffe6 5%, #fbfbd1 100%);
@@ -125,7 +128,7 @@
 			border-radius:10px;
   		}
   		
-  		.playerTwoCard {
+  		.playerCard1 {
   			border:1px solid black;
   			display:none;
 			background:linear-gradient(to bottom, #ffffe6 5%, #fbfbd1 100%);
@@ -133,7 +136,7 @@
 			border-radius:10px;
   		}
   		
-  		.playerThreeCard {
+  		.playerCard2 {
   			border:1px solid black;
   			display:none;
 			background:linear-gradient(to bottom, #ffffe6 5%, #fbfbd1 100%);
@@ -141,7 +144,7 @@
 			border-radius:10px;
   		}
   		
-  		.playerFourCard {
+  		.playerCard3 {
   			border:1px solid black;
   			display:none;
 			background:linear-gradient(to bottom, #ffffe6 5%, #fbfbd1 100%);
@@ -149,7 +152,7 @@
 			border-radius:10px;
   		}
   		
-  		.playerFiveCard {
+  		.playerCard4 {
   			border:1px solid black;
   			display:none;
 			background:linear-gradient(to bottom, #ffffe6 5%, #fbfbd1 100%);
@@ -158,7 +161,7 @@
   		}
 
   		.footer {
-  			position:sticky;
+  			flex-shrink:0;
   			width:100%;
   			padding:2rem;
   			background-color:#4d4d4d;
@@ -203,62 +206,62 @@
 		
 		</div>
 		
-		<div class="playerOneCard">
+		<div class="playerCard0">
 		
 			<div class="cardHeader">
-				Player 1
-				<p id="playerOneDesc">Card Description</p>
+				<h6 id="playerName0">Player Name</h6>
+				<h5 id="playerDesc0">Card Description</h5>
 				<picture>
-				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerOnePic">
+				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerPic0">
 				</picture>
 			</div>
 				
 			<div class ="cardContainer">
-				<p id="playerOneSize">Category 1</p>
-				<p id="playerOneRare">Category 2</p>
-				<p id="playerOneTemp">Category 3</p>
-				<p id="playerOneIntel">Category 4</p>
-				<p id="playerOneCute">Category 5</p>
+				<p id="playerSize0">Category 1</p>
+				<p id="playerRare0">Category 2</p>
+				<p id="playerTemp0">Category 3</p>
+				<p id="playerIntel0">Category 4</p>
+				<p id="playerCute0">Category 5</p>
 			</div>
 	
 		</div>
 			
-		<div class="playerTwoCard">
+		<div class="playerCard1">
 		
 			<div class="cardHeader">
-				Player 2 (AI)
-				<p id="playerTwoDesc">Card Description</p>
+				<h6 id="playerName1">Player Name</h6>
+				<h5 id="playerDesc1">Card Description</h5>
 				<picture>
-				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerTwoPic">
+				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerPic1">
 				</picture>
 			</div>
 		
 			<div class ="cardContainer">
-				<p id="playerTwoSize">Category 1</p>
-				<p id="playerTwoRare">Category 2</p>
-				<p id="playerTwoTemp">Category 3</p>
-				<p id="playerTwoIntel">Category 4</p>
-				<p id="playerTwoCute">Category 5</p>
+				<p id="playerSize1">Category 1</p>
+				<p id="playerRare1">Category 2</p>
+				<p id="playerTemp1">Category 3</p>
+				<p id="playerIntel1">Category 4</p>
+				<p id="playerCute1">Category 5</p>
 			</div>
 	
 		</div>
 			
-		<div class="playerThreeCard">
+		<div class="playerCard2">
 	
 			<div class="cardHeader">
-				Player 3 (AI)
-				<p id="playerThreeDesc">Card Description</p>
+				<h6 id="playerName2">Player Name</h6>
+				<h5 id="playerDesc2">Card Description</h5>
 				<picture>
-				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerThreePic">
+				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerPic2">
 				</picture>
 			</div>
 		
 			<div class ="cardContainer">
-				<p id="playerThreeSize">Category 1</p>
-				<p id="playerThreeRare">Category 2</p>
-				<p id="playerThreeTemp">Category 3</p>
-				<p id="playerThreeIntel">Category 4</p>
-				<p id="playerThreeCute">Category 5</p>
+				<p id="playerSize2">Category 1</p>
+				<p id="playerRare2">Category 2</p>
+				<p id="playerTemp2">Category 3</p>
+				<p id="playerIntel2">Category 4</p>
+				<p id="playerCute2">Category 5</p>
 			</div>
 	
 		</div>
@@ -267,42 +270,42 @@
 			
 		<div class="gap"></div>
 			
-		<div class="playerFourCard">
+		<div class="playerCard3">
 	
 			<div class="cardHeader">
-				Player 4 (AI)
-				<p id="playerFourDesc">Card Description</p>
+				<h6 id="playerName3">Player Name</h6>
+				<h5 id="playerDesc3">Card Description</h5>
 				<picture>
-				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerFourPic">
+				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerPic3">
 				</picture>
 			</div>
 		
 			<div class ="cardContainer">
-				<p id="playerFourSize">Category 1</p>
-				<p id="playerFourRare">Category 2</p>
-				<p id="playerFourTemp">Category 3</p>
-				<p id="playerFourIntel">Category 4</p>
-				<p id="playerFourCute">Category 5</p>
+				<p id="playerSize3">Category 1</p>
+				<p id="playerRare3">Category 2</p>
+				<p id="playerTemp3">Category 3</p>
+				<p id="playerIntel3">Category 4</p>
+				<p id="playerCute3">Category 5</p>
 			</div>
 	
 		</div>
 			
-		<div class="playerFiveCard">
+		<div class="playerCard4">
 	
 			<div class="cardHeader">
-				Player 5 (AI)
-				<p id="playerFiveDesc">Card Description</p>
+				<h6 id="playerName4">Player Name</h6>
+				<h5 id="playerDesc4">Card Description</h5>
 				<picture>
-				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerFivePic">
+				<img src="" alt="Dogs Pic goes here" style="width:100%;height:140px;"" id="playerPic4">
 				</picture>
 			</div>
 		
 			<div class ="cardContainer">
-				<p id="playerFiveSize">Category 1</p>
-				<p id="playerFiveRare">Category 2</p>
-				<p id="playerFiveTemp">Category 3</p>
-				<p id="playerFiveIntel">Category 4</p>
-				<p id="playerFiveCute">Category 5</p>
+				<p id="playerSize4">Category 1</p>
+				<p id="playerRare4">Category 2</p>
+				<p id="playerTemp4">Category 3</p>
+				<p id="playerIntel4">Category 4</p>
+				<p id="playerCute4">Category 5</p>
 			</div>
 	
 		</div>
@@ -310,9 +313,8 @@
 	</div>
 		
 	<div class="footer">
-		Made by Git What You Give</br>Jessica Lavin - Daniel Mitchell - Simon Manton Milne - Wesley Scott
+		Made by You Git What You Give</br>Jessica Lavin - Simon Manton Milne - Cyriac Mathew - Daniel Mitchell - Wesley Scott
 	</div>
-		
 		<script type="text/javascript">
 		
 			// Method that is called on page load
@@ -358,10 +360,12 @@
 		<!-- Here are examples of how to call REST API Methods -->
 		<script type="text/javascript">
 			var headerNames;
+			var playersRem;
 			var topCards;
 			var activePlayer;
 			var roundNum;
 			var handSizes;
+			var playerCount;
 			
 			function startGame() {
 				// First create a CORS request, this is the message we are going to send (a get request in this case)
@@ -381,7 +385,7 @@
  					document.getElementById("selectButton3").value="Select: " + headerNames[3];
  					document.getElementById("selectButton4").value="Select: " + headerNames[4];
  					document.getElementById("selectButton5").value="Select: " + headerNames[5];
-					playersRem();
+					playersLeft();
 				};
 				
 				// We have done everything we need to prepare the CORS request, so send it
@@ -401,50 +405,19 @@
 				// to do when the response arrives 
 				xhr.onload = function(e) {
 					topCards = JSON.parse(xhr.response);
-					var topCardsSize = Object.keys(topCards).length;
+
 					
-					document.getElementById("playerOneDesc").innerHTML= topCards[0].description + " (" + handSizes[0] + ")";
-					document.getElementById("playerOneSize").innerHTML= headerNames[1] + ": " + topCards[0].categoryOne;
-					document.getElementById("playerOneRare").innerHTML= headerNames[2] + ": " + topCards[0].categoryTwo;
-					document.getElementById("playerOneTemp").innerHTML= headerNames[3] + ": " + topCards[0].categoryThree;
-					document.getElementById("playerOneIntel").innerHTML= headerNames[4] + ": " + topCards[0].categoryFour;
-					document.getElementById("playerOneCute").innerHTML= headerNames[5] + ": " + topCards[0].categoryFive;
-					document.getElementById("playerOnePic").src = "../assets/" + topCards[0].description + ".jpg";
-					
-					document.getElementById("playerTwoDesc").innerHTML= topCards[1].description + " (" + handSizes[1] + ")";
-					document.getElementById("playerTwoSize").innerHTML= headerNames[1] + ": " + topCards[1].categoryOne;
-					document.getElementById("playerTwoRare").innerHTML= headerNames[2] + ": " + topCards[1].categoryTwo;
-					document.getElementById("playerTwoTemp").innerHTML= headerNames[3] + ": " + topCards[1].categoryThree;
-					document.getElementById("playerTwoIntel").innerHTML= headerNames[4] + ": " + topCards[1].categoryFour;
-					document.getElementById("playerTwoCute").innerHTML= headerNames[5] + ": " + topCards[1].categoryFive;
-					document.getElementById("playerTwoPic").src = "../assets/" + topCards[1].description + ".jpg";
-					
-					document.getElementById("playerThreeDesc").innerHTML= topCards[2].description + " (" + handSizes[2] + ")";
-					document.getElementById("playerThreeSize").innerHTML= headerNames[1] + ": " + topCards[2].categoryOne;
-					document.getElementById("playerThreeRare").innerHTML= headerNames[2] + ": " + topCards[2].categoryTwo;
-					document.getElementById("playerThreeTemp").innerHTML= headerNames[3] + ": " + topCards[2].categoryThree;
-					document.getElementById("playerThreeIntel").innerHTML= headerNames[4] + ": " + topCards[2].categoryFour;
-					document.getElementById("playerThreeCute").innerHTML= headerNames[5] + ": " + topCards[2].categoryFive;
-					document.getElementById("playerThreePic").src = "../assets/" + topCards[2].description + ".jpg";
-					
-					document.getElementById("playerFourDesc").innerHTML= topCards[3].description + " (" + handSizes[3] + ")";
-					document.getElementById("playerFourSize").innerHTML= headerNames[1] + ": " + topCards[3].categoryOne;
-					document.getElementById("playerFourRare").innerHTML= headerNames[2] + ": " + topCards[3].categoryTwo;
-					document.getElementById("playerFourTemp").innerHTML= headerNames[3] + ": " + topCards[3].categoryThree;
-					document.getElementById("playerFourIntel").innerHTML= headerNames[4] + ": " + topCards[3].categoryFour;
-					document.getElementById("playerFourCute").innerHTML= headerNames[5] + ": " + topCards[3].categoryFive;
-					document.getElementById("playerFourPic").src = "../assets/" + topCards[3].description + ".jpg";
-					
-					document.getElementById("playerFiveDesc").innerHTML= topCards[4].description + " (" + handSizes[4] + ")";
-					document.getElementById("playerFiveSize").innerHTML= headerNames[1] + ": " + topCards[4].categoryOne;
-					document.getElementById("playerFiveRare").innerHTML= headerNames[2] + ": " + topCards[4].categoryTwo;
-					document.getElementById("playerFiveTemp").innerHTML= headerNames[3] + ": " + topCards[4].categoryThree;
-					document.getElementById("playerFiveIntel").innerHTML= headerNames[4] + ": " + topCards[4].categoryFour;
-					document.getElementById("playerFiveCute").innerHTML= headerNames[5] + ": " + topCards[4].categoryFive;
-					document.getElementById("playerFivePic").src = "../assets/" + topCards[4].description + ".jpg";
-					
-					var x = document.getElementsByClassName("playerOneCard");
-					x[0].style.display = "block";
+					for(i=0;i<playerCount;i++){
+						document.getElementById("playerName"+i).innerHTML= playersRem[i] + "</br>" + handSizes[i] + " cards in hand";
+						document.getElementById("playerDesc"+i).innerHTML= topCards[i].description;
+						document.getElementById("playerSize"+i).innerHTML= headerNames[1] + ": " + topCards[i].categoryOne;
+						document.getElementById("playerRare"+i).innerHTML= headerNames[2] + ": " + topCards[i].categoryTwo;
+						document.getElementById("playerTemp"+i).innerHTML= headerNames[3] + ": " + topCards[i].categoryThree;
+						document.getElementById("playerIntel"+i).innerHTML= headerNames[4] + ": " + topCards[i].categoryFour;
+						document.getElementById("playerCute"+i).innerHTML= headerNames[5] + ": " + topCards[i].categoryFive;
+						document.getElementById("playerPic"+i).src = "../assets/" + topCards[i].description + ".jpg";
+					}
+
 					selectPlayer().call();
 				};
 				
@@ -469,11 +442,18 @@
 					var x = document.getElementsByClassName("activePlayerWrapper");
 					x[0].style.display = "block";
 					
-					var y = document.getElementsByClassName("playerOneCard");
+					for(var i = 0;i<playerCount;i++)
+					{
+					if(playersRem[i] === "Player1")
+					{
+					var y = document.getElementsByClassName("playerCard0");
 					y[0].style.display = "block";
+					}
+					}
 					
 					updateRoundCounter();
 					updateActivePlayer();
+					
  					var isBot = JSON.parse(xhr.response); // the text of the response
 					if(isBot == "true")
 						{
@@ -496,8 +476,7 @@
 					var y = document.getElementsByClassName("mainButtonWrapper");
 					y[0].style.display = "none";
 					
-					var z = document.getElementsById("gameHeader").innerHTML = roundNum + ": Waiting on " + activePlayer + "(You) to select a category ";
-					
+					var z = document.getElementsById("gameHeader").innerHTML = roundNum + ": Waiting on " + activePlayer + "(You) to select a category ";	
 			}
 			
 			function updateSelectionHeader(stat) {
@@ -516,18 +495,11 @@
 				var d = document.getElementsByClassName("selectButtonsWrapper");
 				d[0].style.display = "none";
 				
-				var e = document.getElementsByClassName("playerTwoCard");
+				for(i=0;i<playerCount;i++)
+				{
+				var e = document.getElementsByClassName("playerCard"+i);
 				e[0].style.display = "block";
-					
-				var f= document.getElementsByClassName("playerThreeCard");
-				f[0].style.display = "block";
-					
-				var g = document.getElementsByClassName("playerFourCard");
-				g[0].style.display = "block";
-					
-				var h = document.getElementsByClassName("playerFiveCard");
-				h[0].style.display = "block";
-	
+				}
 			}
 			
 			function playCards(stat) {
@@ -545,20 +517,11 @@
 				xhr.onload = function(e) {
  					 // the text of the response
 					
- 					var x = document.getElementsByClassName("playerOneCard");
+					for(i=0;i<playerCount;i++)
+					{
+ 					var x = document.getElementsByClassName("playerCard"+i);
 					x[0].style.display = "none";
-					
-					var x = document.getElementsByClassName("playerTwoCard");
-					x[0].style.display = "none";
-					
-					var x = document.getElementsByClassName("playerThreeCard");
-					x[0].style.display = "none";
-					
-					var x = document.getElementsByClassName("playerFourCard");
-					x[0].style.display = "none";
-					
-					var x = document.getElementsByClassName("playerFiveCard");
-					x[0].style.display = "none";
+					}
 					
 					var x = document.getElementsByClassName("activePlayerWrapper");
 					x[0].style.display = "none"; 
@@ -608,14 +571,15 @@
  					 // the text of the response
 					var gameState = JSON.parse(xhr.response);
 					if(gameState == false)
-						{
-						playersRem().call();
-						}
-					else if(gameState == true){
-						updateDb();
-						alert("game over");
-						}
-				};
+					{
+					resetRound();
+					}
+					else if(gameState == true)
+					{
+					document.getElementById("gameHeader").innerHTML = "GAME OVER: " + activePlayer + " has won the game";
+					resetGame();
+					}
+				}
 				
 				// We have done everything we need to prepare the CORS request, so send it
 				xhr.send();		
@@ -697,7 +661,6 @@
 				// to do when the response arrives 
 				xhr.onload = function(e) {
  					handSizes = JSON.parse(xhr.response);
- 					alert(handSizes);
  					buildRoundCards();
 				};
 				
@@ -705,9 +668,9 @@
 				xhr.send();		
 			}
 			
-			function playersRem() {
+			function playersLeft() {
 				// First create a CORS request, this is the message we are going to send (a get request in this case)
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/playersRem"); // Request type and URL+parameters
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/playersLeft"); // Request type and URL+parameters
 				
 				// Message is not sent yet, but we can check that the browser supports CORS
 				if (!xhr) {
@@ -717,8 +680,8 @@
 				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
 				// to do when the response arrives 
 				xhr.onload = function(e) {
- 					var playersLeft = xhr.repsonse;
- 					//alert(playersLeft);
+ 					playersRem = JSON.parse(xhr.response);
+ 					playerCount = Object.keys(playersRem).length;
  					getHandSizes().call();
 				};
 				
@@ -726,11 +689,19 @@
 				xhr.send();	
 			}
 			
-			function updateDb() {
-			
-				// First create a CORS request, this is the message we are going to send (a get request in this case)
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/helloJSONList"); // Request type and URL
+
+			function resetRound() {
+				document.getElementById("mainButton").value= "Next: Category Selection";
+				var x = document.getElementsByClassName("activePlayerWrapper");
+				x[0].style.display = "block";	
 				
+				playersLeft().call();
+			}
+			
+			function resetGame() {
+				// First create a CORS request, this is the message we are going to send (a get request in this case)
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/setNewGameState"); // Request type and URL+parameters
+
 				// Message is not sent yet, but we can check that the browser supports CORS
 				if (!xhr) {
   					alert("CORS not supported");
@@ -739,13 +710,14 @@
 				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
 				// to do when the response arrives 
 				xhr.onload = function(e) {
- 					var responseText = xhr.response; // the text of the response
-					//alert(responseText); // lets produce an alert
+
+					alert("Returning to main menu...");
+ 					window.history.go(-1);
 				};
 				
 				// We have done everything we need to prepare the CORS request, so send it
-				xhr.send();		
-			}
+				xhr.send();	
+			}	
 
 		</script>
 		

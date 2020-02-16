@@ -123,7 +123,7 @@ public class TopTrumpsRESTAPI {
 	public String buildRoundCards() throws IOException{
 		String topCardsAsJSONString;
 		ArrayList<Card> cards = new ArrayList<Card>();
-		for(Player p: this.model.getPlayers()) {
+		for(Player p: this.model.getPlayersRemaining()) {
 			cards.add(p.getTopCard());
 		}
 		topCardsAsJSONString = oWriter.writeValueAsString(cards);
@@ -141,7 +141,7 @@ public class TopTrumpsRESTAPI {
 	public String playerHandSizes() throws IOException{
 		String handSizesAsJSONString;
 		ArrayList<Integer> handSizes = new ArrayList<Integer>();
-		for(Player p: this.model.getPlayers()) {
+		for(Player p: this.model.getPlayersRemaining()) {
 			handSizes.add(p.getHand().size());
 		}
 		handSizesAsJSONString = oWriter.writeValueAsString(handSizes);
@@ -149,22 +149,21 @@ public class TopTrumpsRESTAPI {
 	}
 	
 	@GET
-	@Path("/playersRem")
+	@Path("/playersLeft")
 	/**
 	 * Here is an example of how to read parameters provided in an HTML Get request.
 	 * @param Word - A word
 	 * @return - A String
 	 * @throws IOException
 	 */
-	public String playersRem() throws IOException{
-		String playersRemianingAsJSONString;
-		ArrayList<Card> playersLeft = new ArrayList<Card>();
-		for(Player p: this.model.getPlayers()) {
-			playersLeft.add(p.getTopCard());
-		
+	public String playersLeft() throws IOException{
+		String playersLeftAsJSONString;
+		ArrayList<String> playersLeft = new ArrayList<String>();
+		for(Player p: this.model.getPlayersRemaining()) {
+			playersLeft.add(p.getName());
 		}
-		playersRemianingAsJSONString = oWriter.writeValueAsString(playersLeft);
-		return  playersRemianingAsJSONString;
+		playersLeftAsJSONString = oWriter.writeValueAsString(playersLeft);
+		return  playersLeftAsJSONString;
 	}
 	
 	@GET
@@ -263,7 +262,7 @@ public class TopTrumpsRESTAPI {
 	 * @throws IOException
 	 */
 	public String showCard() throws IOException {
-		String topCardAsJSONString = oWriter.writeValueAsString(this.model.getPlayers().get(0).getTopCard().getDescription());
+		String topCardAsJSONString = oWriter.writeValueAsString(this.model.getPlayersRemaining().get(0).getTopCard().getDescription());
 		return topCardAsJSONString;
 	}
 	

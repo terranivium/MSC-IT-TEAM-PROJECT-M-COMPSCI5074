@@ -31,6 +31,8 @@
 			font-family:Verdana;
   			text-align:center;
 			font-size:15px;
+			display:flex;
+			flex-direction:column;
 		}
 		
   		.navbar {
@@ -39,19 +41,24 @@
   			padding:2rem;
   		}
   		
+  		.maincontainer {
+  			padding:2rem;
+  			flex: 1 0 auto;
+  		}
+  		
   		.results {
   			background-color:#ffffe6;
 			background:linear-gradient(to bottom, #ffffe6 5%, #fbfbd1 100%);
   			border-left:1px solid black;
   			border-right:1px solid black;
   			border-bottom:1px solid black;
-  			width:600px;
+  			width:75%;
   			display:inline-block;
   			padding:1rem;
   		}
   		
   		.footer {
-  			position:absolute;
+  			flex-shrink:0;
   			right:0;
   			bottom:0;
   			left:0;
@@ -64,7 +71,7 @@
   		}
   		
   		.myButton {
-  			width: 600px;
+  			width:75%;
 			box-shadow:inset 0px 1px 0px 0px #fce2c1;
 			background:linear-gradient(to bottom, #ffc477 5%, #fb9e25 100%);
 			background-color:#ffc477;
@@ -102,10 +109,8 @@
     	
     <div class="mainContainer">
     		
-    <br></br>
-    		
     	<div class="buttons">
-    		<input class="mybutton" type="button" value="&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp New Game &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp" 
+    		<input class="mybutton" type="button" value="Start New Game" 
 			onclick="window.location.href='/toptrumps/game'" />
     	</div>
     		
@@ -120,7 +125,7 @@
 	</div>
 	
 	<div class="footer">
-		Made by Git What You Give</br>Jessica Lavin - Daniel Mitchell - Simon Manton Milne - Wesley Scott
+		Made by You Git What You Give</br>Jessica Lavin - Simon Manton Milne - Cyriac Mathew - Daniel Mitchell - Wesley Scott
 	</div>
 		
 	<script type="text/javascript">
